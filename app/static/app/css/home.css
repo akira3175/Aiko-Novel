@@ -1,0 +1,65 @@
+b, strong {
+    font-weight: 700;
+}
+
+/* Navbar */
+
+/* Banner slider */
+.banner-size {
+    padding-inline: 9%;
+    box-sizing: border-box;
+}
+
+.carousel-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/banner-slider/banner-welcome.jpg');
+    background-size: cover;
+    filter: blur(10px);
+    -webkit-filter: blur(50px);
+    z-index: -1;
+}
+
+/* Main content */
+
+#mainpart {
+    width: 100%;
+    padding-top: 20px;
+    min-height: 350px;
+}
+
+/* Main content recent*/
+
+.b_title {
+    height: 23px;
+    padding-top: 7px;
+}
+
+.b_title strong {
+    box-sizing: border-box;
+    color: white;
+    background: red;
+    padding: 10px 15px;
+}
+
+.owl-wrapper-outer {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.slide-item {
+    display: block;
+    width: 170px;
+    height: 220px;
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.page_aiko_31758421 {
+    background-image: url('../images/owl-item/z5158133494263_62927f8856bd31843e88a5d56eeab850.jpg');
+}
