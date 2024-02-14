@@ -7,7 +7,8 @@
         <title>Aiko Novel</title>
         <!--css bootstrap-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"/>
-        <link href="{% static 'app/css/home.css' %}" rel="stylesheet" />
+        <link href="{% static 'app/css/home.css' %}" rel="stylesheet"/>
+        <link href="{% static 'app/css/fontawesome-free-6.5.1-web/css/all.min.css' %}" rel="stylesheet"/>
         <!--js-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
@@ -37,30 +38,32 @@
                   </li>
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Hướng dẫn
+                      Khác
                     </a>
                     <ul class="dropdown-menu">
                       <li><a class="dropdown-item" href="#"></a></li>
-                      <li><a class="dropdown-item" href="#">Another action</a></li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">Something else here</a></li>
+                      <li><a class="dropdown-item" href="#">Hướng dẫn</a></li>
+                      <li><a class="dropdown-item" href="#">Chúng tôi</a></li>
                     </ul>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-                  </li>
                 </ul>
-                <form class="d-flex" role="search">
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-success" type="submit">Search</button>
+                <form id="search-form" role="search" action="">
+                  <input class="search-input" type="search" placeholder="Search" aria-label="Search">
+                  <button class="search-icon" type="submit">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                  </button>
                 </form>
                 <ul class="navbar-nav mb-2 mb-lg-0">
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      User
+                    <a class="nav-link avatar page_aiko_31758421" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
-                      <li><a class="dropdown-item" href="#">Tài khoản</a></li>
+                      <li>
+                        <a class="dropdown-item account" href="#">
+                          <div class="avatar page_aiko_31758421"></div>
+                          <div class="user-name">Akira</div>
+                        </a>
+                      </li>
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="#">Lịch sử</a></li>
                       <li><a class="dropdown-item" href="#">Yêu thích</a></li>
@@ -76,7 +79,7 @@
         {% block banner_slider %} {% endblock banner_slider %}
         {% block main_content %} {% endblock main_content %}
         <!-- footer-->
-        <footer class="container--fluid bg-success text-center fixed-bottom b-2 mt-5">
+        <footer class="container--fluid bg-success text-center b-2 mt-5">
           Aiko Novel - All rights reserved
         <footer>
 
