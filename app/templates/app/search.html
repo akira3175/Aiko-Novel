@@ -1,19 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Results</title>
-</head>
-<body>
-
-<h1>Search Results</h1>
-
-{% if keywords %}
-    <p>You searched for: "{{ keywords }}"</p>
-{% else %}
-    <p>Please enter a keyword to search.</p>
-{% endif %}
-
-</body>
-</html>
+{% extends "app/base.html" %}
+{% load static %}
+{% block banner_slider %}
+  <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active banner-img-blur">
+        <img src=" {% static 'app/images/banner-slider/banner-welcome.jpg' %}" class="d-block w-100 banner-size" alt="..." height="400">
+      </div>
+  </div>
+{% endblock banner_slider %}
+{% block main_content %}
+    <div id="mainpart" class="container-fluid">
+        <div class="main-content-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-9">
+                        <div id="slider" class="owl-carousel owl-theme" style="opacity: 1; display: block">
+                            <div class="owl-wrapper-outer">
+                                <div class="owl-wrapper" style="width: 3329px; left: 0px; display: inline-flex">
+                                    {% for book in matched_books %}
+                                        <div class="owl-item" style="width: 252px">
+                                            <div class="slide-item">
+                                                <a title={book.tittle} href="#">
+                                                    <div class="image lazy page_aiko_31758421" style=""> </div>
+                                                    <div class="series-info"> 
+                                                    <div class="series"></div>
+                                                    </div> 
+                                                </a>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main_content %}
