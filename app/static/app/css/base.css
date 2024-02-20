@@ -1,0 +1,58 @@
+body {
+    font-family: Roboto, sans-serif;
+    font-size: 16px;
+    background: #fafafa;
+    line-height: 1.42857143;
+}
+
+b, strong {
+    font-weight: 700;
+}
+
+a {
+    color: blue !important;
+    text-decoration: none;
+}
+
+p {
+    margin: 0 0 10px;
+}
+
+
+/* Navbar */
+
+.navbar .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-size: cover;
+}
+
+.nav-link {
+    font-weight: 700;
+    font-size: large;
+}
+
+.navbar .account {
+    width: 220px;
+}
+
+.navbar .account .avatar {
+    display: table-cell;
+    vertical-align: middle;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-size: cover;
+}
+
+.navbar .account .user-name {
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 18px;
+    font-weight: 700;
+    width: 124px;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding-left: 10px;
+}
