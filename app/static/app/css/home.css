@@ -18,35 +18,6 @@
     z-index: -1;
 }
 
-#search-form {
-    width: 210px;
-    height: 36px;
-    border-radius: 20px;
-    border: 1px solid #0dcaf0;
-    line-height: 36px;
-    float: right;
-    background-color: #ffffff;
-    margin-inline-end: 25px;
-}
-
-.search-input {
-    margin-left: 20px;
-    width: 150px;
-    height: 100%;
-    font-size: 14px;
-    background-color: transparent;
-    border: 0;
-}
-
-.search-icon {
-    width: 36px;
-    color: #ccc;
-    float: right;
-    background: transparent;
-    border: 0;
-    padding: 0;
-}
-
 /* Main content */
 
 #mainpart {
