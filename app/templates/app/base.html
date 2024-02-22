@@ -69,6 +69,8 @@
                       <li><a class="dropdown-item" href="#">Lịch sử</a></li>
                       <li><a class="dropdown-item" href="#">Yêu thích</a></li>
                       <li><a class="dropdown-item" href="#">Cài đặt</a></li>
+                        <li><a href=  {% url 'register' %} class="dropdown-item">Đăng kí</a></li>
+                      <li><a href= {% url 'login' %} class="dropdown-item">Đăng nhập </a></li>
                       <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
                     </ul>
                   </li>
@@ -79,6 +81,7 @@
         <!--main-content-->
         {% block banner_slider %} {% endblock banner_slider %}
         {% block main_content %} {% endblock main_content %}
+        {% block register %}  {% endblock register %} 
         <!-- footer-->
         <footer class="container--fluid bg-success text-center b-2 mt-5">
           Aiko Novel - All rights reserved
