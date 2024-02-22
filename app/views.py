@@ -1,7 +1,41 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from app.models import Book
+import json
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate, login, logout # thu vien xac thuc
+from django.contrib import messages # thu vien thong bao
+
 # Create your views here.
+def register(request):
+    form = CreateUserForm()
+    
+    context = {'form': form}
+
+    if request.method == "POST":
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+    return render(request, 'app/register.html', context)
+
+def loginPage(request):
+    if request.user.is_authenticated: # kiem tra xac thuc chua
+        return redirect('home')
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+        else: messages.info(request, "Username hoặc password không đúng!")
+    context = {}
+    return render(request, 'app/login.html', context)
+
+def logoutPage(request):
+    logout(request)
+    return redirect('login')
+    
 def home(request):
     return render(request, 'app/home.html')
 def search(request):
