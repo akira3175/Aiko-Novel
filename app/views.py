@@ -5,6 +5,7 @@ import json
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout # thu vien xac thuc
 from django.contrib import messages # thu vien thong bao
+from .models import CreateUserForm
 
 # Create your views here.
 def register(request):
