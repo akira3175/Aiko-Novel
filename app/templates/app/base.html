@@ -23,7 +23,7 @@
         <!--nar bar-->
           <nav class="navbar navbar-expand-lg py-0" style="background-color: #ffffff;">
             <div class="container-fluid container">
-              <a class="navbar-brand py-0" href="#">
+              <a class="navbar-brand py-0" href="{% url '' %}">
                 <img src="{% static 'app\images\logo\main-logo-1.png' %}" width="70" class="py-0"/> 
               </a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +32,7 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Trang chủ</a>
+                    <a class="nav-link active" aria-current="page" href="{% url '' %}">Trang chủ</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="#">Danh sách</a>
@@ -55,8 +55,28 @@
                   </button>
                 </form>
                 <ul class="navbar-nav mb-2 mb-lg-0">
+                  <div class="anon-user" data-a-target="user-cart">
+                    <div class="btn-div">
+                      <button data-a-target="login-buttton" class="btn login-btn">
+                        <div class="text-btn-div">
+                          <div class="text-btn">
+                            Đăng nhập
+                          </div>
+                        </div>
+                      </button>
+                    </div>
+                    <div class="btn-div">
+                      <button data-a-target="signup-buttton" class="btn signup-btn">
+                        <div class="text-btn-div">
+                          <div class="text-btn">
+                            Đăng ký
+                          </div>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
                   <li class="nav-item dropdown">
-                    <a class="nav-link avatar page_aiko_31758421" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link avatar page_aiko_31758421" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="margin-inline: 7px">
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
                       <li>
