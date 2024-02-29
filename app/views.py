@@ -38,7 +38,8 @@ def logoutPage(request):
     return redirect('login')
     
 def home(request):
-    return render(request, 'app/home.html')
+    return render(request, 'app/home.html') 
+    
 def search(request):
     keywords = request.GET.get('keywords')
     matched_books = []
@@ -48,3 +49,9 @@ def search(request):
             if keywords.lower() in book.title.lower():
                 matched_books.append(book)
     return render(request, 'app/search.html', {'keywords': keywords,'matched_books': matched_books})
+
+def transTeam(request):
+    return render(request, 'app/transteam.html')
+
+def novelOfTransTeam(request):
+    return render(request, 'app/novel-of-trans.html')

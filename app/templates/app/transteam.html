@@ -1,0 +1,95 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block banner_slider %}
+{% endblock banner_slider %}
+{% block main_content %}
+    <div id="app-container">
+        <div id="content-works" class="container">
+            <div>
+                <div class="row">
+                    <div class="col-md-9">
+                        <header>
+                            <div>
+                                <h2>
+                                    <strong aria-label="Translation Teams">Nhóm dịch của tôi</strong>
+                                    <a href="#" class="btn btn-blue btn-right-align pull-right trans-teams">+ Nhóm mới</a>
+                                </h2>
+                            </div>
+                        </header>
+                        <div class="panel">
+                            <div class="works-type-select">
+                                <button class="on-switch-type">Danh sách nhóm</button>
+                            </div>
+                            <section class="item-lists row" role="list">
+                                <div class="works-list">
+                                    <div class="works-item">
+                                        <div class="row-container">
+                                            <div class="left-container">
+                                                <div class="item-wrapper">
+                                                    <div class="item-img">
+                                                        <img src="" alt="" height="70" class="page_aiko_31758421 cover cover-sm-works">
+                                                    </div>
+                                                    <div class="item-info">
+                                                        <h3 class="item-name"><a href=""><strong>Aiko Team</strong></a></h3>
+                                                        <div class="counts"><strong>4 thành viên</strong></div>
+                                                        <!--<div class="counts"><strong>7 truyện</strong></div>-->
+                                                    </div>
+                                                    <div class="meta-wrapper">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="actions-wrapper">
+                                                <div class="dropdown parts-dropdown">
+                                                    <buton class="btn btn-blue btn-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <span class="text">Xem nhóm</span>
+                                                    </buton>
+                                                    <div class="triangle"></div>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="#" class="dropdown-item">Xem thông tin nhóm</a></li>
+                                                        <li><a href="#" class="dropdown-item">Xem truyện của nhóm</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="works-item">
+                                        <div class="row-container">
+                                            <div class="left-container">
+                                                <div class="item-wrapper">
+                                                    <div class="item-img">
+                                                        <img src="" alt="" height="70" class="page_aiko_31758421 cover cover-sm-works">
+                                                    </div>
+                                                    <div class="item-info">
+                                                        <h3 class="item-name"><a href=""><strong>Akira Team</strong></a></h3>
+                                                        <div class="counts"><strong>5 thành viên</strong></div>
+                                                        <!--<div class="counts"><strong>7 truyện</strong></div>-->
+                                                    </div>
+                                                    <div class="meta-wrapper">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="actions-wrapper">
+                                                <div class="dropdown parts-dropdown">
+                                                    <buton class="btn btn-blue btn-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <span class="text">Xem nhóm</span>
+                                                    </buton>
+                                                    <div class="triangle"></div>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="#" class="dropdown-item">Xem thông tin nhóm</a></li>
+                                                        <li><a href= {% url 'novel-of-trans-team' %} class="dropdown-item">Xem truyện của nhóm</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main_content %}

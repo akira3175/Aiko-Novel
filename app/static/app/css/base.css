@@ -1,5 +1,5 @@
 body {
-    font-family: Tahoma, Helvetica, Arial, sans-serif !important;;
+    font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;;
     font-size: 16px;
     background: #fafafa;
     line-height: 1.42857143;
@@ -16,6 +16,12 @@ a {
 
 p {
     margin: 0 0 10px;
+}
+
+h2 {
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 36px;
 }
 
 
@@ -113,6 +119,10 @@ p {
     border-radius: 0.4rem;
 }
 
+.btn:focus {
+    text-decoration: none;
+}
+
 .login-btn {
     background-color: hsla(240, 7%, 70%, .22);
     color: blue;
@@ -122,4 +132,14 @@ p {
 .signup-btn {
     background-color: blue;
     color: white;
+}
+
+/* Another */
+
+.panel {
+    margin-bottom: 24px;
+    background-color: #fff;
+    border: 1px solid transparent;
+    -webkit-box-shadow: 0 1px 10px 0 rgba(34,34,34,.08), 0 4px 5px 0 rgba(34,34,34,.1);
+    box-shadow: 0 1px 10px 0 rgba(34,34,34,.08), 0 4px 5px 0 rgba(34,34,34,.1);
 }
