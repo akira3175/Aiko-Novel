@@ -1,0 +1,271 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2000;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: auto;
+}
+
+.overlay-dialog {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+}
+
+.dialog {
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    margin: 0 !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    --el-dialog-border-radius: var(--account-border-radius-l);
+    --el-dialog-width: 400px;
+    width: 450px;
+    background-color: #fff;
+    box-shadow:  12px 32px 4px rgba(0, 0, 0, .04), 0px 8px 20px rgba(0, 0, 0, .08);
+    border-radius: 24px;
+
+}
+
+.dialog-body {
+    padding: 32px !important;
+    color: #606266;
+    font-size: 14px;
+    word-break: break-all;
+}
+
+.dialog-container {
+    text-align: center;
+}
+
+.form-main-logo {
+    margin: -8px auto 18px auto;
+    background-image: url(../images/logo/main-logo-1.png);
+    background-size: cover;
+    width: 60px;
+    height: 60px;
+    position: relative;
+    z-index: 999;
+    user-select: none;
+}
+
+.cmn-form-web {
+    margin: 0;
+    width: 100%;
+    min-height: 150px;
+    user-select: none;
+}
+
+.form-title {
+    color:#242629;
+    text-align: center;
+    margin-top: 18px 0 8px;
+    user-select: none;
+}
+
+.form-input {
+    position: relative;
+}
+
+.el-input {
+    position: relative;
+    font-size: 14px;
+    display: inline-flex;
+    width: 100%;
+    line-height: 32px;
+}
+
+.el-input-inner {
+    height: 48px;
+    padding-left: var(--account-base-padding, 12px);
+    padding-right: 72px;
+    padding-top: 12px;
+    box-shadow: none;
+}
+
+.form-title {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+    letter-spacing: 0;
+    color: #242629;
+    text-align: center;
+    margin: 18px 0;
+}
+
+.form-input {
+    position: relative;
+}
+
+.el-input {
+    border-radius: 12px;
+    border: 1px solid #c0c4cc;
+    display: inline-flex;
+    width: 100%;
+    line-height: 32px;
+    position: relative;
+    margin-top: 16px;
+}
+
+.el-input-inner {
+    border-radius: 12px;
+    font-size: 14px;
+    color: #242629;
+    height: 48px;
+    outline: 0;
+    border: none;
+    padding: 11px 14px 0;
+    width: 100%;
+}
+
+.input-label {
+    position: absolute;
+    color: #9ea2ae;
+    top: 9px;
+    left: 13px;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.el-input-inner:focus + .input-label,
+.el-input-inner:not(:placeholder-shown) + .input-label {
+    top: -8px;
+    left: 13px;
+    font-size: 0.8em;
+    color: #039be5;
+}
+
+.error-text {
+    color: red;
+    word-break: break-word;
+    font-weight: 400;
+    font-size: 12px;
+    text-align: left;
+    margin-top: 4px;
+}
+
+.agreement-item-list {
+    word-break: break-word;
+    color: #3c3f44;
+    margin-top: 16px;
+}
+
+.el-checkbox {
+    color: white;
+    width: 100%;
+    height: auto;
+    display: flex;
+    user-select: none;
+}
+
+.el-checkbox-input {
+    align-self: flex-start;
+    margin-top: 0;
+    position: relative;
+    pointer-events: pointer;
+}
+
+.el-checkbox-input {
+    width: 25px;
+    position: relative;
+}
+
+.el-checkbox-input label {
+    cursor: pointer;
+    position: absolute;
+    width: 17px;
+    height: 17px;
+    top: -1px;
+    left: 2px;
+    background: #fff;
+    border:1px solid #ddd;
+    border-radius: 50%;
+}
+
+.el-checkbox-input input[type=checkbox]:checked + label {
+    background: #039be5;
+}
+
+.el-checkbox-input label:after {
+    opacity: 0.8;
+    content: '';
+    position: absolute;
+    width: 9px;
+    height: 5px;
+    background: transparent;
+    top: 5px;
+    left: 4px;
+    border: 2px solid white;
+    border-top: none;
+    border-right: none;
+
+    transform: rotate(-45deg);
+}
+
+.el-checkbox-input label:hover::after {
+    opacity: 0.5;
+}
+
+.el-checkbox-input input[type=checkbox]:checked + label:after {
+    opacity: 1;
+}
+
+.el-checkbox-label {
+    font-size: 12px;
+    color: #6b707b;
+    line-height: 18px;
+    margin-left: 10px;
+    text-align: left;
+}
+
+.el-button {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px;
+    border-radius: 12px;
+    border-width: none;
+    color: white;
+    background-color: #039be5;
+    margin: 20px 0 12px;
+    user-select: none;
+    cursor: pointer;
+}
+
+.account-exiting {
+    user-select: none;
+}
+
+.another-choice {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.forget-password {
+    float: left;
+}
+
+.click-log {
+    color: #039be5;
+}
+
+.dialog-close {
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    user-select: none;
+}

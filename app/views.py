@@ -10,13 +10,11 @@ from .models import CreateUserForm
 # Create your views here.
 def register(request):
     form = CreateUserForm()
-    
-    context = {'form': form}
-
     if request.method == "POST":
         form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
+    context = {'form': form}
     return render(request, 'app/register.html', context)
 
 def loginPage(request):

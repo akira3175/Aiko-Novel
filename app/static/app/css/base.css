@@ -5,12 +5,17 @@ body {
     line-height: 1.42857143;
 }
 
+body .modal-open {
+    overflow: hidden;
+}
+
+
 b, strong {
     font-weight: 700;
 }
 
 a {
-    color: blue !important;
+    color: #039be5 !important;
     text-decoration: none;
 }
 
@@ -131,7 +136,7 @@ h2 {
 
 .signup-btn {
     background-color: blue;
-    color: white;
+    color: white !important;
 }
 
 /* Another */
