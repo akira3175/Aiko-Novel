@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Aiko Novel</title>
+        <!--css bootstrap-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"/>
+        <link href="{% static 'app/css/home.css' %}" rel="stylesheet"/>
+        <link href="{% static 'app/css/base.css' %}" rel="stylesheet"/>
+        <link href="{% static 'app/css/transteam.css' %}" rel="stylesheet"/>
+        <link href="{% static 'app/css/register.css' %}" rel="stylesheet"/>
+        <link href="{% static 'app/css/novelworks.css' %}" rel="stylesheet"/>
+        <link href="{% static 'app/css/fontawesome-free-6.5.1-web/css/all.min.css' %}" rel="stylesheet"/>
+        <!--js-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+        <script src="{% static 'app/js/loadPage.js'%}"> </script>
+        <script src="{% static 'app/js/transteam.js'%}"> </script>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <!--main-content-->
+        <div class="app-container">
+            <div>
+                <div class="works-item-edit">
+                    <div id="edit-controls" class="edit-profile">
+                        <button class="btn on-edit-cancel">
+                            <i class="fa-solid fa-angle-left"></i>
+                        </button>
+                        <div class="works-item-metadata">
+                            <p class="group-title">Chỉnh sửa thông tin truyện</p>
+                            <span><h4>Travaler of Aiko</h4></span>
+                        </div>
+                        <div class="actions pull-right">
+                            <img src="" alt="" class="save-working">
+                            <button class="btn btn-grey on-edit-cancel">Hủy</button>
+                            <button class="btn btn-blue on-edit-save">Lưu</button>
+                        </div>
+                    </div>
+                    <div class="container panel" style="width: 80%">
+                        <div class="works-type-select">
+                            <button class="on-switch-type">Chi tiết</button>
+                            <button class="on-switch-type">Mục lục</button>
+                            <button class="on-switch-type">Ghi chú</button>
+                        </div>
+                        <section class="work-section">
+                            <form action="" class="main-edit-form">
+                                <div class="col-lg-4 col-md-3 col-sm-12" id="picture-sidebar">
+                                    <div class="image-placeholder file-upload file-drop" data-file-upload="drop">
+                                        <img src="" alt="" class="cover edit-cover page_aiko_31758421" height="256">
+                                    </div>
+                                </div>
+                                <div class="required-form-wrapper col-lg-8 col-md-3 col-sm-12">
+                                    <div class="form-group title-form">
+                                        <label for="">Tiêu đề</label>
+                                        <span class="empty-warning" id="title-warning"></span>
+                                        <div class="novel-title has-title" contenteditable="true">
+                                            Travaler of Aiko
+                                        </div>
+                                    </div>
+                                    <div class="form-group author-form">
+                                        <label for="">Tác giả</label>
+                                        <span class="empty-warning" id="author-warning"></span>
+                                        <div class="novel-author" contenteditable="true"></div>
+                                    </div>
+                                    <div class="form-group artist-form">
+                                        <label for="">Họa sĩ</label>
+                                        <span class="empty-warning" id="artist-warning"></span>
+                                        <div class="novel-artist" contenteditable="true"></div>
+                                    </div>
+                                    <div class="form-group trans-team-form">
+                                        <label for="">Nhóm dịch</label>
+                                        <span class="empty-warning" id="trans-team-warning"></span>
+                                        <div class="novel-trans-team" contenteditable="false">Aiko Team</div>
+                                    </div>
+                                    <div class="form-group category-form">
+                                        <label for="">Thể loại</label>
+                                        <span class="empty-warning" id="category-warning"></span>
+                                        <div class="novel-category" contenteditable="true"></div>
+                                    </div>
+                                    <div class="form-group description-form">
+                                        <label for="">Mô tả</label>
+                                        <span class="empty-warning" id="description-warning"></span>
+                                        <textarea name="" id="" cols="30" rows="10" class="novel-description"></textarea>
+                                    </div>
+                                    <div class="form-group status-form">
+                                        <label for="">Tình trạng</label>
+                                        <div class="novel-status">
+                                            <p>Đang tiến hành</p>
+                                            <label class="switch">
+                                                <input type="checkbox">
+                                                <span class="slider round"></span>
+                                            </label>
+                                            <p>Đã hoàn thành</p>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </form>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- footer-->
+        
+
+        <script src="" async defer></script>
+    </body>
+</html>

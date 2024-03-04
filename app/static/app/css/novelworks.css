@@ -1,0 +1,213 @@
+/* App */
+
+#app-container {
+    padding-bottom: 12px;
+    margin-bottom: -60px;
+}
+
+.works-item-edit {
+    margin-top: 114px;
+}
+
+/* Edit controls */
+
+#edit-controls {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1030;
+    width: 100%;
+    padding: 15px 8px;
+    background: #fff;
+    border: 1px solid #eee;
+    opacity: 1;
+}
+
+.edit-profile {
+    border: none;
+    height: auto;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.on-edit-cancel i {
+    font-size: 30px;
+}
+
+.works-item-metadata {
+    flex: 1;
+    color: #222;
+    display: inline-block;
+}
+
+.group-title {
+    color: #6f6f6f;
+    font-size: 14px;
+    line-height: 18px;
+    margin: 0;
+}
+
+.works-item-metadata h4 {
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 24px;
+    margin-top: 3px;
+}
+
+.actions {
+    padding-right: 20px;
+}
+
+.btn-grey {
+    color: #222;
+    background-color: #eee;
+    border-color: #eee;
+}
+
+/* Type Select */
+.works-type-select button {
+    height: 48px;
+    border: 0;
+    background-color: transparent;
+    color: #222;
+    font-size: 18px;
+    margin-right: 24px;
+    padding: 0 24px;
+}
+
+.works-type-select .active {
+    height: 45px;
+    border-bottom: 3px solid blue;
+    font-weight: 600;
+} 
+
+.works-type-select button:hover {
+    font-weight: 600;
+} 
+
+/* Main Edit */
+
+.main-edit-form {
+    display: flex;
+}
+
+.image-placeholder {
+    width: 256px;
+    height: 400px;
+    margin: 52px 72px;
+}
+
+.image-placeholder .cover {
+    width: 256px;
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+}
+
+.required-form-wrapper {
+    margin-top: 52px;
+    padding-right: 5%;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-size: 21px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 9px;
+    display: inline-block;
+}
+
+.form-group .novel-title,
+.form-group .novel-author,
+.form-group .novel-artist,
+.form-group .novel-trans-team,
+.form-group .novel-category {
+    width: 100%;
+    line-height: inherit;
+    padding: 6px 9px;
+    border: 1px solid #eee;
+    color: #6f6f6f;
+}
+
+.form-group textarea {
+    width: 100%;
+    overflow-y: scroll;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+  
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+  
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+  
+input:checked + .slider {
+    background-color: #2196F3;
+}
+  
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+  
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+  
+  /* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+  
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.novel-status {
+    display: flex;
+    align-items: center;
+}
+
+.novel-status p:first-child {
+    padding-right: 20px;
+}
+
+.novel-status p:not(:first-child) {
+    padding-left: 20px;
+}

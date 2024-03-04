@@ -29,6 +29,10 @@ h2 {
     line-height: 36px;
 }
 
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset; /* Đặt màu nền trong suốt */
+}
+
 
 /* Navbar */
 
@@ -82,7 +86,7 @@ h2 {
 .search-input {
     margin-left: 20px;
     width: 150px;
-    height: 100%;
+    height: 90%;
     font-size: 14px;
     background-color: transparent;
     border: 0;
@@ -130,12 +134,12 @@ h2 {
 
 .login-btn {
     background-color: hsla(240, 7%, 70%, .22);
-    color: blue;
-    border-color: blue;
+    color: #039be5;
+    border-color: transparent;
 }
 
 .signup-btn {
-    background-color: blue;
+    background-color: #039be5;
     color: white !important;
 }
 
