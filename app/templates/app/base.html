@@ -24,6 +24,11 @@
     </head>
     <body>
         <!--nar bar-->
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+          {{ message }}
+        </div>
+        {% endfor %}
           <nav class="navbar navbar-expand-lg py-0" style="background-color: #ffffff;">
             <div class="container-fluid container">
               <a class="navbar-brand py-0" href= {% url 'home' %}>
@@ -58,6 +63,7 @@
                   </button>
                 </form>
                 <ul class="navbar-nav mb-2 mb-lg-0">
+                  {% if not user.is_authenticated %}
                   <div class="anon-user" data-a-target="user-cart">
                     <div class="btn-div">
                       <button data-a-target="login-buttton" class="btn login-btn" onclick="loadLoginForm()">
@@ -78,6 +84,7 @@
                       </button>
                     </div>
                   </div>
+                  {% elif user.is_authenticated %}
                   <li class="nav-item dropdown">
                     <a class="nav-link avatar page_aiko_31758421" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="margin-inline: 7px">
                     </a>
@@ -85,7 +92,7 @@
                       <li>
                         <a class="dropdown-item account" href="#">
                           <div class="avatar page_aiko_31758421"></div>
-                          <div class="user-name">Akira</div>
+                          <div class="user-name">{{ name }}</div>
                         </a>
                       </li>
                       <li><hr class="dropdown-divider"></li>
@@ -93,9 +100,10 @@
                       <li><a class="dropdown-item" href="#">Yêu thích</a></li>
                       <li><a class="dropdown-item" href="#">Cài đặt</a></li>
                       <li><a class="dropdown-item" href= {% url 'transteam' %}>Nhóm dịch của bạn</a></li>
-                      <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                      <li><a class="dropdown-item" href= {% url 'logout' %}>Đăng xuất</a></li>
                     </ul>
                   </li>
+                  {% endif %}
                 </ul>
               </div>
             </div>

@@ -1,25 +1,36 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from app.models import Book
+from app.models import User
 import json
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout # thu vien xac thuc
+from django.contrib.auth.models import User
 from django.contrib import messages # thu vien thong bao
-from .models import CreateUserForm
+from .models import UserForm
 
 # Create your views here.
 def register(request):
-    form = CreateUserForm()
-    if request.method == "POST":
-        form = CreateUserForm(request.POST)
-        if form.is_valid():
-            form.save()
-    context = {'form': form}
-    return render(request, 'app/register.html', context)
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        repassword = request.POST.get('repassword')
+
+        if password == repassword:
+            myuser = User.objects.create_user(username=username, email=email, password=password)
+            myuser.save()
+            messages.success(request, "Your account has been registered")
+            return redirect('home')
+        else:
+            messages.error(request, "Passwords do not match")
+
+    return redirect('home')
 
 def loginPage(request):
-    if request.user.is_authenticated: # kiem tra xac thuc chua
-        return redirect('home')
+    if request.user.is_authenticated:
+        return render(request, 'app/home.html', {'name': request.user.username})
+    
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -27,13 +38,15 @@ def loginPage(request):
         
         if user is not None:
             login(request, user)
-        else: messages.info(request, "Username hoặc password không đúng!")
-    context = {}
-    return render(request, 'app/login.html', context)
+            return render(request, 'app/home.html', {'name': user.username})
+        else:
+            messages.error(request, "Username or password is incorrect!")
+
+    return render(request, 'app/home.html')
 
 def logoutPage(request):
     logout(request)
-    return redirect('login')
+    return redirect('home')
     
 def home(request):
     return render(request, 'app/home.html') 

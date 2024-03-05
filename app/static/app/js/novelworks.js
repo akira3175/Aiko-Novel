@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
             var selectedCategory = event.target.textContent;
             var selectedCategoryValue = event.target.getAttribute('data-value');
             addCategory(selectedCategory, selectedCategoryValue);
-            console.log(selectedCategory);
+            updateCategorySearchPosition();
         }
     });
 
@@ -39,9 +39,11 @@ document.addEventListener('DOMContentLoaded', function() {
         categoryDiv.appendChild(categoryName);
         categoryDiv.appendChild(lineDiv);
         categoryDiv.appendChild(cancelDiv);
+        categoryDiv.setAttribute('contenteditable', 'false');
         
         novelCategory.appendChild(categoryDiv);
     }
+
 });
 
 var novelCategory = document.querySelector('.novel-category');
@@ -60,3 +62,16 @@ window.onclick = function(event) {
         dropdownMenu.classList.remove('show');
     }
 }
+
+function updateCategorySearchPosition() {
+    var novelCategory = document.getElementById('novel-category');
+    var categorySearch = document.querySelector('.category-search');
+    novelCategory.appendChild(categorySearch);
+}
+
+    var novelCategory = document.getElementById('novel-category');
+    var categorySearch = document.querySelector('.category-search');
+
+    novelCategory.addEventListener('click', function() {
+        categorySearch.focus();
+    });
