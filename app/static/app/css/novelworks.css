@@ -139,6 +139,37 @@
     overflow-y: scroll;
 }
 
+.novel-category {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.category-button {
+    display: flex;
+    background-color: #2196F3;
+    width: fit-content;
+    height: 30px;
+    border-radius: 15px;
+    padding: 4px 10px;
+    margin: 7px 15px;
+    justify-content: center;
+}
+
+.category-name {
+    color: white;
+}
+
+.line {
+    background-color: rgba(255, 255, 255, .6);
+    height: 100%;
+    width: 1px;
+    margin: 0 5px;
+}
+
+.category-cancel {
+    color: white;
+}
+
 .switch {
     position: relative;
     display: inline-block;
