@@ -1,3 +1,34 @@
+//Switch types
+
+const mainEditButton = $('.main-edit-form')
+const TOCButton = $('.table-of-contents')
+const noteButton = $('.note-works')
+
+function switchToMainEdit() {
+    mainEditButton.show();
+    TOCButton.hide();
+    noteButton.hide();
+}
+
+function switchToTOC() {
+    mainEditButton.hide();
+    TOCButton.show();
+    noteButton.hide();
+}
+
+function switchToNote() {
+    mainEditButton.hide();
+    TOCButton.hide();
+    noteButton.show();
+}
+
+$('.on-switch-type').click(function() {
+    $('.on-switch-type').removeClass('active');
+    $(this).addClass('active');
+});
+
+//Main Edit
+
 function deleteCategory(element) {
     element.parentElement.remove();
 }
@@ -69,9 +100,13 @@ function updateCategorySearchPosition() {
     novelCategory.appendChild(categorySearch);
 }
 
-    var novelCategory = document.getElementById('novel-category');
-    var categorySearch = document.querySelector('.category-search');
+var novelCategory = document.getElementById('novel-category');
+var categorySearch = document.querySelector('.category-search');
 
-    novelCategory.addEventListener('click', function() {
-        categorySearch.focus();
-    });
+novelCategory.addEventListener('click', function() {
+    categorySearch.focus();
+});
+
+//Table of Contents
+
+//Note

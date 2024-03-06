@@ -26,3 +26,8 @@ function switchForm() {
     $('#login-form').toggle();
     $('#register-form').toggle();
 }
+
+function goBack() {
+    window.history.back();
+}
+

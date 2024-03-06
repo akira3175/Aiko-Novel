@@ -258,3 +258,16 @@ input:checked + .slider:before {
 .novel-status p:not(:first-child) {
     padding-left: 20px;
 }
+
+.time-form {
+    display: flex;
+    align-items: baseline;
+}
+
+.novel-time {
+    margin-left: 7%;
+    color: gray;
+}
+
+/* Table of Contents */
+
