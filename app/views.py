@@ -38,11 +38,11 @@ def loginPage(request):
         
         if user is not None:
             login(request, user)
-            return render(request, 'app/home.html', {'name': user.username})
+            return redirect('home')
         else:
             messages.error(request, "Username or password is incorrect!")
 
-    return render(request, 'app/home.html')
+    return redirect('home')
 
 def logoutPage(request):
     logout(request)

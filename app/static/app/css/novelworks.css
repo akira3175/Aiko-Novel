@@ -170,9 +170,11 @@
 }
 
 .category-search {
-    margin-top: auto;
     align-self: center;
-    min-width: 20px;
+    width: 30px;
+    min-width: 30px;
+    border: none;
+    outline: none;
 }
 
 .line {

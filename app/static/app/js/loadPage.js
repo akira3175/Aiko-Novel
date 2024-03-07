@@ -1,3 +1,4 @@
+//tạo nút chuyển qua login và nút chuyển qua register
 function toggleModalOpen() {
     $('body').toggleClass('modal-open');
 }
@@ -27,6 +28,8 @@ function switchForm() {
     $('#register-form').toggle();
 }
 
+
+//trả về trang trước
 function goBack() {
     window.history.back();
 }

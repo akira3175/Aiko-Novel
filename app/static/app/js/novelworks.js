@@ -1,5 +1,6 @@
 //Switch types
 
+//Tạo 3 nut chuyển đôỉ qua lại cho chỉnh sửa truyện
 const mainEditButton = $('.main-edit-form')
 const TOCButton = $('.table-of-contents')
 const noteButton = $('.note-works')
@@ -34,6 +35,8 @@ function deleteCategory(element) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+
+    //Tạo thẻ button cho thể loại khi chọn trong danh sách thể loại
     var dropdownMenu = document.getElementById('dropdown-menu');
     var novelCategory = document.getElementById('novel-category');
 
@@ -85,6 +88,7 @@ function toggleDropdown() {
     dropdownMenu.classList.toggle('show');
 }
 
+//tắt dropdown khi nhấp ngoài ô thể loại
 window.onclick = function(event) {
     var dropdownMenu = document.getElementById('dropdown-menu');
     var novelCategory = document.getElementById('novel-category');
@@ -94,18 +98,27 @@ window.onclick = function(event) {
     }
 }
 
-function updateCategorySearchPosition() {
-    var novelCategory = document.getElementById('novel-category');
-    var categorySearch = document.querySelector('.category-search');
-    novelCategory.appendChild(categorySearch);
-}
 
 var novelCategory = document.getElementById('novel-category');
 var categorySearch = document.querySelector('.category-search');
 
+//đảm bảo ô input luôn nằm sau cùng các thẻ thể loại khác
+function updateCategorySearchPosition() {
+    novelCategory.appendChild(categorySearch);
+}
+
+//tự động trỏ chuột vào ô input khi nhấp vào ô thể loại
+
 novelCategory.addEventListener('click', function() {
     categorySearch.focus();
 });
+
+$(document).ready(function() {
+    $('input').on('input', function() {
+        $(this).css('width', $(this).val().length * 9 + 'px'); // chỉnh độ dài cho ô tìm kiểm thể loại
+    });
+});
+
 
 //Table of Contents
 
