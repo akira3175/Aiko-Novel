@@ -128,4 +128,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_TEMPLATE_PACK="bootstrap5"
 
-CKEDITOR_UPLOAD_PATH = "/ckeditor_upload_path"
