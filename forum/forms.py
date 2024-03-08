@@ -11,6 +11,14 @@ class ForumPostForm(forms.ModelForm):
             'title': 'Tiêu đề',
             'content': 'Nội dung',
         }
+        error_messages = {
+            'title': {
+                'required': 'Nhập tiêu đề bài đăng',
+            },
+            'content': {
+                'required': 'Nhập nội dung bài đăng',
+            }
+        }
 
 
 class CommentForm(forms.ModelForm):
@@ -18,3 +26,9 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ['content']
         labels = {'content': ''}
+        error_messages = {
+            'content': {
+                'required': 'Nhập nội dung bình luận',
+            }
+        }
+        

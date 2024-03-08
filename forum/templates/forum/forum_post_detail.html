@@ -7,20 +7,20 @@
 <div class="d-flex justify-content-center">
   <div class="col-11"> 
     <h1>{{ post.title }}</h1>
-    <div>Ngày đăng: {{ post.created_at }}</div>
+    <div><i>Ngày đăng: {{ post.created_at }}</i></div>
     <div>Tác giả: {{ post.username.username }}</div>
-    <p>{{ post.content|linebreaks }}</p>
+    <p>{{ post.content|safe }}</p>
 
-{% if user.username %}
-  <h2>Thêm Bình Luận</h2>
-  <form method="post" action="{% url 'add-comment-to-post' post.id %}">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <button type="submit">Đăng Bình Luận</button>
-  </form>
-{% else %}
-    <div><a href="{% url 'login' %}">Đăng nhập </a> để bình luận </div>
-{% endif %}
+    {% if user.username %}
+      <h2>Thêm Bình Luận</h2>
+      <form method="post" action="{% url 'add-comment-to-post' post.id %}" autocomplete="off">
+        {% csrf_token %}
+        {{ comment_form|crispy }}
+        <button type="submit">Đăng Bình Luận</button>
+      </form>
+    {% else %}
+      <div><a href="{% url 'login' %}">Đăng nhập </a> để bình luận </div>
+    {% endif %}
 
     <h2>Bình luận</h2>
     {% for comment in comments %}

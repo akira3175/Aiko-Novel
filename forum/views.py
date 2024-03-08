@@ -38,7 +38,6 @@ class PostDetailView(FormMixin, DetailView):
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         form = self.get_form()
-
         if form.is_valid():
             return self.form_valid(form)
         else:
@@ -69,7 +68,6 @@ def CreatePostView(request):
 
     return render(request, 'forum/create_post.html', {'form': form})
 
-
 @login_required
 def add_comment_to_post(request, post_id):
     post = get_object_or_404(ForumPost, pk=post_id)
@@ -85,4 +83,4 @@ def add_comment_to_post(request, post_id):
     else:
         form = CommentForm()
 
-    return render(request, 'forum/forum_post_detail.html', {'form': form, 'post': post})
+    return render(request, 'forum/forum_post_detail.html', {'comment_form': form, 'post': post})

@@ -11,7 +11,7 @@
 <div class="d-flex justify-content-center">
     <div class="col-11">
         <h3><a href="{% url 'post-detail' pk=post.pk %}">{{ post.title }}</a></h3>
-        <div>Ngày đăng: {{ post.created_at }}</div>
+        <div><i>Ngày đăng: {{ post.created_at }}</i></div>
         <div>Người đăng: {{ post.username.username }}</div>
         <br>
         {% comment %} <p>{{ post.content }}</p> {% endcomment %}

@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
-    "forum", 'crispy_forms', "crispy_bootstrap5"
+    'ckeditor',
+    "forum", 'crispy_forms', "crispy_bootstrap5",
     
 ]
 
@@ -126,3 +127,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_TEMPLATE_PACK="bootstrap5"
+
+CKEDITOR_UPLOAD_PATH = "/ckeditor_upload_path"
