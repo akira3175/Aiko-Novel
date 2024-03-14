@@ -1,8 +1,10 @@
 {% extends "app/base.html" %}
 {% load static %}
 {% block banner_slider %}
+
 {% endblock banner_slider %}
 {% block main_content %}
+
     <div id="app-container">
         <div id="content-works" class="container">
             <div>
@@ -12,7 +14,7 @@
                             <div>
                                 <h2>
                                     <strong aria-label="Translation Teams">Nhóm dịch của tôi</strong>
-                                    <a href="#" class="btn btn-blue btn-right-align pull-right trans-teams">+ Nhóm mới</a>
+                                    <button  class="btn btn-blue btn-right-align pull-right trans-teams" onclick="loadAddGroupForm()">+ Nhóm mới</button>
                                 </h2>
                             </div>
                         </header>
@@ -92,4 +94,5 @@
             </div>
         </div>
     </div>
+    {% include 'app/addgroup.html' %}
 {% endblock main_content %}
