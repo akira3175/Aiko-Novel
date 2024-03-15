@@ -9,19 +9,27 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"/>
         <link href="{% static 'app/css/home.css' %}" rel="stylesheet"/>
         <link href="{% static 'app/css/base.css' %}" rel="stylesheet"/>
+        <link href="{% static 'app/css/transteam.css' %}" rel="stylesheet"/>
+        <link href="{% static 'app/css/register.css' %}" rel="stylesheet"/>
         <link href="{% static 'app/css/fontawesome-free-6.5.1-web/css/all.min.css' %}" rel="stylesheet"/>
         <!--js-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
-        <script src=""> </script>
+        <script src="{% static 'app/js/loadPage.js'%}"> </script>
+        <script src="{% static 'app/js/transteam.js'%}"> </script>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
     </head>
     <body>
         <!--nar bar-->
-          <nav class="navbar navbar-expand-lg py-0" style="background-color: #ffffff;">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+          {{ message }}
+        </div>
+        {% endfor %}
+          <nav class="navbar navbar-expand-lg py-0" style="background-color: #ffffff; user-select: none;">
             <div class="container-fluid container">
               <a class="navbar-brand py-0" href="{% url 'home' %}">
                 <img src="{% static 'app\images\logo\main-logo-1.png' %}" width="70" class="py-0"/> 
@@ -55,9 +63,10 @@
                   </button>
                 </form>
                 <ul class="navbar-nav mb-2 mb-lg-0">
+                  {% if not user.is_authenticated %}
                   <div class="anon-user" data-a-target="user-cart">
                     <div class="btn-div">
-                      <button data-a-target="login-buttton" class="btn login-btn">
+                      <button data-a-target="login-buttton" class="btn login-btn" onclick="loadLoginForm()">
                         <div class="text-btn-div">
                           <div class="text-btn">
                             Đăng nhập
@@ -66,7 +75,7 @@
                       </button>
                     </div>
                     <div class="btn-div">
-                      <button data-a-target="signup-buttton" class="btn signup-btn">
+                      <button data-a-target="signup-buttton" class="btn signup-btn" onclick="loadRegisterForm()">
                         <div class="text-btn-div">
                           <div class="text-btn">
                             Đăng ký
@@ -75,6 +84,7 @@
                       </button>
                     </div>
                   </div>
+                  {% elif user.is_authenticated %}
                   <li class="nav-item dropdown">
                     <a class="nav-link avatar page_aiko_31758421" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="margin-inline: 7px">
                     </a>
@@ -82,18 +92,18 @@
                       <li>
                         <a class="dropdown-item account" href="#">
                           <div class="avatar page_aiko_31758421"></div>
-                          <div class="user-name">Akira</div>
+                          <div class="user-name">{{ name }}</div>
                         </a>
                       </li>
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="#">Lịch sử</a></li>
                       <li><a class="dropdown-item" href="#">Yêu thích</a></li>
                       <li><a class="dropdown-item" href="#">Cài đặt</a></li>
-                        <li><a href=  {% url 'register' %} class="dropdown-item">Đăng kí</a></li>
-                      <li><a href= {% url 'login' %} class="dropdown-item">Đăng nhập </a></li>
-                      <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                      <li><a class="dropdown-item" href= {% url 'transteam' %}>Nhóm dịch của bạn</a></li>
+                      <li><a class="dropdown-item" href= {% url 'logout' %}>Đăng xuất</a></li>
                     </ul>
                   </li>
+                  {% endif %}
                 </ul>
               </div>
             </div>
@@ -101,7 +111,9 @@
         <!--main-content-->
         {% block banner_slider %} {% endblock banner_slider %}
         {% block main_content %} {% endblock main_content %}
-        {% block register %}  {% endblock register %} 
+        {% block register %}  {% endblock register %}
+        {% include 'app/register.html' %}
+        {% include 'app/login.html' %}
         <!-- footer-->
         <footer class="container--fluid bg-success text-center b-2 mt-5">
           Aiko Novel - All rights reserved
