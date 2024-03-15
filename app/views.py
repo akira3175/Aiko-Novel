@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from app.models import Book, CreateUserForm
 from app.models import Book
 from app.models import User
 import json
