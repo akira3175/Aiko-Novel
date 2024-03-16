@@ -74,15 +74,43 @@ class GroupForm(forms.ModelForm):
         model = Group
         fields = ['groupname']
         
+        
 def addGroup(request):
     form = GroupForm()
     if request.method == 'POST':
         form = GroupForm(request.POST)
         if form.is_valid():
-            form.save()
+            group = form.save()
+            # Thêm người tạo nhóm vào bảng Member với vai trò là "admin"
+            Member.objects.create(user=request.user, group=group, teamrole='admin')
             messages.success(request, "Group created successfully")
     context = {'form': form}
     return render(request, 'addgroup.html', context)
+
+# def addGroup(request):
+#     form = GroupForm()
+#     # member_form = MemberForm()  # Tạo một instance của MemberForm
+
+#     if request.method == 'POST':
+#         form = GroupForm(request.POST)
+#         # member_form = MemberForm(request.POST)
+        
+#         if form.is_valid(): # and member_form.is_valid():
+#             group = form.save()
+
+#             # # Lấy dữ liệu từ member_form và tạo một thành viên mới
+#             # username = member_form.cleaned_data['username']
+#             # email = member_form.cleaned_data['email']
+#             # new_member = User.objects.create_user(username=username, email=email)
+
+#             # # Thêm người tạo nhóm vào bảng Member với vai trò là "admin"
+#             # Member.objects.create(user=new_member, group=group, teamrole='admin')
+
+#             messages.success(request, "Group created successfully")
+#             return redirect('home')
+    
+#     context = {'form': form}
+#     return render(request, 'addgroup.html', context)
 
 def deleteGroup(request, group_id):
     group = get_object_or_404(Group, pk=group_id)
@@ -90,25 +118,9 @@ def deleteGroup(request, group_id):
     messages.success(request, "Group deleted successfully")
     return redirect('home')
 
-# def deleteMember(request, group_id, member_id):
-#     group = get_object_or_404(Group, pk=group_id)
-#     member = get_object_or_404(Member, pk=member_id)
-#     member.delete()
-#     messages.success(request, "Member deleted successfully")
-#     return redirect('group_detail', group_id=group.id)
-
-# def addMember(request, group_id):
-#     group = get_object_or_404(Group, pk=group_id)
-#     if request.method == 'POST':
-#         form = AddMemberForm(request.POST)
-#         if form.is_valid():
-#             member = form.save(commit=False)
-#             member.group = group
-#             member.save()
-#             messages.success(request, "Member added successfully")
-#             return redirect('group_detail', group_id=group.id)
-#         else:
-#             messages.error(request, "Error adding member")
-#     else:
-#         form = AddMemberForm()
-#     return render(request, 'app/addmember.html', {'form': form, 'group': group})
+def deleteMember(request, group_id, member_id):
+    group = get_object_or_404(Group, pk=group_id)
+    member = get_object_or_404(Member, pk=member_id)
+    member.delete()
+    messages.success(request, "Member deleted successfully")
+    return redirect('group_detail', group_id=group.id)
