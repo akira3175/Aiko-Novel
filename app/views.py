@@ -1,3 +1,4 @@
+from audioop import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 import json
@@ -5,8 +6,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout # thu vien xac thuc
 from django.contrib.auth.models import User
 from django.contrib import messages # thu vien thong bao
-from .models import Book, Member, User, Group
+from .models import Book, Member, User, Group, UserForm
 from django import forms
+
 
 # Create your views here.
 def register(request):
@@ -74,49 +76,45 @@ class GroupForm(forms.ModelForm):
         model = Group
         fields = ['groupname']
         
-        
+class MemberForm(forms.ModelForm):
+    class Meta:
+        model = Member
+        fields = ['user', 'group', 'teamrole']
+
 def addGroup(request):
     form = GroupForm()
     if request.method == 'POST':
         form = GroupForm(request.POST)
         if form.is_valid():
             group = form.save()
-            # Thêm người tạo nhóm vào bảng Member với vai trò là "admin"
-            Member.objects.create(user=request.user, group=group, teamrole='admin')
-            messages.success(request, "Group created successfully")
-    context = {'form': form}
-    return render(request, 'addgroup.html', context)
+            # Lấy thông tin user hiện tại từ request
+            current_user = request.user
+            # Kiểm tra xem current_user có phải là User không
+            if isinstance(current_user, User):
+                # Thêm user tạo group vào nhóm với vai trò admin
+                member = Member(user=current_user, group=group, teamrole='admin')
+                member.save()
+                messages.success(request, "Group created successfully")
+            else:
+                messages.error(request, "Error add member. Please check the addGroup.")
+        else:   messages.error(request, "Error add group. Please check the addGroup.")
+    return redirect('transteam')
 
-# def addGroup(request):
-#     form = GroupForm()
-#     # member_form = MemberForm()  # Tạo một instance của MemberForm
 
-#     if request.method == 'POST':
-#         form = GroupForm(request.POST)
-#         # member_form = MemberForm(request.POST)
-        
-#         if form.is_valid(): # and member_form.is_valid():
-#             group = form.save()
-
-#             # # Lấy dữ liệu từ member_form và tạo một thành viên mới
-#             # username = member_form.cleaned_data['username']
-#             # email = member_form.cleaned_data['email']
-#             # new_member = User.objects.create_user(username=username, email=email)
-
-#             # # Thêm người tạo nhóm vào bảng Member với vai trò là "admin"
-#             # Member.objects.create(user=new_member, group=group, teamrole='admin')
-
-#             messages.success(request, "Group created successfully")
-#             return redirect('home')
     
-#     context = {'form': form}
-#     return render(request, 'addgroup.html', context)
+# def addMember(request):
+#     form = MemberForm()
+#     if request.method == 'POST':
+#         form = MemberForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#     return redirect('transteam')
 
 def deleteGroup(request, group_id):
     group = get_object_or_404(Group, pk=group_id)
     group.delete()
     messages.success(request, "Group deleted successfully")
-    return redirect('home')
+    return redirect('transteam')
 
 def deleteMember(request, group_id, member_id):
     group = get_object_or_404(Group, pk=group_id)
