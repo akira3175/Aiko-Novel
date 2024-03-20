@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from storages.backends.s3boto3 import S3Boto3Storage
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -123,3 +125,21 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+
+
+
+AWS_ACCESS_KEY_ID = 'AKIA4MTWKQ7OGDD3YIFB'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'aikonovel'
+AWS_S3_SIGNATURE_NAME = 's3v4'
+AWS_S3_REGION_NAME = 'ap-southeast-2'
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+AWS_S3_VERITY = True
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+class MediaStorage(S3Boto3Storage):
+    location = 'media'  # Định nghĩa nơi lưu trữ các tệp trong bucket

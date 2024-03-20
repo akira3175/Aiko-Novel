@@ -33,14 +33,14 @@
                         <button class="btn on-edit-cancel" onclick="goBack()">
                             <i class="fa-solid fa-angle-left"></i>
                         </button>
-                        <div class="works-item-metadata">
+                        <div class="works-item-metadata" id-novel="-1">
                             <p class="group-title">Chỉnh sửa thông tin truyện</p>
-                            <span><h4>Travaler of Aiko</h4></span>
+                            <span><h4>Truyện chưa có tên</h4></span>
                         </div>
                         <div class="actions pull-right">
                             <img src="" alt="" class="save-working">
                             <button class="btn btn-grey on-edit-cancel" onclick="goBack()">Hủy</button>
-                            <button class="btn btn-blue on-edit-save">Lưu</button>
+                            <button class="btn btn-blue on-edit-save" onclick="saveBook()">Lưu</button>
                         </div>
                     </div>
                     <div class="container panel" style="width: 80%">
@@ -50,18 +50,26 @@
                             <button class="on-switch-type" onclick="switchToNote()">Ghi chú</button>
                         </div>
                         <section class="work-section">
-                            <form action="" class="main-edit-form" style="display: none">
+                            <form action="" method="" class="main-edit-form" style="display: none">
+                                {% csrf_token %}
                                 <div class="col-lg-4 col-md-3 col-sm-12" id="picture-sidebar">
                                     <div class="image-placeholder file-upload file-drop" data-file-upload="drop">
-                                        <img src="" alt="" class="cover edit-cover page_aiko_31758421" height="256">
+                                        <div class="icon-upload">
+                                            <input type="file" id="image-upload" accept="image/*" onchange="previewImage(event)">
+                                                <label for="image-upload">
+                                                    <i class="fa-regular fa-image"></i>
+                                                    <span class="text-icon">Đăng ảnh</span>
+                                                </label>
+                                        </div>
+                                        <img id="preview" src="" alt="" class="cover edit-cover page_aiko_31758421" height="256">
                                     </div>
                                 </div>
                                 <div class="required-form-wrapper col-lg-8 col-md-3 col-sm-12">
                                     <div class="form-group title-form">
-                                        <label for="">Tiêu đề</label>
+                                        <label for="title">Tiêu đề</label>
                                         <span class="empty-warning" id="title-warning"></span>
                                         <div class="novel-title has-title" contenteditable="true">
-                                            Travaler of Aiko
+                                            Truyện chưa có tên
                                         </div>
                                     </div>
                                     <div class="form-group author-form">
@@ -77,7 +85,7 @@
                                     <div class="form-group trans-team-form">
                                         <label for="">Nhóm dịch</label>
                                         <span class="empty-warning" id="trans-team-warning"></span>
-                                        <div class="novel-trans-team" contenteditable="false">Aiko Team</div>
+                                        <div class="novel-trans-team" contenteditable="false" worker-id="0001">Aiko Team</div>
                                     </div>
                                     <div class="form-group category-form">
                                         <label for="">Thể loại</label>
@@ -87,25 +95,10 @@
                                                 Chọn thể loại
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="dropdown-menu" contenteditable₫"false">
-                                                <li><div class="dropdown-item" data-value="1">Action1</div></li>
-                                                <li><div class="dropdown-item" data-value="2">Action2</div></li>
-                                                <li><div class="dropdown-item" data-value="3">Action3</div></li>
-                                                <li><div class="dropdown-item" data-value="4">Action4</div></li>
+                                                {% for category in categories %}
+                                                    <li><div class="dropdown-item" data-value="{{ category.id }}" onclick="removeCategory(this)">{{ category.name }}</div></li>
+                                                {% endfor %}
                                             </ul>
-                                            <div class="category-button" contenteditable="false">
-                                                <div class="category-name" data-value="1">Hành động</div>
-                                                <div class="line"></div>
-                                                <div class="category-cancel" onclick="deleteCategory(this);">
-                                                    <i class="fa-solid fa-xmark"></i>
-                                                </div>
-                                            </div>
-                                            <div class="category-button" contenteditable="false">
-                                                <div class="category-name" data-value="2">Phiêu lưu</div>
-                                                <div class="line"></div>
-                                                <div class="category-cancel" onclick="deleteCategory(this);">
-                                                    <i class="fa-solid fa-xmark"></i>
-                                                </div>
-                                            </div>
                                             <input class="category-search">
                                         </div>
                                     </div>
@@ -128,7 +121,7 @@
                                     </div>
                                     <div class="form-group time-form">
                                         <label for="">Thời gian đăng</label>
-                                        <div class="novel-time" contenteditable="false">17-04-2024</div>
+                                        <div class="novel-time" contenteditable="false"></div>
                                     </div>
                                 </div>
                             </form>

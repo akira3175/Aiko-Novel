@@ -94,8 +94,35 @@
 
 .image-placeholder {
     width: 256px;
-    height: 400px;
-    margin: 52px 72px;
+    height: auto;
+    margin: 52px 72px 0 52px;
+    position: relative;
+}
+
+.icon-upload {
+    display: flex;
+    width: fit-content;
+    height: auto;
+    background-color: white;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 10px;
+}
+
+.text-icon {
+    font-weight: 700;
+    padding-left: 5px;
+}
+
+.icon-upload input[type="file"] {
+    display: none;
+}
+
+.image-placeholder .icon-upload {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
 }
 
 .image-placeholder .cover {

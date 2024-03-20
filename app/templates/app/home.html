@@ -148,9 +148,11 @@
               <strong>Mới cập nhật</strong>
             </div>
             <main class="gridlist">
+              {% for novel in novels %}
+              {% if forloop.counter <= 14 %}
               <div class = "glitem">
                 <a title="Mở đầu" href="#">
-                  <div class="image lazy page_aiko_31758421" style=""></div>
+                  <img class="image lazy page_aiko_31758421" style="" src="{{novel.img.url}}"></img>
                   <div class="series-info">
                     <div class="vol" title="Tập 01">Tập 01</div>
                     <div class="chap" title="Mở đầu">Mở đầu</div>
@@ -158,191 +160,11 @@
                 </a>
                 <a class="series-name" title="I Was Caught up in a Hero Summoning, but That World Is at Peace"
                 href="#">
-                  I Was Caught up in a Hero Summoning, but That World Is at Peace
+                  {{novel.title}}
                 </a>
               </div>
-              <div class = "glitem">
-                <a title="Mở đầu" href="#">
-                  <div class="image lazy page_aiko_31758421" style=""></div>
-                  <div class="series-info">
-                    <div class="vol" title="Tập 01">Tập 01</div>
-                    <div class="chap" title="Mở đầu">Mở đầu</div>
-                  </div>
-                </a>
-                <a class="series-name" title="I Was Caught up in a Hero Summoning, but That World Is at Peace"
-                href="#">
-                  I Was Caught up in a Hero Summoning, but That World Is at Peace
-                </a>
-              </div>
-              <div class = "glitem">
-                <a title="Mở đầu" href="#">
-                  <div class="image lazy page_aiko_31758421" style=""></div>
-                  <div class="series-info">
-                    <div class="vol" title="Tập 01">Tập 01</div>
-                    <div class="chap" title="Mở đầu">Mở đầu</div>
-                  </div>
-                </a>
-                <a class="series-name" title="I Was Caught up in a Hero Summoning, but That World Is at Peace"
-                href="#">
-                  I Was Caught up in a Hero Summoning, but That World Is at Peace
-                </a>
-              </div>
-              <div class = "glitem">
-                <a title="Mở đầu" href="#">
-                  <div class="image lazy page_aiko_31758421" style=""></div>
-                  <div class="series-info">
-                    <div class="vol" title="Tập 01">Tập 01</div>
-                    <div class="chap" title="Mở đầu">Mở đầu</div>
-                  </div>
-                </a>
-                <a class="series-name" title="I Was Caught up in a Hero Summoning, but That World Is at Peace"
-                href="#">
-                  I Was Caught up in a Hero Summoning, but That World Is at Peace
-                </a>
-              </div>
-              <div class = "glitem">
-                <a title="Mở đầu" href="#">
-                  <div class="image lazy page_aiko_31758421" style=""></div>
-                  <div class="series-info">
-                    <div class="vol" title="Tập 01">Tập 01</div>
-                    <div class="chap" title="Mở đầu">Mở đầu</div>
-                  </div>
-                </a>
-                <a class="series-name" title="I Was Caught up in a Hero Summoning, but That World Is at Peace"
-                href="#">
-                  I Was Caught up in a Hero Summoning, but That World Is at Peace
-                </a>
-              </div>
-              <div class = "glitem">
-                <a title="Mở đầu" href="#">
-                  <div class="image lazy page_aiko_31758421" style=""></div>
-                  <div class="series-info">
-                    <div class="vol" title="Tập 01">Tập 01</div>
-                    <div class="chap" title="Mở đầu">Mở đầu</div>
-                  </div>
-                </a>
-                <a class="series-name" title="I Was Caught up in a Hero Summoning, but That World Is at Peace"
-                href="#">
-                  I Was Caught up in a Hero Summoning, but That World Is at Peace
-                </a>
-              </div>
-              <div class = "glitem">
-                <a title="Mở đầu" href="#">
-                  <div class="image lazy page_aiko_31758421" style=""></div>
-                  <div class="series-info">
-                    <div class="vol" title="Tập 01">Tập 01</div>
-                    <div class="chap" title="Mở đầu">Mở đầu</div>
-                  </div>
-                </a>
-                <a class="series-name" title="I Was Caught up in a Hero Summoning, but That World Is at Peace"
-                href="#">
-                  I Was Caught up in a Hero Summoning, but That World Is at Peace
-                </a>
-              </div>
-              <div class = "glitem">
-                <a title="Mở đầu" href="#">
-                  <div class="image lazy page_aiko_31758421" style=""></div>
-                  <div class="series-info">
-                    <div class="vol" title="Tập 01">Tập 01</div>
-                    <div class="chap" title="Mở đầu">Mở đầu</div>
-                  </div>
-                </a>
-                <a class="series-name" title="I Was Caught up in a Hero Summoning, but That World Is at Peace"
-                href="#">
-                  I Was Caught up in a Hero Summoning, but That World Is at Peace
-                </a>
-              </div>
-              <div class = "glitem">
-                <a title="Mở đầu" href="#">
-                  <div class="image lazy page_aiko_31758421" style=""></div>
-                  <div class="series-info">
-                    <div class="vol" title="Tập 01">Tập 01</div>
-                    <div class="chap" title="Mở đầu">Mở đầu</div>
-                  </div>
-                </a>
-                <a class="series-name" title="I Was Caught up in a Hero Summoning, but That World Is at Peace"
-                href="#">
-                  I Was Caught up in a Hero Summoning, but That World Is at Peace
-                </a>
-              </div>
-              <div class = "glitem">
-                <a title="Mở đầu" href="#">
-                  <div class="image lazy page_aiko_31758421" style=""></div>
-                  <div class="series-info">
-                    <div class="vol" title="Tập 01">Tập 01</div>
-                    <div class="chap" title="Mở đầu">Mở đầu</div>
-                  </div>
-                </a>
-                <a class="series-name" title="I Was Caught up in a Hero Summoning, but That World Is at Peace"
-                href="#">
-                  I Was Caught up in a Hero Summoning, but That World Is at Peace
-                </a>
-              </div>
-              <div class = "glitem">
-                <a title="Mở đầu" href="#">
-                  <div class="image lazy page_aiko_31758421" style=""></div>
-                  <div class="series-info">
-                    <div class="vol" title="Tập 01">Tập 01</div>
-                    <div class="chap" title="Mở đầu">Mở đầu</div>
-                  </div>
-                </a>
-                <a class="series-name" title="I Was Caught up in a Hero Summoning, but That World Is at Peace"
-                href="#">
-                  I Was Caught up in a Hero Summoning, but That World Is at Peace
-                </a>
-              </div>
-              <div class = "glitem">
-                <a title="Mở đầu" href="#">
-                  <div class="image lazy page_aiko_31758421" style=""></div>
-                  <div class="series-info">
-                    <div class="vol" title="Tập 01">Tập 01</div>
-                    <div class="chap" title="Mở đầu">Mở đầu</div>
-                  </div>
-                </a>
-                <a class="series-name" title="I Was Caught up in a Hero Summoning, but That World Is at Peace"
-                href="#">
-                  I Was Caught up in a Hero Summoning, but That World Is at Peace
-                </a>
-              </div>
-              <div class = "glitem">
-                <a title="Mở đầu" href="#">
-                  <div class="image lazy page_aiko_31758421" style=""></div>
-                  <div class="series-info">
-                    <div class="vol" title="Tập 01">Tập 01</div>
-                    <div class="chap" title="Mở đầu">Mở đầu</div>
-                  </div>
-                </a>
-                <a class="series-name" title="I Was Caught up in a Hero Summoning, but That World Is at Peace"
-                href="#">
-                  I Was Caught up in a Hero Summoning, but That World Is at Peace
-                </a>
-              </div>
-              <div class = "glitem">
-                <a title="Mở đầu" href="#">
-                  <div class="image lazy page_aiko_31758421" style=""></div>
-                  <div class="series-info">
-                    <div class="vol" title="Tập 01">Tập 01</div>
-                    <div class="chap" title="Mở đầu">Mở đầu</div>
-                  </div>
-                </a>
-                <a class="series-name" title="I Was Caught up in a Hero Summoning, but That World Is at Peace"
-                href="#">
-                  I Was Caught up in a Hero Summoning, but That World Is at Peace
-                </a>
-              </div>
-              <div class = "glitem">
-                <a title="Mở đầu" href="#">
-                  <div class="image lazy page_aiko_31758421" style=""></div>
-                  <div class="series-info">
-                    <div class="vol" title="Tập 01">Tập 01</div>
-                    <div class="chap" title="Mở đầu">Mở đầu</div>
-                  </div>
-                </a>
-                <a class="series-name" title="I Was Caught up in a Hero Summoning, but That World Is at Peace"
-                href="#">
-                  I Was Caught up in a Hero Summoning, but That World Is at Peace
-                </a>
-              </div>
+              {% endif %}
+              {% endfor %}
             </main>
           </div>
           <div class="col-xs-12 col-sm-12 col-md-3">

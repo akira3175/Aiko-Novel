@@ -11,4 +11,6 @@ urlpatterns = [
     path('trans-team', views.transTeam, name="transteam"),
     path('novel-of-trans-team', views.novelOfTransTeam, name="novel-of-trans-team"),
     path('novel-works', views.novelWorks, name="novel-works"),
+    path('saveBook', views.saveBook, name='saveBook')
 ]
+ 
