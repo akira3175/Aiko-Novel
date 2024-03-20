@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import os
+from dotenv import load_dotenv
 from pathlib import Path
 from storages.backends.s3boto3 import S3Boto3Storage
 
@@ -129,10 +131,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
+load_dotenv()
 
-
-AWS_ACCESS_KEY_ID = 'AKIA4MTWKQ7OGDD3YIFB'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = 'aikonovel'
 AWS_S3_SIGNATURE_NAME = 's3v4'
 AWS_S3_REGION_NAME = 'ap-southeast-2'
