@@ -1,8 +1,9 @@
 from audioop import reverse
+from urllib import request
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 import json
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import User
 from django.contrib.auth import authenticate, login, logout # thu vien xac thuc
 from django.contrib.auth.models import User
 from django.contrib import messages # thu vien thong bao
@@ -75,11 +76,6 @@ class GroupForm(forms.ModelForm):
     class Meta:
         model = Group
         fields = ['groupname']
-        
-class MemberForm(forms.ModelForm):
-    class Meta:
-        model = Member
-        fields = ['user', 'group', 'teamrole']
 
 def addGroup(request):
     form = GroupForm()
@@ -89,17 +85,16 @@ def addGroup(request):
             group = form.save()
             # Lấy thông tin user hiện tại từ request
             current_user = request.user
-            # Kiểm tra xem current_user có phải là User không
-            if isinstance(current_user, User):
-                # Thêm user tạo group vào nhóm với vai trò admin
-                member = Member(user=current_user, group=group, teamrole='admin')
-                member.save()
-                messages.success(request, "Group created successfully")
-            else:
-                messages.error(request, "Error add member. Please check the addGroup.")
+            # Thêm user tạo group vào nhóm với vai trò admin
+            member = Member(auth_user_id=current_user.id, group_id=group.id, teamrole='admin')
+            member.save()
+            messages.success(request, "Group created successfully")
         else:   messages.error(request, "Error add group. Please check the addGroup.")
     return redirect('transteam')
 
+def list(requaest):
+    Data = {'Groups': Group.objects.all().order_by('groupname')}
+    return render(request, 'app/transteam.html', Data)
 
     
 # def addMember(request):

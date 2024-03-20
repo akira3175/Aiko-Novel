@@ -1,6 +1,6 @@
 from django.db import models
 from django import forms
-from django.contrib.auth.models import User 
+from django.contrib.auth.models import User as AuthUser
 from django.contrib.auth.forms import UserCreationForm
 from django.utils import timezone
 
@@ -37,12 +37,11 @@ class Group(models.Model):
     
     def __str__(self) -> str:
         return self.groupname
-
+    
 class Member(models.Model):
-    user = models.ForeignKey(User, related_name='user', on_delete=models.CASCADE)  
-    group = models.ForeignKey(Group, related_name='group', on_delete=models.CASCADE)
+    auth_user = models.ForeignKey(AuthUser, related_name='members', on_delete=models.CASCADE)  
+    group = models.ForeignKey(Group, related_name='members', on_delete=models.CASCADE)
     teamrole = models.CharField(max_length=40, db_index=True, default="member")
 
-    def __str__(self) -> str:
-        return f'{self.user.username} {self.group.groupname}'
-    
+    def __str__(self):
+        return f'{self.auth_user.username} {self.group.groupname}'

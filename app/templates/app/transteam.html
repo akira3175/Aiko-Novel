@@ -24,6 +24,7 @@
                             </div>
                             <section class="item-lists row" role="list">
                                 <div class="works-list">
+                                    {% for group in Groups %}
                                     <div class="works-item">
                                         <div class="row-container">
                                             <div class="left-container">
@@ -32,7 +33,7 @@
                                                         <img src="" alt="" height="70" class="page_aiko_31758421 cover cover-sm-works">
                                                     </div>
                                                     <div class="item-info">
-                                                        <h3 class="item-name"><a href=""><strong>Aiko Team</strong></a></h3>
+                                                        <h3 class="item-name"><a href=""><strong>{{group.groupname}}</strong></a></h3>
                                                         <div class="counts"><strong>4 thành viên</strong></div>
                                                         <!--<div class="counts"><strong>7 truyện</strong></div>-->
                                                     </div>
@@ -55,6 +56,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    {% endfor%}
                                     <div class="works-item">
                                         <div class="row-container">
                                             <div class="left-container">
