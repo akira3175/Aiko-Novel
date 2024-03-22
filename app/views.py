@@ -3,11 +3,10 @@ from urllib import request
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 import json
-from django.contrib.auth.forms import User
 from django.contrib.auth import authenticate, login, logout # thu vien xac thuc
 from django.contrib.auth.models import User
 from django.contrib import messages # thu vien thong bao
-from .models import Book, Member, User, Group, UserForm
+from .models import Book, Member, Group, GroupForm
 from django import forms
 
 
@@ -72,10 +71,7 @@ def novelOfTransTeam(request):
 def novelWorks(request):
     return render(request, 'app/novelworks.html')
 
-class GroupForm(forms.ModelForm):
-    class Meta:
-        model = Group
-        fields = ['groupname']
+
 
 def addGroup(request):
     form = GroupForm()
