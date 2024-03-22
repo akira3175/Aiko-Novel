@@ -68,6 +68,9 @@ def transTeam(request):
 def novelOfTransTeam(request):
     return render(request, 'app/novel-of-trans.html')
 
+def memberOfTransTeam(request):
+    return render(request, 'app/member-of-trans.html')
+
 def novelWorks(request):
     return render(request, 'app/novelworks.html')
 
