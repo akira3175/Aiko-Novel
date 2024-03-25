@@ -63,18 +63,18 @@ def search(request):
     return render(request, 'app/search.html', {'keywords': keywords,'matched_books': matched_books})
 
 def transTeam(request):
-    return render(request, 'app/transteam.html')
+    groups = Group.objects.all()
+    return render(request, 'app/transteam.html', {'Groups': groups})
 
 def novelOfTransTeam(request):
     return render(request, 'app/novel-of-trans.html')
 
 def memberOfTransTeam(request):
-    return render(request, 'app/member-of-trans.html')
+    members = Member.objects.all()
+    return render(request, 'app/member-of-trans.html', {'Members' : members})
 
 def novelWorks(request):
     return render(request, 'app/novelworks.html')
-
-
 
 def addGroup(request):
     form = GroupForm()
@@ -90,10 +90,6 @@ def addGroup(request):
             messages.success(request, "Group created successfully")
         else:   messages.error(request, "Error add group. Please check the addGroup.")
     return redirect('transteam')
-
-def list(requaest):
-    Data = {'Groups': Group.objects.all().order_by('groupname')}
-    return render(request, 'app/transteam.html', Data)
 
     
 # def addMember(request):

@@ -20,6 +20,7 @@
             </div>
             <section class="item-lists row" role="list">
               <div class="works-list">
+                {% for member in Members%}
                 <div class="works-item">
                   <div class="row-container">
                     <div class="left-container">
@@ -34,10 +35,13 @@
                         </div>
                         <div class="item-info">
                           <h3 class="item-name">
-                            <a href=""><strong>Akira Yakult</strong></a>
+                            <a href=""
+                              ><strong>{{member.auth_user.username}}</strong></a
+                            >
                           </h3>
-                          <div class="counts"><strong>Member</strong></div>
-                          <!--<div class="counts"><strong>7 truyện</strong></div>-->
+                          <div class="counts">
+                            <strong>{{member.teamrole}}</strong>
+                          </div>
                         </div>
                         <div class="meta-wrapper"></div>
                       </div>
@@ -70,6 +74,7 @@
                     </div>
                   </div>
                 </div>
+                {% endfor%}
               </div>
             </section>
           </div>
