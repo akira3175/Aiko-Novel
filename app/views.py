@@ -64,7 +64,18 @@ def search(request):
 
 def transTeam(request):
     groups = Group.objects.all()
-    return render(request, 'app/transteam.html', {'Groups': groups})
+    group_member_counts = []
+    for group in groups:
+        member_count = Member.objects.filter(group=group).count()
+        group_member_info = {
+            'groupname': group.groupname,
+            'member_count': member_count
+        }
+        group_member_counts.append(group_member_info)
+    context = {
+        'group_member_counts': group_member_counts,
+    }
+    return render(request, 'app/transteam.html', context)
 
 def novelOfTransTeam(request):
     return render(request, 'app/novel-of-trans.html')
