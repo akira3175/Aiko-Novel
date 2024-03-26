@@ -15,7 +15,7 @@
       <h2>Thêm Bình Luận</h2>
       <form method="post" action="{% url 'add-comment-to-post' post.id %}" autocomplete="off">
         {% csrf_token %}
-        {{ comment_form|crispy }}
+        {{ comment_form }}
         <button type="submit">Đăng Bình Luận</button>
       </form>
     {% else %}
