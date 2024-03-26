@@ -66,10 +66,11 @@ def transTeam(request):
     groups = Group.objects.all()
     group_member_counts = []
     for group in groups:
-        member_count = Member.objects.filter(group=group).count()
+        member = Member.objects.filter(group=group)
         group_member_info = {
             'groupname': group.groupname,
-            'member_count': member_count
+            'groupid': group.id,
+            'member_count': member.count()
         }
         group_member_counts.append(group_member_info)
     context = {
@@ -80,8 +81,9 @@ def transTeam(request):
 def novelOfTransTeam(request):
     return render(request, 'app/novel-of-trans.html')
 
-def memberOfTransTeam(request):
-    members = Member.objects.all()
+def memberOfTransTeam(request, group_id):
+    group = Group.objects.get(pk=group_id)
+    members = Member.objects.filter(group=group)
     return render(request, 'app/member-of-trans.html', {'Members' : members})
 
 def novelWorks(request):
