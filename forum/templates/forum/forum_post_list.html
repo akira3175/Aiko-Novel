@@ -4,7 +4,7 @@
 {% if user.username %}
     <a class="btn" href="{% url 'create-post' %}" role="button">Đăng bài</a>
 {% else %}
-    <a class="btn" href="{% url 'login' %}" role="button">Đăng bài</a>
+    <div><button onclick="loadLoginForm()"> Đăng nhập </button> để đăng bài </div>
 {% endif %}
 <h1>Danh sách bài đăng</h1>
 {% for post in posts %}

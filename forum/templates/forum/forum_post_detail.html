@@ -19,7 +19,7 @@
         <button type="submit">Đăng Bình Luận</button>
       </form>
     {% else %}
-      <div><a href="{% url 'login' %}">Đăng nhập </a> để bình luận </div>
+      <div><button onclick="loadLoginForm()"> Đăng nhập </button> để bình luận </div>
     {% endif %}
 
     <h2>Bình luận</h2>

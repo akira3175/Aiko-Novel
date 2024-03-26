@@ -27,7 +27,7 @@ class User(models.Model):
 
 
 class Book(models.Model):
-    id = models.AutoField(primary_key=True)
+    #id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=100)
     author = models.CharField(max_length=100)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
