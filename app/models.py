@@ -32,7 +32,6 @@ class UserForm(forms.ModelForm):
         fields = ['username', 'email', 'password']
 
 class Group(models.Model):
-    id = models.AutoField(primary_key=True)
     groupname = models.CharField(max_length=40, db_index=True)
     
     def __str__(self) -> str:

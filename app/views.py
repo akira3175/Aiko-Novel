@@ -1,7 +1,7 @@
 from audioop import reverse
 from urllib import request
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 import json
 from django.contrib.auth import authenticate, login, logout # thu vien xac thuc
 from django.contrib.auth.models import User
@@ -84,7 +84,7 @@ def novelOfTransTeam(request):
 def memberOfTransTeam(request, group_id):
     group = Group.objects.get(pk=group_id)
     members = Member.objects.filter(group=group)
-    return render(request, 'app/member-of-trans.html', {'Members' : members})
+    return render(request, 'app/member-of-trans.html', {'Members' : members, 'Group':group})
 
 def novelWorks(request):
     return render(request, 'app/novelworks.html')
@@ -117,11 +117,15 @@ def deleteGroup(request, group_id):
     group = get_object_or_404(Group, pk=group_id)
     group.delete()
     messages.success(request, "Group deleted successfully")
-    return redirect('transteam')
+    return redirect('member-of-trans-team', group_id=group_id)
 
 def deleteMember(request, group_id, member_id):
-    group = get_object_or_404(Group, pk=group_id)
-    member = get_object_or_404(Member, pk=member_id)
-    member.delete()
-    messages.success(request, "Member deleted successfully")
-    return redirect('group_detail', group_id=group.id)
+    # Lấy nhóm và thành viên từ cơ sở dữ liệu
+    group = get_object_or_404(Group, id=group_id)
+    member = get_object_or_404(Member, id=member_id)
+    if member.teamrole == "admin":
+        messages.error(request, "Can't delete an admin member.")
+    else:
+        member.delete()
+        messages.success(request, "Member deleted successfully")
+    return redirect('member-of-trans-team', group_id=group_id)

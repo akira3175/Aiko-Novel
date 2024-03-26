@@ -9,8 +9,14 @@
             <div>
               <h2>
                 <strong aria-label="Translation Teams"
-                  >Thành viên nhóm tôi</strong
+                  >Nhóm {{Group.groupname}}</strong
                 >
+                <button
+                  class="btn btn-blue btn-right-align pull-right trans-teams"
+                  onclick="#"
+                >
+                  + Thêm thành viên
+                </button>
               </h2>
             </div>
           </header>
@@ -40,10 +46,7 @@
                             >
                           </h3>
                           <div class="counts">
-                            <strong
-                              >{{member.teamrole}} of group
-                              {{member.group.groupname}}</strong
-                            >
+                            <strong>{{member.teamrole}}</strong>
                           </div>
                         </div>
                         <div class="meta-wrapper"></div>
@@ -70,7 +73,7 @@
                             <a href="#" class="dropdown-item">Đổi vai trò</a>
                           </li>
                           <li>
-                            <a href="#" class="dropdown-item">Xóa khỏi nhóm</a>
+                            <a href= {% url 'delete_member' group_id=member.group.id member_id=member.id %} class="dropdown-item">Xóa khỏi nhóm</a>
                           </li>
                         </ul>
                       </div>
