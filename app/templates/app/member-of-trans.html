@@ -70,7 +70,7 @@
                             >
                           </li>
                           <li>
-                            <a href="#" class="dropdown-item">Đổi vai trò</a>
+                            <a href="{% url 'change_role_to_admin' group_id=member.group.id member_id=member.id %}" class="dropdown-item"> Đổi vai trò admin</a>
                           </li>
                           <li>
                             <a href= {% url 'delete_member' group_id=member.group.id member_id=member.id %} class="dropdown-item">Xóa khỏi nhóm</a>

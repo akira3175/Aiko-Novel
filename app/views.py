@@ -94,14 +94,17 @@ def addGroup(request):
     if request.method == 'POST':
         form = GroupForm(request.POST)
         if form.is_valid():
-            group = form.save()
-            # Lấy thông tin user hiện tại từ request
-            current_user = request.user
-            # Thêm user tạo group vào nhóm với vai trò admin
-            member = Member(auth_user_id=current_user.id, group_id=group.id, teamrole='admin')
-            member.save()
-            messages.success(request, "Group created successfully")
-        else:   messages.error(request, "Error add group. Please check the addGroup.")
+            groupname = request.POST.get('groupname')
+            if Group.objects.filter(groupname=groupname).exists():
+                messages.error(request, "Group name already exists")
+            else: 
+                group = form.save()
+                current_user = request.user # Lấy thông tin user hiện tại từ request
+                member = Member(auth_user_id=current_user.id, group_id=group.id, teamrole='admin')
+                member.save()
+                messages.success(request, "Group created successfully")
+        else:   
+            messages.error(request, "Error add group. Please check the addGroup.")
     return redirect('transteam')
 
     
@@ -113,6 +116,18 @@ def addGroup(request):
 #             form.save()
 #     return redirect('transteam')
 
+def changeRoleToAdmin(request, group_id, member_id):
+    # Đổi vai trò thành viên
+    group = get_object_or_404(Group, pk=group_id)
+    member = get_object_or_404(Member, pk=member_id)
+    if Member.objects.filter(auth_user=request.user, group=group, teamrole='admin').exists():
+        member.teamrole = "admin"
+        member.save()
+        messages.success(request, "Change member's role successfully")
+    else:
+        messages.error(request, "You must have admin role in the group to change member's role")
+    return redirect('member-of-trans-team', group_id=group_id)
+    
 def deleteGroup(request, group_id):
     group = get_object_or_404(Group, pk=group_id)
     # Kiểm tra xem người dùng hiện tại có trong nhóm và có vai trò admin trong nhóm đó không
