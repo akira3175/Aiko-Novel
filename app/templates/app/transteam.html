@@ -32,6 +32,7 @@
                                                     <div class="item-info">
                                                         <h3 class="item-name"><a href=""><strong>{{ group_info.groupname }}</strong></a></h3>
                                                         <div class="counts"><strong>{{ group_info.member_count }} thành viên</strong></div>
+                                                        <div class="counts"><strong>{{ group_info.join }}</strong></div>
                                                     </div>
                                                     <div class="meta-wrapper">
 
@@ -48,6 +49,9 @@
                                                         <li><a href="#" class="dropdown-item">Xem thông tin nhóm </a></li>
                                                         <li><a href= {% url 'novel-of-trans-team' %} class="dropdown-item">Xem truyện của nhóm</a></li>
                                                         <li><a href= {% url 'member-of-trans-team' group_id=group_info.groupid %} class="dropdown-item">Xem thành viên nhóm</a></li>
+                                                        {% if not group_info.is_member %}
+                                                        <li><a href= "#" class="dropdown-item">Tham gia nhóm</a></li>
+                                                        {% endif %}
                                                     </ul>
                                                 </div>
                                             </div>
