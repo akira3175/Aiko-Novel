@@ -11,12 +11,12 @@
                 <strong aria-label="Translation Teams"
                   >Nhóm {{Group.groupname}}</strong
                 >
-                <button
-                  class="btn btn-blue btn-right-align pull-right trans-teams"
-                  onclick="#"
-                >
-                  + Thêm thành viên
-                </button>
+                <form action="{% url 'delete_group' group_id=Group.id %}" method="post">
+                  {% csrf_token %}
+                  <button type='submit' class="btn btn-blue btn-right-align pull-right trans-teams">
+                    - Xóa nhóm
+                  </button>
+                </form>
               </h2>
             </div>
           </header>
