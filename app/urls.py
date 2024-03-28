@@ -17,5 +17,6 @@ urlpatterns = [
     path('change-role-to-admin/<int:group_id>/<int:member_id>', views.changeRoleToAdmin, name='change_role_to_admin'),
     path('delete-group/<int:group_id>', views.deleteGroup, name='delete_group'),
     path('delete-member/<int:group_id>/<int:member_id>', views.deleteMember, name='delete_member'),
+    path('out-group/<int:group_id>', views.outGroup, name='out_group'),
     path('novel-works', views.novelWorks, name="novel-works"),
 ]

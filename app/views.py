@@ -96,7 +96,13 @@ def memberOfTransTeam(request, group_id):
     group = Group.objects.get(pk=group_id)
     members = Member.objects.filter(group=group, teamrole__in = ['owner', 'admin', 'member'])
     waiters = Member.objects.filter(group=group, teamrole='waiter')
-    return render(request, 'app/member-of-trans.html', {'Members' : members, 'Group':group, 'Waiters': waiters})
+    
+    # Kiểm tra xem người dùng hiện tại có phải là thành viên của nhóm không
+    is_member = Member.objects.filter(auth_user=request.user, group=group).exists()
+    is_owner = Member.objects.filter(auth_user=request.user, group=group, teamrole='owner').exists()
+    context = {'Members' : members, 'Group':group, 'Waiters': waiters, 'is_member': is_member, 'is_owner': is_owner}
+    
+    return render(request, 'app/member-of-trans.html', context)
 
 def novelWorks(request):
     return render(request, 'app/novelworks.html')
@@ -189,5 +195,19 @@ def deleteMember(request, group_id, member_id):
             messages.error(request, "You must have admin/owner role in the group to delete this member")
     else:
         messages.error(request, "You must be a member of the group to delete this member")
+    
+    return redirect('member-of-trans-team', group_id=group_id)
+
+def outGroup(request, group_id):
+    group = get_object_or_404(Group, id=group_id)
+    member = get_object_or_404(Member, auth_user=request.user, group=group)
+    
+    if request.method == "POST":
+        if member.teamrole != 'owner':
+            member.delete()
+            messages.success(request, "Left group successfully")
+        else:
+            messages.error(request, "Owner can't leave the group.")
+        return redirect('member-of-trans-team', group_id=group_id)
     
     return redirect('member-of-trans-team', group_id=group_id)
