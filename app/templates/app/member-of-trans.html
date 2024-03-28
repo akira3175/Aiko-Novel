@@ -1,4 +1,4 @@
-{% extends "app/base.html" %}{% load static %} {% block banner_slider %}
+{% extends "app/base.html" %} {% load static %} {% block banner_slider %}
 {%endblock banner_slider %} {% block main_content %}
 <div id="app-container">
   <div id="content-works" class="container">
@@ -11,9 +11,15 @@
                 <strong aria-label="Translation Teams"
                   >Nhóm {{Group.groupname}}</strong
                 >
-                <form action="{% url 'delete_group' group_id=Group.id %}" method="post">
+                <form
+                  action="{% url 'delete_group' group_id=Group.id %}"
+                  method="post"
+                >
                   {% csrf_token %}
-                  <button type='submit' class="btn btn-blue btn-right-align pull-right trans-teams">
+                  <button
+                    type="submit"
+                    class="btn btn-blue btn-right-align pull-right trans-teams"
+                  >
                     - Xóa nhóm
                   </button>
                 </form>
@@ -26,7 +32,7 @@
             </div>
             <section class="item-lists row" role="list">
               <div class="works-list">
-                {% for member in Members%}
+                {% for member in Members %}
                 <div class="works-item">
                   <div class="row-container">
                     <div class="left-container">
@@ -54,14 +60,14 @@
                     </div>
                     <div class="actions-wrapper">
                       <div class="dropdown parts-dropdown">
-                        <buton
+                        <button
                           class="btn btn-blue btn-primary"
                           type="button"
                           data-bs-toggle="dropdown"
                           aria-expanded="false"
                         >
                           <span class="text">Chi tiết</span>
-                        </buton>
+                        </button>
                         <div class="triangle"></div>
                         <ul class="dropdown-menu">
                           <li>
@@ -70,17 +76,79 @@
                             >
                           </li>
                           <li>
-                            <a href= {% url 'change_role_to_admin' group_id=member.group.id member_id=member.id %} class="dropdown-item"> Đổi vai trò admin</a>
+                            <a
+                              href="{% url 'change_role_to_admin' group_id=member.group.id member_id=member.id %}"
+                              class="dropdown-item"
+                              >Đổi vai trò admin</a
+                            >
                           </li>
                           <li>
-                            <a href= {% url 'delete_member' group_id=member.group.id member_id=member.id %} class="dropdown-item">Xóa khỏi nhóm</a>
+                            <a
+                              href="{% url 'delete_member' group_id=member.group.id member_id=member.id %}"
+                              class="dropdown-item"
+                              >Xóa khỏi nhóm</a
+                            >
                           </li>
                         </ul>
                       </div>
                     </div>
                   </div>
                 </div>
-                {% endfor%}
+                {% endfor %}
+              </div>
+            </section>
+          </div>
+          <div class="panel">
+            <div class="works-type-select">
+              <button class="on-switch-type"><b>Danh sách chờ duyệt</b></button>
+            </div>
+            <section class="item-lists row" role="list">
+              <div class="works-list">
+                {% for member in Waiters %}
+                <div class="works-item">
+                  <div class="row-container">
+                    <div class="left-container">
+                      <div class="item-wrapper">
+                        <div class="item-img">
+                          <img
+                            src=""
+                            alt=""
+                            height="70"
+                            class="page_aiko_31758421 cover cover-sm-works"
+                          />
+                        </div>
+                        <div class="item-info">
+                          <h3 class="item-name">
+                            <a href=""
+                              ><strong>{{member.auth_user.username}}</strong></a
+                            >
+                          </h3>
+                          <div class="counts">
+                            <strong>{{member.teamrole}}</strong>
+                          </div>
+                        </div>
+                        <div class="meta-wrapper"></div>
+                      </div>
+                    </div>
+                    <div class="actions-wrapper">
+                      <div class="dropdown parts-dropdown">
+                        <form
+                          action="{% url 'approve_member' group_id=member.group.id member_id=member.id %}"
+                          method="post"
+                        >
+                          {% csrf_token %}
+                          <button
+                            class="btn btn-blue btn-primary"
+                            type="submit"
+                          >
+                            Duyệt
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
               </div>
             </section>
           </div>

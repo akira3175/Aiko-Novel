@@ -64,7 +64,7 @@ def search(request):
 
 def forOfTransTeam(group_member_counts, groups, join):
     for group in groups:
-        member = Member.objects.filter(group=group)
+        member = Member.objects.filter(group=group, teamrole__in = ['owner', 'admin', 'member'])
         group_member_info = {
             'groupname': group.groupname,
             'groupid': group.id,
@@ -94,8 +94,9 @@ def novelOfTransTeam(request):
 
 def memberOfTransTeam(request, group_id):
     group = Group.objects.get(pk=group_id)
-    members = Member.objects.filter(group=group)
-    return render(request, 'app/member-of-trans.html', {'Members' : members, 'Group':group})
+    members = Member.objects.filter(group=group, teamrole__in = ['owner', 'admin', 'member'])
+    waiters = Member.objects.filter(group=group, teamrole='waiter')
+    return render(request, 'app/member-of-trans.html', {'Members' : members, 'Group':group, 'Waiters': waiters})
 
 def novelWorks(request):
     return render(request, 'app/novelworks.html')
@@ -119,13 +120,28 @@ def addGroup(request):
     return redirect('transteam')
 
     
-# def addMember(request):
-#     form = MemberForm()
-#     if request.method == 'POST':
-#         form = MemberForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#     return redirect('transteam')
+def wantToJoin(request, group_id):
+    group = get_object_or_404(Group, pk=group_id)
+    if Member.objects.filter(auth_user=request.user, group=group, teamrole='waiter').exists():
+        messages.success(request, 'Please waiting for the admin acceptance')
+    elif Member.objects.exclude(auth_user=request.user, group=group).exists():
+        member = Member(auth_user_id=request.user.id, group_id=group.id, teamrole='waiter')
+        member.save()
+        messages.success(request, 'Join successfully')
+    return redirect('transteam')
+
+def approveMember(request, group_id, member_id):
+    group = get_object_or_404(Group, pk=group_id)
+    member = get_object_or_404(Member, pk=member_id)
+    
+    if Member.objects.filter(auth_user=request.user, group=group, teamrole__in=['admin', 'owner', 'member']).exists():
+        if request.method == 'POST':
+            member.teamrole = "member"
+            member.save()
+            messages.success(request, "Approve successfully")
+    else:
+        messages.error(request, "You must have admin/owner/member role in the group to approve members")
+    return redirect('member-of-trans-team', group_id=group_id)
 
 def changeRoleToAdmin(request, group_id, member_id):
     # Đổi vai trò thành viên
