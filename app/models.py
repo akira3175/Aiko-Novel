@@ -37,8 +37,6 @@ class Group(models.Model):
     def __str__(self) -> str:
         return self.groupname
     
-    
-    
 class Member(models.Model):
     auth_user = models.ForeignKey(AuthUser, related_name='members', on_delete=models.CASCADE)  
     group = models.ForeignKey(Group, related_name='members', on_delete=models.CASCADE)

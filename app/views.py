@@ -100,7 +100,8 @@ def memberOfTransTeam(request, group_id):
     # Kiểm tra xem người dùng hiện tại có phải là thành viên của nhóm không
     is_member = Member.objects.filter(auth_user=request.user, group=group).exists()
     is_owner = Member.objects.filter(auth_user=request.user, group=group, teamrole='owner').exists()
-    context = {'Members' : members, 'Group':group, 'Waiters': waiters, 'is_member': is_member, 'is_owner': is_owner}
+    is_admin = Member.objects.filter(auth_user=request.user, group=group, teamrole='admin').exists()
+    context = {'Members' : members, 'Group':group, 'Waiters': waiters, 'is_member': is_member, 'is_admin': is_admin, 'is_owner': is_owner}
     
     return render(request, 'app/member-of-trans.html', context)
 
@@ -150,16 +151,50 @@ def approveMember(request, group_id, member_id):
     return redirect('member-of-trans-team', group_id=group_id)
 
 def changeRoleToAdmin(request, group_id, member_id):
-    # Đổi vai trò thành viên
+    # Đổi vai trò thành admin
     group = get_object_or_404(Group, pk=group_id)
     member = get_object_or_404(Member, pk=member_id)
-    if Member.objects.filter(auth_user=request.user, group=group, teamrole__in=['admin', 'owner']).exists():
-        member.teamrole = "admin"
-        member.save()
-        messages.success(request, "Change member's role successfully")
-    else:
-        messages.error(request, "You must have admin/owner role in the group to change member's role")
+    
+    if Member.objects.filter(auth_user=member.auth_user, group=group, teamrole='member').exists():
+        if Member.objects.filter(auth_user=request.user, group=group, teamrole__in=['admin', 'owner']).exists():
+            member.teamrole = "admin"
+            member.save()
+            messages.success(request, "Change member's role successfully")
+  
     return redirect('member-of-trans-team', group_id=group_id)
+
+def deleteRoleOfAdmin(request, group_id, member_id):
+    # Xoá vai trò thành admin của thành viên
+    group = get_object_or_404(Group, pk=group_id)
+    member = get_object_or_404(Member, pk=member_id)
+    
+    if Member.objects.filter(auth_user=member.auth_user, group=group, teamrole='admin').exists():
+        if Member.objects.filter(auth_user=request.user, group=group, teamrole='owner').exists():
+            member.teamrole = "member"
+            member.save()
+            messages.success(request, "Change member's role successfully")
+  
+    return redirect('member-of-trans-team', group_id=group_id)
+
+def changeRoleToOwner(request, group_id, member_id):
+    # Nhượng quyền sở hữu cho thành viên khác
+    group = get_object_or_404(Group, pk=group_id)
+    member = get_object_or_404(Member, pk=member_id)
+    owner = Member.objects.filter(group=group, teamrole='owner').first()
+    
+    if owner.id != member_id:
+        if Member.objects.filter(auth_user=request.user, group=group, teamrole='owner').exists():
+            member.teamrole = "owner"
+            member.save()
+            
+            auth_member = Member.objects.filter(auth_user=request.user, group=group).first()
+            auth_member.teamrole = 'member'
+            auth_member.save()
+            messages.success(request, "Change member's role successfully")
+            
+    return redirect('member-of-trans-team', group_id=group_id)
+
+
     
 def deleteGroup(request, group_id):
     group = get_object_or_404(Group, pk=group_id)
@@ -180,14 +215,14 @@ def deleteMember(request, group_id, member_id):
     if Member.objects.filter(auth_user=request.user, group=group).exists():
         # Kiểm tra xem người dùng hiện tại có vai trò "owner" trong nhóm đó không
         if Member.objects.filter(auth_user=request.user, group=group, teamrole='owner').exists():
-            if member.teamrole == "owner" and member.auth_user == request.user:
-                messages.error(request, "You can't delete yourself as the owner.")
+            if member.teamrole == "owner":
+                messages.error(request, "You can't delete the owner")
             else:
                 member.delete()
                 messages.success(request, "Delete member successfully")
         elif Member.objects.filter(auth_user=request.user, group=group, teamrole='admin').exists():
             if member.teamrole in ["owner", "admin"]:
-                messages.error(request, "Can't delete an admin/owner member.")
+                messages.error(request, "Can't delete the admin/owner member")
             else:
                 member.delete()
                 messages.success(request, "Delete member successfully")

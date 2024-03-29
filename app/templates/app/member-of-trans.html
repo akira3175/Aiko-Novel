@@ -77,6 +77,22 @@
                               >Xem thông tin cá nhân</a
                             >
                           </li>
+                          {% if is_owner%}
+                          <li>
+                            <a
+                              href="{% url 'change_role_to_owner' group_id=member.group.id member_id=member.id %}"
+                              class="dropdown-item"
+                              >Sang nhượng nhóm</a
+                            >
+                          </li>
+                          <li>
+                            <a
+                              href="{% url 'delete_role_of_admin' group_id=member.group.id member_id=member.id %}"
+                              class="dropdown-item"
+                              >Xóa vai trò admin</a
+                            >
+                          </li>
+                          {% endif %} {% if is_admin or is_owner %}
                           <li>
                             <a
                               href="{% url 'change_role_to_admin' group_id=member.group.id member_id=member.id %}"
@@ -91,6 +107,7 @@
                               >Xóa khỏi nhóm</a
                             >
                           </li>
+                          {% endif %}
                         </ul>
                       </div>
                     </div>
@@ -154,7 +171,7 @@
               </div>
             </section>
           </div>
-          {% if is_owner%}
+          {% if is_owner %}
           <form
             action="{% url 'delete_group' group_id=Group.id %}"
             method="post"
