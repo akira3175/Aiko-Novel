@@ -53,14 +53,33 @@ def home(request):
     return render(request, 'app/home.html', {'novels': novels}) 
     
 def search(request):
-    keywords = request.GET.get('keywords')
-    matched_books = []
-    all_book = Book.objects.all()
-    if all_book:
-        for book in all_book:
-            if keywords.lower() in book.title.lower():
-                matched_books.append(book)
-    return render(request, 'app/search.html', {'keywords': keywords,'matched_books': matched_books})
+    title = request.GET.get('title')
+    author = request.GET.get('author')
+    selectcategory   = request.GET.get('selectcategory ')
+    rejectcategory  = request.GET.get('rejectcategory ')
+    status = request.GET.get('status')
+    if title is not None and title != '':
+        queryset = Book.objects.all()
+    else:
+        return render(request, 'app/search.html')
+
+    if title:
+        queryset = queryset.filter(title=title)
+
+    if author:
+        queryset = queryset.filter(author=author)
+
+    if selectcategory :
+        selectcategory  = selectcategory .split(',')
+        queryset = queryset.filter(category__in=selectcategory )
+
+    if rejectcategory :
+        rejectcategory  = rejectcategory .split(',')
+        queryset = queryset.exclude(category__in=rejectcategory )
+    # if status:
+    #     queryset = queryset.filter(status=status)
+    results = queryset.distinct()
+    return render(request, 'app/search.html', {'keywords': title,'matched_books': results})
 
 def transTeam(request):
     return render(request, 'app/transteam.html')
