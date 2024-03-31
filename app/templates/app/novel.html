@@ -1,0 +1,838 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Aiko Novel</title>
+        <!--css bootstrap-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"/>
+        <link href="/static/app/css/home.css" rel="stylesheet"/>
+        <link href="/static/app/css/base.css" rel="stylesheet"/>
+        <link href="/static/app/css/transteam.css" rel="stylesheet"/>
+        <link href="/static/app/css/register.css" rel="stylesheet"/>
+        <link href="/static/app/css/noel.css" rel="stylesheet"/>
+        <link href="/static/app/css/fontawesome-free-6.5.1-web/css/all.min.css" rel="stylesheet"/>
+        <!--js-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+        <script src="/static/app/js/loadPage.js"> </script>
+        <script src="/static/app/js/transteam.js"> </script>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <!--nar bar-->
+        
+          <nav class="navbar navbar-expand-lg py-0" style="background-color: #ffffff; user-select: none;">
+            <div class="container-fluid container">
+              <a class="navbar-brand py-0" href= />
+                <img src="/static/app/images/logo/main-logo-1.png" width="70" class="py-0"/> 
+              </a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href= />Trang chủ</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Danh sách</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Khác
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#"></a></li>
+                      <li><a class="dropdown-item" href="#">Hướng dẫn</a></li>
+                      <li><a class="dropdown-item" href="#">Chúng tôi</a></li>
+                    </ul>
+                  </li>
+                </ul>
+                <form id="search-form" action="/search" method="get">
+                  <input class="search-input" type="search" placeholder="Search" name="keywords">
+                  <button class="search-icon" type="submit">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                  </button>
+                </form>
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                  
+                  <div class="anon-user" data-a-target="user-cart">
+                    <div class="btn-div">
+                      <button data-a-target="login-buttton" class="btn login-btn" onclick="loadLoginForm()">
+                        <div class="text-btn-div">
+                          <div class="text-btn">
+                            Đăng nhập
+                          </div>
+                        </div>
+                      </button>
+                    </div>
+                    <div class="btn-div">
+                      <button data-a-target="signup-buttton" class="btn signup-btn" onclick="loadRegisterForm()">
+                        <div class="text-btn-div">
+                          <div class="text-btn">
+                            Đăng ký
+                          </div>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                  
+                </ul>
+              </div>
+            </div>
+          </nav>
+        <!--main-content-->
+         
+        
+    <body>
+    <main id="mainpart" class="project-page" style="min-height: 872px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-breadcrumb">
+                        <span class="breadcrum-level">
+                            <a href="https://docln.net"><i class="fas fa-home"></i></a>
+                        </span>
+                        <span class="next-icon"><i class="fas fa-chevron-right"></i></span>
+                        <span class="breadcrum-level"><a href="https://docln.net">Truyện dịch</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row d-block clearfix">
+                <div class="col-12 col-lg-9 float-left">
+                    <section class="feature-section at-series clear">
+                        <main class="section-body">
+                            <div class="top-part">
+                                <div class="row">
+                                    <div class="left-column col-12 col-md-3">
+                                        <div class="series-cover">
+                                            <div class="series-type">
+                                                <span>Truyện dịch</span>
+                                            </div>
+                                            <div class="a6-ratio">
+                                                <div class="content img-in-ratio" style="background-image: url('https://i2.docln.net/ln/series/covers/s17382-81d9f951-f10b-468e-8479-c6fc6bae2b7b.jpg');"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-9 flex flex-col">
+                                        <div class="flex-1">
+                                            <div class="series-name-group">
+                                                <span class="series-name">
+                                                    <a href="/truyen/17382-teniireta-saimin-apuri-de-yume-no-haremu-seikatsu-o-okuritai">Teniireta Saimin Apuri de yume no Haremu Seikatsu o Okuritai</a>
+                                                </span>
+                                            </div>
+                                            <div class="series-information mb-0 flex flex-col">
+                                                <div class="series-gernes" x-data="{ more: false }">
+                                                    <a class="series-gerne-item" href="https://docln.net/the-loai/comedy">Comedy</a>
+                                                    <a class="series-gerne-item" href="https://docln.net/the-loai/ecchi">Ecchi</a>
+                                                    <a class="series-gerne-item" href="https://docln.net/the-loai/harem">Harem</a>
+                                                    <a class="series-gerne-item" href="https://docln.net/the-loai/romance">Romance</a>
+                                                    <a class="series-gerne-item" href="https://docln.net/the-loai/school-life">School Life</a>
+                                                </div>
+                                                <div class="info-item">
+                                                    <span class="info-name">Tác giả:</span>
+                                                    <span class="info-value"><a href="https://docln.net/tac-gia/%E3%81%BF%E3%82%87%E3%82%93">みょん</a></span>
+                                                </div>
+                                                <div class="info-item">
+                                                    <span class="info-name">Họa sĩ:</span>
+                                                    <span class="info-value"><a href="https://docln.net/hoa-si/%E3%83%9E%E3%83%83%E3%83%91%E3%83%8B%E3%83%8A%E3%83%83%E3%82%BF">マッパニナッタ</a></span>
+                                                </div>
+                                                <div class="info-item">
+                                                    <span class="info-name">Tình trạng:</span>
+                                                    <span class="info-value">
+                                                        <a href="https://docln.net/truyen-dang-tien-hanh">Đang tiến hành</a>
+                                                    </span>
+                                                </div>
+                                                <div class="flex flex-row self-center md:self-start gap-2">
+                                                    <div
+                                                        wire:snapshot='{"data":{"series":[null,{"class":"App\\Models\\Series","key":17382,"s":"mdl"}],"ignored":false},"memo":{"id":"ZWXTQjcccXB0cY0Tf3yk","name":"pub.series.member.notification-ignore-button","path":"truyen\/17382-teniireta-saimin-apuri-de-yume-no-haremu-seikatsu-o-okuritai","method":"GET","children":[],"scripts":[],"assets":[],"errors":[],"locale":"vi"},"checksum":"094107d8497e6328e3b6d5be9b8d99299b44fc257e69b4fb4ef0063976114347"}'
+                                                        wire:effects="[]"
+                                                        wire:id="ZWXTQjcccXB0cY0Tf3yk"
+                                                    >
+                                                        <button
+                                                            class="self-center md:self-start rounded-full bg-amber-600 mt-3 mb-3 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-amber-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d43f3a] justify-center"
+                                                            wire:click="handle"
+                                                        >
+                                                            <i class="fas fa-bullhorn" style="margin-right: 6px;"></i>Tắt nhận thông báo
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="side-features flex-none">
+                                            <div class="row">
+                                                <div class="col-4 col-md feature-item width-auto-xl">
+                                                    <a id="collect" class="side-feature-button button-follow follow" >
+                                                        <span class="block feature-value"><i class="far fa-heart"></i></span>
+                                                        <span class="block feature-name"> 97 </span>
+                                                    </a>
+                                                </div>
+                                                <div class="col-4 col-md feature-item width-auto-xl">
+                                                    <div class="series-rating rated">
+                                                        <a href="https://docln.net/truyen/17382/danh-gia">
+                                                            <label for="open-rating" class="side-feature-button button-rate">
+                                                                <span class="block feature-value"><i class="far fa-star"></i></span>
+                                                                <span class="block feature-name">Đánh giá</span>
+                                                            </label>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4 col-md feature-item width-auto-xl">
+                                                    <div class="catalog-icon side-feature-button">
+                                                        <span class="block feature-value"><i class="fas fa-list"></i></span>
+                                                        <span class="block feature-name">Mục lục</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4 col-md feature-item width-auto-xl">
+                                                    <a href="https://docln.net/truyen/17382-teniireta-saimin-apuri-de-yume-no-haremu-seikatsu-o-okuritai#series-comments" class="side-feature-button">
+                                                        <span class="block feature-value"><i class="fas fa-comments"></i></span>
+                                                        <span class="block feature-name">Bàn luận</span>
+                                                    </a>
+                                                </div>
+                                                <div class="col-4 col-md feature-item width-auto-xl">
+                                                    <label for="open-sharing" class="side-feature-button" onclick="showShare()">
+                                                        <span class="block feature-value"><i class="fas fa-share-alt"></i></span>
+                                                        <span class="block feature-name">Chia sẻ</span>
+                                                    </label>
+                                                    <input type="checkbox" id="open-sharing" />
+                                                    <div id="sharing-box"> 
+                                                        <a x-data="" href="#" class="sharing-item" @click.prevent="window.navigator.clipboard.writeText('https://docln.net/truyen/17382'); $store.toast.show('Copy thành công!')">Link rút gọn</a>
+                                                        <a
+                                                            class="sharing-item"
+                                                            href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdocln.net%2Ftruyen%2F17382-teniireta-saimin-apuri-de-yume-no-haremu-seikatsu-o-okuritai"
+                                                            target="_blank"
+                                                        >
+                                                            <i class="fab fa-facebook-f"></i>
+                                                        </a>
+                                                        <a
+                                                            class="sharing-item"
+                                                            href="https://twitter.com/intent/tweet?text=Teniireta Saimin Apuri de yume no Haremu Seikatsu o Okuritai&amp;url=https%3A%2F%2Fdocln.net%2Ftruyen%2F17382-teniireta-saimin-apuri-de-yume-no-haremu-seikatsu-o-okuritai"
+                                                            target="_blank"
+                                                        >
+                                                            <i class="fab fa-twitter"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bottom-part">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="row statistic-list">
+                                            <div class="col-12 col-md-3 statistic-item block-wide at-mobile">
+                                                <div class="statistic-name">Lần cuối</div>
+                                                <div class="statistic-value"><time class="timeago" title="31/03/2024 11:00:56" datetime="2024-03-31T11:00:56+07:00">7 phút</time></div>
+                                            </div>
+                                            <div class="col-4 col-md-3 statistic-item">
+                                                <div class="statistic-name">Số từ</div>
+                                                <div class="statistic-value">3.872</div>
+                                            </div>
+                                            <div class="col-4 col-md-3 statistic-item">
+                                                <div class="statistic-name">Đánh giá</div>
+                                                <div class="statistic-value">0 / <small>0</small></div>
+                                            </div>
+                                            <div class="col-4 col-md-3 statistic-item">
+                                                <div class="statistic-name">Lượt xem</div>
+                                                <div class="statistic-value">3.343</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="summary-wrapper other-facts col-12">
+                                        <div class="fact-item">
+                                            <div class="fact-name">Tên khác:</div>
+                                            <div class="fact-value">
+                                                <div class="block pad-bottom-5">手に入れた催眠アプリで夢のハーレム生活を送りたい</div>
+                                                <div class="block pad-bottom-5">Saimin App de yume no Harem Seikatsu</div>
+                                                <div class="block pad-bottom-5">Saimin App</div>
+                                                <div class="block pad-bottom-5">I Want To Live The Harem Life of My Dreams with The Hypnosis App I got</div>
+                                                <div class="block pad-bottom-5">Tôi muốn sống một cuộc sống hậu cung trong mơ với ứng dụng thôi miên mà tôi có</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="summary-wrapper col-12">
+                                        <div class="series-summary">
+                                            <h4 class="font-bold">Tóm tắt</h4>
+                                            <div class="summary-content">
+                                                <p><strong>Bản phát hành mới đầy hứa hẹn là một bộ rom-com kết hợp yếu tố thôi miên và harem.</strong></p>
+                                                <p>&nbsp;</p>
+                                                <p>
+                                                    Tôi chưa bao giờ có bạn gái. Ứng dụng được cài đặt trên điện thoại của tôi là một ứng dụng thôi miên có khả năng điều khiển bất kỳ ai. Sau khi thử nghiệm, tôi khẳng định sức mạnh của ứng dụng
+                                                    là có thật. Nhờ vậy, cuộc sống hậu cung không còn là một giấc mơ xa vời nữa. Hãy cố gắng hết sức nhé, tôi ơi, giờ là lúc phải gạt bỏ lương tâm… cơ mà khoan đã,
+                                                </p>
+                                                <p>&nbsp;</p>
+                                                <p>“Tại sao tất cả những cô gái mà tôi nhắm tới đều gặp rắc rối vậy!?”</p>
+                                                <p>&nbsp;</p>
+                                                <p>
+                                                    Một nàng gal xinh đẹp tuyệt vời, một cô gái giản dị ẩn chứa nét đẹp tiềm ẩn, một thiếu nữ ojou-sama mang vẻ ngoài lạnh lùng— Nhờ sức mạnh của ứng dụng thôi miên, những bí mật sâu kín mà họ cất
+                                                    giấu bấy lâu nay đã được hé lộ!
+                                                </p>
+                                                <p>&nbsp;</p>
+                                                <p><em>(Tôi chỉ muốn làm những điều khiêu dâm*c…!)</em></p>
+                                                <p>&nbsp;</p>
+                                                <p>Kẻ tự xưng là kẻ thua cuộc nhưng về cơ bản lại là nhân vật chính tốt bụng, cuối cùng lại chạy khắp nơi để giúp đỡ mọi người!? Một câu chuyện rom-com thôi miên mọi lứa tuổi!</p>
+                                            </div>
+                                            <div class="summary-more more-state">
+                                                <div class="see_more">Xem thêm</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </main>
+                    </section>
+                </div>
+                <div id="rd-sidebar" class="col-12 col-lg-3 float-right">
+                    <div class="row top-group">
+                        <div class="col-12 no-push push-3-m col-md-6 no-push-l col-lg-12">
+                            <section class="series-users">
+                                <main>
+                                    <div class="series-owner group-mem">
+                                        <img width="50px" height="50px" src="https://i2.docln.net/ln/users/avatars/u177745-b5a43e43-d94e-44e1-8c14-2219d917e549.jpg" alt="Poster's avatar" />
+                                        <div class="series-owner-title">
+                                            <span class="series-owner_name"><a href="/thanh-vien/177745">M1NO</a></span>
+                                        </div>
+                                    </div>
+                                    <div class="fantrans-section">
+                                        <div class="fantrans-name">Nhóm dịch</div>
+                                        <div class="fantrans-value"><a href="https://docln.net/nhom-dich/2851-1credeble">1&amp;credible</a></div>
+                                    </div>
+                                    <div class="owner-donate" style="padding: 0;"></div>
+                                </main>
+                            </section>
+                        </div>
+                    </div>
+                    <section class="series-note basic-section gradual-mobile">
+                        <header class="sect-header">
+                            <span class="sect-title">Chú thích thêm</span><span class="mobile-icon"><i class="fas fa-chevron-down"></i></span>
+                        </header>
+                        <main class="d-lg-block">
+                            <div class="long-text" style="word-wrap: break-word;">
+                                <p>Bộ này khả năng cao lên 18+, không phải như câu cuối phần tóm tắt đâu nên không dành cho người già, trẻ em, phụ nữ có thai và cho con bú.</p>
+                                <p>Lời hứa hẹn sinh ra để phá vỡ. Vậy nên đây là bộ <s>đầu tiên</s> thứ ba của mình. Chắc là bộ cuối rồi đấy =))</p>
+                                <p>
+                                    <em><strong>Eng:</strong></em>
+                                    <a href="https://www.novelupdates.com/series/i-want-to-live-the-harem-life-of-my-dreams-with-the-hypnosis-app-i-got/" rel="nofollow noreferrer noopener" target="_blank">
+                                        https://www.novelupdates.com/series/i-want-to-live-the-harem-life-of-my-dreams-with-the-hypnosis-app-i-got/
+                                    </a>
+                                </p>
+                            </div>
+                        </main>
+                    </section>
+                    <section class="basic-section gradual-mobile">
+                        <header class="sect-header">
+                            <span class="sect-title">Thảo luận</span><span class="mobile-icon"><i class="fas fa-chevron-down"></i></span>
+                        </header>
+                        <main class="d-lg-block">
+                            <div class="text-right pad-10">
+                                <a class="button button-green" href="https://docln.net/action/page/create?series_id=17382"> <i class="fas fa-plus"></i> Tạo bài viết </a>
+                            </div>
+                        </main>
+                    </section>
+                    <section id="list-vol" class="none list_vol-section">
+                        <div class="list-volume-wrapper basic-section">
+                            <header class="sect-header"><span class="sect-title">Mục lục</span></header>
+                            <span class="list-vol_off">
+                                <i class="fas fa-times"></i>
+                            </span>
+                            <ol class="list-volume unstyled no-margin no-padding">
+                                <li data-scrollto="#volume_23799"><span class="list_vol-order">01.</span><span class="list_vol-title">Minh Hoạ LN</span></li>
+                                <li data-scrollto="#volume_23798"><span class="list_vol-order">02.</span><span class="list_vol-title">Light Novel Tập 01</span></li>
+                            </ol>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-12 col-lg-9 float-left">
+                    <div style="text-align: center; margin: 0 auto 10px auto;"></div>
+                    <section class="volume-list at-series basic-section volume-mobile gradual-mobile">
+                        <header id="volume_23799" class="sect-header">
+                            <span class="mobile-icon"><i class="fas fa-chevron-down"></i></span>
+                            <span class="sect-title"> Minh Hoạ LN <span style="color: red;">*</span> </span>
+                        </header>
+                        <main class="d-lg-block">
+                            <div class="row">
+                                <div class="col-12 col-md-2">
+                                    <div class="volume-cover">
+                                        <a href="/truyen/17382-teniireta-saimin-apuri-de-yume-no-haremu-seikatsu-o-okuritai/t23799-minh-hoa-ln">
+                                            <div class="a6-ratio">
+                                                <div class="content img-in-ratio" style="background-image: url('https://docln.net/img/nocover.jpg');"></div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-10">
+                                    <ul class="list-chapters at-series">
+                                        <li class="">
+                                            <div class="chapter-name">
+                                                <div class="new-status badge">
+                                                    <div class="badge-item new">Mới</div>
+                                                </div>
+                                                <i class="fas fa-image" aria-hidden="true" title="Có chứa ảnh"></i>
+                                                <a href="/truyen/17382-teniireta-saimin-apuri-de-yume-no-haremu-seikatsu-o-okuritai/c129347-illustrations-tap-1" title="Illustrations Tập 1">Illustrations Tập 1</a>
+                                            </div>
+                                            <div class="chapter-time">30/03/2024</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </main>
+                    </section>
+                    <section class="volume-list at-series basic-section volume-mobile gradual-mobile">
+                        <header id="volume_23798" class="sect-header">
+                            <span class="mobile-icon"><i class="fas fa-chevron-down"></i></span>
+                            <span class="sect-title"> Light Novel Tập 01 <span style="color: red;">*</span> </span>
+                        </header>
+                        <main class="d-lg-block">
+                            <div class="row">
+                                <div class="col-12 col-md-2">
+                                    <div class="volume-cover">
+                                        <a href="/truyen/17382-teniireta-saimin-apuri-de-yume-no-haremu-seikatsu-o-okuritai/t23798-light-novel-tap-01">
+                                            <div class="a6-ratio">
+                                                <div class="content img-in-ratio" style="background-image: url('https://docln.net/img/nocover.jpg');"></div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-10">
+                                    <ul class="list-chapters at-series">
+                                        <li class="">
+                                            <div class="chapter-name">
+                                                <div class="new-status badge">
+                                                    <div class="badge-item new">Mới</div>
+                                                </div>
+                                                <i class="fas fa-image" aria-hidden="true" title="Có chứa ảnh"></i>
+                                                <a href="/truyen/17382-teniireta-saimin-apuri-de-yume-no-haremu-seikatsu-o-okuritai/c129346-chuong-11-gap-phai-ung-dung-thoi-mien" title="Chương 1.1: Gặp phải ứng dụng thôi miên (1)">
+                                                    Chương 1.1: Gặp phải ứng dụng thôi miên (1)
+                                                </a>
+                                            </div>
+                                            <div class="chapter-time">30/03/2024</div>
+                                        </li>
+                                        <li class="">
+                                            <div class="chapter-name">
+                                                <div class="new-status badge">
+                                                    <div class="badge-item new">Mới</div>
+                                                </div>
+                                                <a href="/truyen/17382-teniireta-saimin-apuri-de-yume-no-haremu-seikatsu-o-okuritai/c129363-chuong-12-gap-phai-ung-dung-thoi-mien-2" title="Chương 1.2: Gặp phải ứng dụng thôi miên (2)">
+                                                    Chương 1.2: Gặp phải ứng dụng thôi miên (2)
+                                                </a>
+                                            </div>
+                                            <div class="chapter-time">31/03/2024</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </main>
+                    </section>
+                    <div wire:id="ICzTkIfRUgWKfCUiuc0t" wire:init="loadRelevantSeries">
+                        <section class="basic-section gradual-mobile">
+                            <header class="sect-header">
+                                <span class="sect-title">Có thể bạn quan tâm</span><span class="mobile-icon"><i class="fas fa-chevron-down"></i></span>
+                            </header>
+                            <main class="d-lg-block">
+                                <ul class="others-list">
+                                    <div class="row">
+                                        <!--[if BLOCK]> <![endif]-->
+                                        <!--[if ENDBLOCK]> <![endif]-->
+                                    </div>
+                                </ul>
+                                <div class="mobile-more none">
+                                    <div class="see_more">
+                                        <span>Xem thêm</span>
+                                    </div>
+                                </div>
+                            </main>
+                        </section>
+                    </div>
+                    <section id="series-comments" class="basic-section">
+                        <header class="sect-header tab-list">
+                            <span class="sect-title tab-title" data-tab-index="1">Tổng bình luận <span class="comments-count">(11)</span></span>
+                        </header>
+                        <main id="fbcmt_root" class="comment-wrapper d-lg-block clear">
+                            <span style="padding: 10px; display: inline-block;">Báo cáo bình luận không phù hợp ở <a href="/thao-luan/619-bao-cao-binh-luan" style="color: blue;">đây</a></span>
+                            <div id="tab-content-1" class="tab-content clear">
+                                <section class="ln-comment">
+                                    <header>
+                                        <h3 class="text-lg font-bold dark:text-white">8 Bình luận</h3>
+                                    </header>
+                                    <main class="ln-comment-body">
+                                        <div id="ln-comment-submit" class="ln-comment-form clear">
+                                            <form class="comment_form">
+                                                <textarea class="comment_content" id="mce_0" style="display: none;" aria-hidden="true"></textarea>
+                                                <div role="application" class="tox tox-tinymce" style="visibility: hidden; height: 200px;">
+                                                    <div class="tox-editor-container">
+                                                        <div data-alloy-vertical-dir="toptobottom" class="tox-editor-header">
+                                                            <div role="group" class="tox-toolbar-overlord">
+                                                                <div role="group" class="tox-toolbar__primary">
+                                                                    <div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group">
+                                                                        <button aria-label="Emoticons" title="Emoticons" type="button" tabindex="-1" class="tox-tbtn">
+                                                                            <span class="tox-icon tox-tbtn__icon-wrap">
+                                                                                <svg width="24" height="24">
+                                                                                    <path
+                                                                                        d="M9 11c.6 0 1-.4 1-1s-.4-1-1-1a1 1 0 0 0-1 1c0 .6.4 1 1 1zm6 0c.6 0 1-.4 1-1s-.4-1-1-1a1 1 0 0 0-1 1c0 .6.4 1 1 1zm-3 5.5c2.1 0 4-1.5 4.4-3.5H7.6c.5 2 2.3 3.5 4.4 3.5zM12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16zm0 14.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13z"
+                                                                                        fill-rule="nonzero"
+                                                                                    ></path>
+                                                                                </svg>
+                                                                            </span>
+                                                                        </button>
+                                                                        <button aria-label="Undo" title="Undo" type="button" tabindex="-1" class="tox-tbtn tox-tbtn--disabled" aria-disabled="true">
+                                                                            <span class="tox-icon tox-tbtn__icon-wrap">
+                                                                                <svg width="24" height="24">
+                                                                                    <path
+                                                                                        d="M6.4 8H12c3.7 0 6.2 2 6.8 5.1.6 2.7-.4 5.6-2.3 6.8a1 1 0 0 1-1-1.8c1.1-.6 1.8-2.7 1.4-4.6-.5-2.1-2.1-3.5-4.9-3.5H6.4l3.3 3.3a1 1 0 1 1-1.4 1.4l-5-5a1 1 0 0 1 0-1.4l5-5a1 1 0 0 1 1.4 1.4L6.4 8z"
+                                                                                        fill-rule="nonzero"
+                                                                                    ></path>
+                                                                                </svg>
+                                                                            </span>
+                                                                        </button>
+                                                                        <button aria-label="Redo" title="Redo" type="button" tabindex="-1" class="tox-tbtn tox-tbtn--disabled" aria-disabled="true">
+                                                                            <span class="tox-icon tox-tbtn__icon-wrap">
+                                                                                <svg width="24" height="24">
+                                                                                    <path
+                                                                                        d="M17.6 10H12c-2.8 0-4.4 1.4-4.9 3.5-.4 2 .3 4 1.4 4.6a1 1 0 1 1-1 1.8c-2-1.2-2.9-4.1-2.3-6.8.6-3 3-5.1 6.8-5.1h5.6l-3.3-3.3a1 1 0 1 1 1.4-1.4l5 5a1 1 0 0 1 0 1.4l-5 5a1 1 0 0 1-1.4-1.4l3.3-3.3z"
+                                                                                        fill-rule="nonzero"
+                                                                                    ></path>
+                                                                                </svg>
+                                                                            </span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group">
+                                                                        <button aria-label="Bold" title="Bold" type="button" tabindex="-1" class="tox-tbtn" aria-pressed="false">
+                                                                            <span class="tox-icon tox-tbtn__icon-wrap">
+                                                                                <svg width="24" height="24">
+                                                                                    <path
+                                                                                        d="M7.8 19c-.3 0-.5 0-.6-.2l-.2-.5V5.7c0-.2 0-.4.2-.5l.6-.2h5c1.5 0 2.7.3 3.5 1 .7.6 1.1 1.4 1.1 2.5a3 3 0 0 1-.6 1.9c-.4.6-1 1-1.6 1.2.4.1.9.3 1.3.6s.8.7 1 1.2c.4.4.5 1 .5 1.6 0 1.3-.4 2.3-1.3 3-.8.7-2.1 1-3.8 1H7.8zm5-8.3c.6 0 1.2-.1 1.6-.5.4-.3.6-.7.6-1.3 0-1.1-.8-1.7-2.3-1.7H9.3v3.5h3.4zm.5 6c.7 0 1.3-.1 1.7-.4.4-.4.6-.9.6-1.5s-.2-1-.7-1.4c-.4-.3-1-.4-2-.4H9.4v3.8h4z"
+                                                                                        fill-rule="evenodd"
+                                                                                    ></path>
+                                                                                </svg>
+                                                                            </span>
+                                                                        </button>
+                                                                        <button aria-label="Italic" title="Italic" type="button" tabindex="-1" class="tox-tbtn" aria-pressed="false">
+                                                                            <span class="tox-icon tox-tbtn__icon-wrap">
+                                                                                <svg width="24" height="24">
+                                                                                    <path
+                                                                                        d="M16.7 4.7l-.1.9h-.3c-.6 0-1 0-1.4.3-.3.3-.4.6-.5 1.1l-2.1 9.8v.6c0 .5.4.8 1.4.8h.2l-.2.8H8l.2-.8h.2c1.1 0 1.8-.5 2-1.5l2-9.8.1-.5c0-.6-.4-.8-1.4-.8h-.3l.2-.9h5.8z"
+                                                                                        fill-rule="evenodd"
+                                                                                    ></path>
+                                                                                </svg>
+                                                                            </span>
+                                                                        </button>
+                                                                        <button aria-label="Underline" title="Underline" type="button" tabindex="-1" class="tox-tbtn" aria-pressed="false">
+                                                                            <span class="tox-icon tox-tbtn__icon-wrap">
+                                                                                <svg width="24" height="24">
+                                                                                    <path
+                                                                                        d="M16 5c.6 0 1 .4 1 1v5.5a4 4 0 0 1-.4 1.8l-1 1.4a5.3 5.3 0 0 1-5.5 1 5 5 0 0 1-1.6-1c-.5-.4-.8-.9-1.1-1.4a4 4 0 0 1-.4-1.8V6c0-.6.4-1 1-1s1 .4 1 1v5.5c0 .3 0 .6.2 1l.6.7a3.3 3.3 0 0 0 2.2.8 3.4 3.4 0 0 0 2.2-.8c.3-.2.4-.5.6-.8l.2-.9V6c0-.6.4-1 1-1zM8 17h8c.6 0 1 .4 1 1s-.4 1-1 1H8a1 1 0 0 1 0-2z"
+                                                                                        fill-rule="evenodd"
+                                                                                    ></path>
+                                                                                </svg>
+                                                                            </span>
+                                                                        </button>
+                                                                        <button aria-label="Strikethrough" title="Strikethrough" type="button" tabindex="-1" class="tox-tbtn" aria-pressed="false">
+                                                                            <span class="tox-icon tox-tbtn__icon-wrap">
+                                                                                <svg width="24" height="24">
+                                                                                    <g fill-rule="evenodd">
+                                                                                        <path
+                                                                                            d="M15.6 8.5c-.5-.7-1-1.1-1.3-1.3-.6-.4-1.3-.6-2-.6-2.7 0-2.8 1.7-2.8 2.1 0 1.6 1.8 2 3.2 2.3 4.4.9 4.6 2.8 4.6 3.9 0 1.4-.7 4.1-5 4.1A6.2 6.2 0 0 1 7 16.4l1.5-1.1c.4.6 1.6 2 3.7 2 1.6 0 2.5-.4 3-1.2.4-.8.3-2-.8-2.6-.7-.4-1.6-.7-2.9-1-1-.2-3.9-.8-3.9-3.6C7.6 6 10.3 5 12.4 5c2.9 0 4.2 1.6 4.7 2.4l-1.5 1.1z"
+                                                                                        ></path>
+                                                                                        <path d="M5 11h14a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2z" fill-rule="nonzero"></path>
+                                                                                    </g>
+                                                                                </svg>
+                                                                            </span>
+                                                                        </button>
+                                                                        <div
+                                                                            aria-pressed="false"
+                                                                            aria-label="Text color"
+                                                                            title="Text color"
+                                                                            role="button"
+                                                                            aria-haspopup="true"
+                                                                            unselectable="on"
+                                                                            tabindex="-1"
+                                                                            class="tox-split-button"
+                                                                            aria-expanded="false"
+                                                                            aria-describedby="aria_5100410021521711857982602"
+                                                                            style="user-select: none;"
+                                                                        >
+                                                                            <span role="presentation" tabindex="-1" class="tox-tbtn">
+                                                                                <span class="tox-icon tox-tbtn__icon-wrap">
+                                                                                    <svg width="24" height="24">
+                                                                                        <g fill-rule="evenodd">
+                                                                                            <path id="tox-icon-text-color__color" d="M3 18h18v3H3z"></path>
+                                                                                            <path
+                                                                                                d="M8.7 16h-.8a.5.5 0 0 1-.5-.6l2.7-9c.1-.3.3-.4.5-.4h2.8c.2 0 .4.1.5.4l2.7 9a.5.5 0 0 1-.5.6h-.8a.5.5 0 0 1-.4-.4l-.7-2.2c0-.3-.3-.4-.5-.4h-3.4c-.2 0-.4.1-.5.4l-.7 2.2c0 .3-.2.4-.4.4zm2.6-7.6l-.6 2a.5.5 0 0 0 .5.6h1.6a.5.5 0 0 0 .5-.6l-.6-2c0-.3-.3-.4-.5-.4h-.4c-.2 0-.4.1-.5.4z"
+                                                                                            ></path>
+                                                                                        </g>
+                                                                                    </svg>
+                                                                                </span>
+                                                                            </span>
+                                                                            <span role="presentation" tabindex="-1" class="tox-tbtn tox-split-button__chevron">
+                                                                                <svg width="10" height="10">
+                                                                                    <path d="M8.7 2.2c.3-.3.8-.3 1 0 .4.4.4.9 0 1.2L5.7 7.8c-.3.3-.9.3-1.2 0L.2 3.4a.8.8 0 0 1 0-1.2c.3-.3.8-.3 1.1 0L5 6l3.7-3.8z" fill-rule="nonzero"></path>
+                                                                                </svg>
+                                                                            </span>
+                                                                            <span aria-hidden="true" id="aria_5100410021521711857982602" style="display: none;">To open the popup, press Shift+Enter</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group">
+                                                                        <button aria-label="Insert/edit link" title="Insert/edit link" type="button" tabindex="-1" class="tox-tbtn" aria-pressed="false">
+                                                                            <span class="tox-icon tox-tbtn__icon-wrap">
+                                                                                <svg width="24" height="24">
+                                                                                    <path
+                                                                                        d="M6.2 12.3a1 1 0 0 1 1.4 1.4l-2.1 2a2 2 0 1 0 2.7 2.8l4.8-4.8a1 1 0 0 0 0-1.4 1 1 0 1 1 1.4-1.3 2.9 2.9 0 0 1 0 4L9.6 20a3.9 3.9 0 0 1-5.5-5.5l2-2zm11.6-.6a1 1 0 0 1-1.4-1.4l2-2a2 2 0 1 0-2.6-2.8L11 10.3a1 1 0 0 0 0 1.4A1 1 0 1 1 9.6 13a2.9 2.9 0 0 1 0-4L14.4 4a3.9 3.9 0 0 1 5.5 5.5l-2 2z"
+                                                                                        fill-rule="nonzero"
+                                                                                    ></path>
+                                                                                </svg>
+                                                                            </span>
+                                                                        </button>
+                                                                        <button aria-label="Insert/edit image" title="Insert/edit image" type="button" tabindex="-1" class="tox-tbtn" aria-pressed="false">
+                                                                            <span class="tox-icon tox-tbtn__icon-wrap">
+                                                                                <svg width="24" height="24">
+                                                                                    <path
+                                                                                        d="M5 15.7l3.3-3.2c.3-.3.7-.3 1 0L12 15l4.1-4c.3-.4.8-.4 1 0l2 1.9V5H5v10.7zM5 18V19h3l2.8-2.9-2-2L5 17.9zm14-3l-2.5-2.4-6.4 6.5H19v-4zM4 3h16c.6 0 1 .4 1 1v16c0 .6-.4 1-1 1H4a1 1 0 0 1-1-1V4c0-.6.4-1 1-1zm6 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"
+                                                                                        fill-rule="nonzero"
+                                                                                    ></path>
+                                                                                </svg>
+                                                                            </span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group">
+                                                                        <button aria-label="Clear formatting" title="Clear formatting" type="button" tabindex="-1" class="tox-tbtn">
+                                                                            <span class="tox-icon tox-tbtn__icon-wrap">
+                                                                                <svg width="24" height="24">
+                                                                                    <path
+                                                                                        d="M13.2 6a1 1 0 0 1 0 .2l-2.6 10a1 1 0 0 1-1 .8h-.2a.8.8 0 0 1-.8-1l2.6-10H8a1 1 0 1 1 0-2h9a1 1 0 0 1 0 2h-3.8zM5 18h7a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2zm13 1.5L16.5 18 15 19.5a.7.7 0 0 1-1-1l1.5-1.5-1.5-1.5a.7.7 0 0 1 1-1l1.5 1.5 1.5-1.5a.7.7 0 0 1 1 1L17.5 17l1.5 1.5a.7.7 0 0 1-1 1z"
+                                                                                        fill-rule="evenodd"
+                                                                                    ></path>
+                                                                                </svg>
+                                                                            </span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group">
+                                                                        <button aria-label="Fullscreen" title="Fullscreen" type="button" tabindex="-1" class="tox-tbtn" aria-pressed="false">
+                                                                            <span class="tox-icon tox-tbtn__icon-wrap">
+                                                                                <svg width="24" height="24">
+                                                                                    <path
+                                                                                        d="M15.3 10l-1.2-1.3 2.9-3h-2.3a.9.9 0 1 1 0-1.7H19c.5 0 .9.4.9.9v4.4a.9.9 0 1 1-1.8 0V7l-2.9 3zm0 4l3 3v-2.3a.9.9 0 1 1 1.7 0V19c0 .5-.4.9-.9.9h-4.4a.9.9 0 1 1 0-1.8H17l-3-2.9 1.3-1.2zM10 15.4l-2.9 3h2.3a.9.9 0 1 1 0 1.7H5a.9.9 0 0 1-.9-.9v-4.4a.9.9 0 1 1 1.8 0V17l2.9-3 1.2 1.3zM8.7 10L5.7 7v2.3a.9.9 0 0 1-1.7 0V5c0-.5.4-.9.9-.9h4.4a.9.9 0 0 1 0 1.8H7l3 2.9-1.3 1.2z"
+                                                                                        fill-rule="nonzero"
+                                                                                    ></path>
+                                                                                </svg>
+                                                                            </span>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="tox-anchorbar"></div>
+                                                        </div>
+                                                        <div class="tox-sidebar-wrap">
+                                                            <div class="tox-edit-area"><iframe id="mce_0_ifr" frameborder="0" allowtransparency="true" title="Rich Text Area. Press ALT-0 for help." class="tox-edit-area__iframe"></iframe></div>
+                                                            <div role="complementary" class="tox-sidebar">
+                                                                <div data-alloy-tabstop="true" tabindex="-1" class="tox-sidebar__slider tox-sidebar--sliding-closed" style="width: 0px;"><div class="tox-sidebar__pane-container"></div></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tox-statusbar">
+                                                        <div class="tox-statusbar__text-container">
+                                                            <div role="navigation" data-alloy-tabstop="true" class="tox-statusbar__path">
+                                                                <div role="button" data-index="0" tab-index="-1" aria-level="1" tabindex="-1" class="tox-statusbar__path-item">p</div>
+                                                            </div>
+                                                            <button type="button" data-alloy-tabstop="true" tabindex="-1" class="tox-statusbar__wordcount">0 words</button>
+                                                        </div>
+                                                        <div title="Resize" aria-hidden="true" class="tox-statusbar__resize-handle">
+                                                            <svg width="10" height="10">
+                                                                <g fill-rule="nonzero"><path d="M8.1 1.1A.5.5 0 1 1 9 2l-7 7A.5.5 0 1 1 1 8l7-7zM8.1 5.1A.5.5 0 1 1 9 6l-3 3A.5.5 0 1 1 5 8l3-3z"></path></g>
+                                                            </svg>
+                                                        </div>
+                                                    </div>
+                                                    <div aria-hidden="true" class="tox-throbber" style="display: none;"></div>
+                                                </div>
+                                                <div class="comment_toolkit clear">
+                                                    <input class="button" type="button" value="Đăng bình luận" />
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="ln-comment-group">
+                                            <div id="ln-comment-2396487" class="ln-comment-item mt-3 clear" data-comment="2396487" data-parent="2396487">
+                                                <div class="flex gap-1 max-w-full">
+                                                    <div class="w-[50px]">
+                                                        <div class="mx-1 my-1">
+                                                            <img src="https://i.docln.net/lightnovel/users/ua47111-ec2924ad-ecf3-4141-a3b6-4d20c071eddf.jpg" class="w-full rounded-full" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="w-full min-w-0 rounded-md bg-gray-100 ps-1 pe-0 pb-1 pt-0 dark:!bg-zinc-800">
+                                                        <div class="flex min-w-0 flex-col px-2">
+                                                            <div class="flex align-top justify-between">
+                                                                <div class="flex flex-wrap gap-x-2 gap-y-1 align-middle pt-1">
+                                                                    <div class="self-center">
+                                                                        <a class="font-bold leading-6 md:leading-7 ln-username" href="/thanh-vien/47111">Gray Field</a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="px-2 md:px-3 md:py-1 text-lg md:text-xl cursor-pointer" x-data="{ show: false }">
+                                                                    <div class="" @click="show = !show">
+                                                                        <i class="fas fa-angle-down"></i>
+                                                                    </div>
+                                                                    <div class="ln-comment-toolkit" x-show="show" @click.outside="show = false" style="display: none;"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="ln-comment-content long-text">
+                                                                Nhớ trên Hako cũng có một bộ 18+ thôi miên khác thì phải
+                                                            </div>
+                                                            <div class="comment_see_more expand none">Xem thêm</div>
+                                                            <div class="flex gap-2 align-bottom text-[13px] visible-toolkit">
+                                                                <a href="/truyen/17382-teniireta-saimin-apuri-de-yume-no-haremu-seikatsu-o-okuritai?comment_id=2396487#ln-comment-2396487" class="text-slate-500">
+                                                                    <time class="timeago" title="31-03-2024 09:48:08" datetime="2024-03-31T09:48:08+07:00">1 giờ</time>
+                                                                </a>
+                                                                <a class="self-center visible-toolkit-item do-like cursor-pointer">
+                                                                    <i class="fas fa-thumbs-up me-1"></i>
+                                                                    <span class="likecount font-semibold"></span>
+                                                                </a>
+                                                                <a class="self-center visible-toolkit-item do-reply cursor-pointer">
+                                                                    <i class="fas fa-comment me-1"></i>
+                                                                    <span class="font-semibold">Trả lời</span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </main>
+                                </section>
+                            </div>
+                        </main>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="/static/app/js/novel.js"> </script>
+</body>
+
+          
+            <div id="register-form" style="display: none; height: 100vh; position: fixed">
+      <div class="overlay">
+        <div class="overlay-dialog">
+          <div class="dialog">
+            <div class="dialog-body">
+              <div class="dialog-container">
+                <form action="register" class="cmn-form-web" method="POST">
+                  <input type="hidden" name="csrfmiddlewaretoken" value="QZ1knZ2TeoKopcVr5Lr9NtQd5ynsJ0iWqrZM4dlvCLK11cpxahxgLqGoAOUFGMwU">
+                  <div class="form-main-logo">
+                  </div>
+                  <div class="form-title">Đăng ký tài khoản</div>
+                  <div class="form-input">
+                    <div class="el-input">
+                      <input type="text" id="username" name="username" autocomplete="off" class="el-input-inner" placeholder="">
+                      <label for="" class="input-label">Tên người dùng</label>
+                    </div>
+                    <div class="error-text">Tài khoản không được để trống</div>
+                  </div>
+                  <div class="form-input">
+                    <div class="el-input">
+                      <input type="text" id='email' name="email" autocomplete="off" class="el-input-inner" placeholder="">
+                      <label for="" class="input-label">Email</label>
+                    </div>
+                    <div class="error-text">Email không được để trống</div>
+                  </div>
+                  <div class="form-input">
+                    <div class="el-input">
+                      <input type="text" id="password" name="password"autocomplete="new-password" class="el-input-inner" placeholder="">
+                      <label for="" class="input-label">Mật khẩu</label>
+                    </div>
+                    <div class="error-text">Mật khẩu không được để trống</div>
+                  </div>
+                  <div class="form-input">
+                    <div class="el-input">
+                      <input type="text" id="repassword" name="repassword" autocomplete="new-password" class="el-input-inner" placeholder="">
+                      <label for="" class="input-label">Nhập lại mật khẩu</label>
+                    </div>
+                    <div class="error-text">Mật khẩu không đúng</div>
+                  </div>
+                  <div class="agreement-item-list">
+                    <label for="" class="el-checkbox">
+                      <span class="el-checkbox-input" aria-checked="false">
+                        <input type="checkbox" class="el-checkbox-original checkbox rounded-circle" id="agreement-check">
+                        <label class="el-checkbox-inner" for="agreement-check"></label>
+                      </span>
+                      <span class="el-checkbox-label">
+                        <div>
+                          <span><span>Tôi đã đọc và đồng ý </span></span>
+                          <span><a href="#" class="el-link"><span>Điều Khoản Dịch Vụ</span></a></span>
+                          <span> &amp; </span>
+                          <span><a href="#" class="el-link"><span>Chính Sách Về Quyền Riêng Tư</span></a></span>
+                        </div>
+                      </span>
+                    </label>
+                  </div>
+                  <button class="el-button" type="submit"><span>Đăng Ký</button></div>
+                  <div class="account-exiting">
+                    <span>Đã có tài khoản? </span>
+                    <span class="click-log" onclick="switchForm()">Đăng nhập</span>
+                  </div>
+                </form>
+              </div>
+              <div class="dialog-close" onclick="closeRegisterForm()">
+                <i class="fa-solid fa-x"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        <div id="login-form" style="display: none; height: 100vh; position: fixed">
+  <div class="overlay">
+    <div class="overlay-dialog">
+      <div class="dialog">
+        <div class="dialog-body">
+          <div class="dialog-container">
+            <form action="loginPage" class="cmn-form-web" method="POST">
+              <input type="hidden" name="csrfmiddlewaretoken" value="QZ1knZ2TeoKopcVr5Lr9NtQd5ynsJ0iWqrZM4dlvCLK11cpxahxgLqGoAOUFGMwU">
+              <div class="form-main-logo">
+              </div>
+              <div class="form-title">Đăng nhập tài khoản</div>
+              <div class="form-input">
+                <div class="el-input">
+                  <input type="text" name="username" id="username" autocomplete="off" class="el-input-inner" placeholder="">
+                  <label for="" class="input-label">Tên người dùng</label>
+                </div>
+                <div class="error-text">Tài khoản không được để trống</div>
+              </div>
+              <div class="form-input">
+                <div class="el-input">
+                  <input type="text" name="password" id="password" autocomplete="new-password" class="el-input-inner" placeholder="">
+                  <label for="" class="input-label">Mật khẩu</label>
+                </div>
+                <div class="error-text">Mật khẩu không đúng</div>
+              </div>
+              <button type="submit" class="el-button"><span>Đăng Nhập</span></button>
+              <div class="another-choice">
+                <a href="" class="forgot-password">Quên mật khẩu?</a>
+              </div>
+              <div class="account-exiting">
+                <span>Chưa có tài khoản? </span>
+                <span class="click-log" onclick="switchForm()">Đăng ký ngay</span>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="dialog-close" onclick="closeLoginForm()">
+          <i class="fa-solid fa-x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        <!-- footer-->
+        <footer class="container--fluid bg-success text-center b-2 mt-5">
+          Aiko Novel - All rights reserved
+        <footer>
+
+        <script src="" async defer></script>
+    </body>
+</html>

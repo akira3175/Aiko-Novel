@@ -1,0 +1,166 @@
+.page-breadcrumb {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 4px 10px;
+}
+.feature-section,.page-breadcrumb{
+    background-color: hsla(0,0%,100%,.9);
+    border-color: #e4e5e7 #dadbdd hsla(214,4%,80%,.8);
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 1px;
+    overflow: hidden;
+}
+.float-right {
+    float: right;
+}
+.float-left {
+    float: left;
+}
+.a6-ratio {
+    position: relative;
+    content: "";
+    display: block;
+    padding-top: 143.3333333333%;
+    width: 100%;
+    overflow: hidden;
+}
+.a6-ratio>.content {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.img-in-ratio {
+    background-size: 100% 100%;
+}
+
+.feature-section .series-type {
+    background-color: #36a189;
+    border-radius: 4px;
+    color: #fff;
+    display: inline-block;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding: 6px 10px;
+    position: relative;
+    text-align: center;
+    width: 100%;
+}
+.feature-section .top-part {
+    padding: 10px;
+}
+.feature-section .series-name {
+    display: block;
+    font-weight: 700;
+    font-size: 1.625rem;
+    font-family: OpenSans;
+}
+.feature-section .series-gerne-item{
+    background-color: #eee;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    padding: 0 10px;
+}
+.basic-section, .board-list, .board_categ-list, .detail-list, .feature-section, .mail-page .mail-detail-list, .modal-content, .page-breadcrumb, .private-tabs, .profile-feature, .series-users, .showcase-item, .sub-index-style, .user-pm .mail-list {
+    background-color: hsla(0, 0%, 100%, .9);
+    border-color: #e4e5e7 #dadbdd hsla(214, 4%, 80%, .8);
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 1px;
+    overflow: hidden;
+}
+.series-users .series-owner {
+    background-color: #36a189;
+    display: block;
+    position: relative;
+    width: 100%;
+}
+.series-users .series-owner img {
+    display: block;
+    height: 60px;
+    width: 60px;
+    z-index: 2;
+}
+.series-users .series-owner-title {
+    left: 80px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+.series-users .fantrans-section {
+    padding: 10px;
+}
+.series-users .fantrans-name {
+    color: rgba(0, 0, 0, .4);
+    font-size: 14px;
+    font-size: .875rem;
+}
+.series-users .fantrans-value {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.basic-section .sect-header, .detail-list header.section-title, .modal-header, .private-tabs header, table.broad-table tr th {
+    background-color: #f4f5f6;
+    border-bottom: 1px solid #dadbdd;
+    padding: 10px;
+}
+section.basic-section main {
+    padding: 10px;
+}
+.series-users {
+    border-radius: 4px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+.basic-section {
+    margin-bottom: 20px;
+}
+.owner-donate {
+    border-bottom: 4px solid #d9534f;
+    border-top: 1px solid #d4dae2;
+    padding: 10px;
+    text-align: center;
+}
+.rounded-full {
+    border-radius: 9999px;
+}
+.bg-amber-600 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(217 119 6 / var(--tw-bg-opacity));
+}
+.statistic-list {
+    border-top: 1px solid #d4dae2;
+    padding-top: 10px;
+}
+.statistic-list .statistic-name {
+    color: rgba(0, 0, 0, .4);
+    text-align: center;
+}
+.statistic-list .statistic-value {
+    font-size: 18px;
+    font-size: 1.125rem;
+    font-weight: 700;
+    text-align: center;
+}
+.feature-section .summary-wrapper {
+    border-top: 1px solid #d4dae2;
+    margin-top: 10px;
+    padding-top: 10px;
+}
+.col-12{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.other-facts .fact-name {
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+#sharing-box  , #open-sharing{
+    display: none;
+}
