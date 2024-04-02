@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login, logout # thu vien xac thuc
 from django.contrib.auth.models import User
 from django.contrib import messages # thu vien thong bao
 from .models import UserForm
+from forum.models import ForumPost
 
 # Create your views here.
 def register(request):
@@ -49,7 +50,9 @@ def logoutPage(request):
     return redirect('home')
     
 def home(request):
-    return render(request, 'app/home.html') 
+    latest_posts = ForumPost.objects.all().order_by('-created_at')[:5]
+    
+    return render(request, 'app/home.html',{"latest_posts": latest_posts}) 
     
 def search(request):
     keywords = request.GET.get('keywords')

@@ -134,9 +134,12 @@
                   </strong>
                 </a>
               </div>
-              <p> 
-                <a title="● Đang build Website Aiko Novel" href="#">● Đang build Website Aiko Novel</a>
-              </p>
+              {% for post in latest_posts %}
+              <div class="row">
+                <div class="col 9"><a href="{% url 'post-detail' pk=post.pk %}">{{ post.title }}</a></div>
+                <div class="col 3 text-right">{{ post.created_at|date:"d/m/Y" }}</div>
+              </div>
+              {% endfor %} 
             </div>
           </div>
         </div>
