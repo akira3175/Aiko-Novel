@@ -1,7 +1,7 @@
 from django.utils import timezone
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
-from app.models import Book, User, Category
+from app.models import Book, UserInfo, Category, Role
 import json
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout # thu vien xac thuc
@@ -16,16 +16,58 @@ def register(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         repassword = request.POST.get('repassword')
+        date_join = timezone.now()
 
         if password == repassword:
-            myuser = User.objects.create_user(username=username, email=email, password=password)
-            myuser.save()
+            # Tạo một người dùng mới
+            myuser = User.objects.create_user(
+                username=username, 
+                email=email, 
+                password=password,
+            )
+
+            # Tạo một đối tượng UserInfo và liên kết với người dùng mới
+            UserInfo.objects.create(username=myuser, full_name=myuser.username, date_join=date_join, role_id = -999)
+
             messages.success(request, "Your account has been registered")
             return redirect('home')
         else:
             messages.error(request, "Passwords do not match")
 
     return redirect('home')
+
+def checkUsername(request):
+    if request.method == 'GET' and request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+        username = request.GET.get('username', '').strip()
+        if username:
+            try:
+                if User.objects.filter(username__iexact=username).exists():
+                    return JsonResponse({'is_taken': True})
+                else:
+                    return JsonResponse({'is_taken': False})
+            except Exception as e:
+                return JsonResponse({'error': str(e)}, status=500)
+        else:
+            return JsonResponse({'error': 'Yêu cầu không hợp lệ.'}, status=400)
+    else:
+        return JsonResponse({'error': 'Yêu cầu không hợp lệ hoặc không phải là AJAX.'}, status=400)
+
+def checkEmail(request):
+    if request.method == 'GET' and request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+        email = request.GET.get('email', '').strip()
+        if email:
+            try:
+                if User.objects.filter(email__iexact=email).exists():
+                    return JsonResponse({'is_taken': True})
+                else:
+                    return JsonResponse({'is_taken': False})
+            except Exception as e:
+                return JsonResponse({'error': str(e)}, status=500)
+        else:
+            return JsonResponse({'error': 'Yêu cầu không hợp lệ.'}, status=400)
+    else:
+        return JsonResponse({'error': 'Yêu cầu không hợp lệ hoặc không phải là AJAX.'}, status=400)
+
 
 def loginPage(request):
     if request.user.is_authenticated:
@@ -126,3 +168,56 @@ def saveBook(request):
 
     else:
         return JsonResponse({'error': 'Yêu cầu không hợp lệ.'}, status=405)
+    
+def profile(request, username):
+    userInfo, created = UserInfo.objects.get_or_create(username__username=username) 
+    return render(request, 'app/profile.html', {'userInfo': userInfo})
+
+from django.shortcuts import get_object_or_404
+
+def saveBackground(request):
+    if request.method == 'POST':
+        if request.user.is_authenticated:  # Đảm bảo người dùng đã xác thực
+            username = request.user.username
+            background_image = request.FILES.get('backgroundImage')
+            scroll_position = request.POST.get('scrollPosition')
+            
+            try:
+                user = get_object_or_404(User, username=username)
+                user_info, created = UserInfo.objects.get_or_create(username=user)  # Đảm bảo UserInfo liên quan đến User
+                print(1)
+
+                # Nếu background_image không phải None, xóa hình ảnh cũ và lưu hình ảnh mới
+                if background_image:
+                    user_info.img_background.delete()
+                    user_info.img_background = background_image
+                    user_info.img_background_position = scroll_position
+                    user_info.save()
+                    
+                return JsonResponse({'success': True})
+            except Exception as e:
+                return JsonResponse({'success': False, 'error': str(e)}, status=500)
+        else:
+            return JsonResponse({'success': False, 'error': 'Người dùng chưa được xác thực'}, status=401)
+    else:
+        return JsonResponse({'success': False, 'error': 'Phương thức không được phép'}, status=405)
+
+    
+def saveAvatar(request):
+    if request.method == 'POST':
+        username = request.user.username
+        avatar_image = request.FILES.get('avatarImage')
+        
+        try:
+            user = User.objects.get(username=username)
+            userInfo = UserInfo.objects.get(username=user)
+            userInfo.img_avatar.delete()
+            userInfo.img_avatar = avatar_image
+            userInfo.save()
+            return JsonResponse({'success': True})
+        except UserInfo.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'User does not exist'}, status=404)
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=500)
+    else:
+        return JsonResponse({'success': False, 'error': 'Method not allowed'}, status=405) 

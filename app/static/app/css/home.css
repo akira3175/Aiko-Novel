@@ -70,6 +70,12 @@
 
 .page_aiko_31758421 {
     background-image: url('../images/owl-item/z5158133494263_62927f8856bd31843e88a5d56eeab850.jpg');
+    background-size: cover;
+}
+
+.page_user {
+    background-image: url('../images/icon/default-avatar-profile-icon-of-social-media-user-vector.jpg');
+    background-size: cover;
 }
 
 .slide-item .series-info {
@@ -128,6 +134,8 @@
 }
 
 .gridlist .glitem .image {
+    object-position: top;
+    object-fit: cover;
     position: absolute;
     top: 0;
     left: 0;
@@ -248,7 +256,7 @@ a.series-name {
     
     .gridlist .glitem {
         width: 120px;
-        height: 138px;
+        height: 142px;
     }
 
 }
@@ -274,7 +282,7 @@ a.series-name {
 
     .gridlist .glitem {
         width: 162px;
-        height: 183px;
+        height: 198px;
     }
 
 }
