@@ -6,19 +6,32 @@
           <div class="dialog-container">
             <form action= {% url 'login' %} class="cmn-form-web" method="POST">
               {% csrf_token %}
-              <div class="form-main-logo">
-              </div>
+              <div class="form-main-logo"></div>
               <div class="form-title">Đăng nhập tài khoản</div>
               <div class="form-input">
                 <div class="el-input">
-                  <input type="text" name="username" id="username" autocomplete="off" class="el-input-inner" placeholder="">
+                  <input
+                    type="text"
+                    name="username"
+                    id="username"
+                    autocomplete="off"
+                    class="el-input-inner"
+                    placeholder=""
+                  />
                   <label for="" class="input-label">Tên người dùng</label>
                 </div>
                 <div class="error-text" id="username-error" style="display: none;"></div>
               </div>
               <div class="form-input">
                 <div class="el-input">
-                  <input type="text" name="password" id="password" autocomplete="new-password" class="el-input-inner" placeholder="">
+                  <input
+                    type="text"
+                    name="password"
+                    id="password"
+                    autocomplete="new-password"
+                    class="el-input-inner"
+                    placeholder=""
+                  />
                   <label for="" class="input-label">Mật khẩu</label>
                 </div>
                 <div class="error-text" id="password-error" style="display: none;"></div>
@@ -29,13 +42,15 @@
               </div>
               <div class="account-exiting">
                 <span>Chưa có tài khoản? </span>
-                <span class="click-log" onclick="switchForm()">Đăng ký ngay</span>
+                <span class="click-log" onclick="switchForm()"
+                  >Đăng ký ngay</span
+                >
               </div>
             </form>
+            <div class="dialog-close" onclick="closeLoginForm()">
+              <i class="fa-solid fa-x"></i>
+            </div>
           </div>
-        </div>
-        <div class="dialog-close" onclick="closeLoginForm()">
-          <i class="fa-solid fa-x"></i>
         </div>
       </div>
     </div>

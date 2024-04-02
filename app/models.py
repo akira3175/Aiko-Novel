@@ -1,5 +1,5 @@
-from django.db import models
 from django import forms
+from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.utils import timezone
@@ -81,3 +81,13 @@ class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = ['id', 'name']
+
+class Group(models.Model):
+    id = models.AutoField(primary_key=True)
+    groupname = models.CharField(max_length=40, db_index=True)
+
+class Member(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+
+

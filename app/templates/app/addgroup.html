@@ -1,0 +1,42 @@
+
+<div id="addgroup-form" style="display: none; height: 100vh; position: fixed">
+  <div class="overlay">
+    <div class="overlay-dialog">
+      <div class="dialog">
+        <div class="dialog-body">
+          <div class="dialog-container">
+            <form action="addGroupPane" class="cmn-form-web" method="POST">
+              {% csrf_token %} 
+              <div class="form-main-logo"></div>
+              <div class="form-title">Tạo nhóm mới</div>
+              <div class="form-input">
+                <div class="el-input">
+                  <input
+                    type="text"
+                    name="groupname"
+                    id="groupname"
+                    autocomplete="off"
+                    class="el-input-inner"
+                    placeholder=""
+                  />
+                  <label for="" class="input-label">Tên nhóm</label>
+                </div>
+                <div class="error-text">Tên không được để trống</div>
+              </div>
+              </div>
+              <button type="submit" class="el-button">
+                <span>Tạo nhóm</span>
+              </button>
+              </div>
+            </form>
+            <div class="dialog-close" onclick="closeAddGroupForm()">
+              <i class="fa-solid fa-x"></i>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
