@@ -89,12 +89,12 @@
                   </div>
                   {% elif user.is_authenticated %}
                   <li class="nav-item dropdown">
-                    <a class="nav-link avatar page_user" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="margin-inline: 7px; background-image: url('{{ InfoUser.img_avatar.url }}');">
+                    <a class="nav-link avatar page_user" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="margin-inline: 7px; {% if UserInfo.img_avatar %} background-image: url('{{ InfoUser.img_avatar.url }}'); {% endif %}">
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
                       <li>
                         <a class="dropdown-item account" href= {% url 'profile' username=user.username %}>
-                          <div class="avatar page_user" style="background-image: url('{{ InfoUser.img_avatar.url }}');"></div>
+                          <div class="avatar page_user"{% if UserInfo.img_avatar %} style="background-image: url('{{ InfoUser.img_avatar.url|default_if_none:"#" }}');" {% endif %}></div>
                           <div class="user-name"><p>{{ InfoUser.full_name }}</p></div>
                         </a>
                       </li>

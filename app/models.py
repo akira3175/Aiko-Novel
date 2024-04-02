@@ -11,7 +11,7 @@ from django.utils import timezone
 """User model"""
 
 class Role(models.Model):
-    role_id = models.IntegerField(primary_key=True)
+    role_id = models.IntegerField(primary_key=True, default=-900)
     role_name = models.CharField(max_length=200, null=False, blank=False)
     def __str__(self):
         return self.role_name
@@ -33,7 +33,7 @@ class UserInfo(models.Model):
     img_avatar = models.ImageField(upload_to='avatar_images/', null=True)
     img_background = models.ImageField(upload_to='background_images/', null=True, blank=True)
     img_background_position = models.IntegerField(default=0)
-    role_id = models.ForeignKey(Role, on_delete=models.CASCADE, default=-900)
+    role_id = models.ForeignKey(Role, on_delete=models.CASCADE, null=True, blank=True)
     def __str__(self):
         return self.username.username
 
