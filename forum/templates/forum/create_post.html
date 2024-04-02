@@ -1,0 +1,17 @@
+{% extends "app/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block main_content %} 
+<h1>Đăng bài mới</h1>
+<div class="d-flex justify-content-center">
+  <div class="col-10">
+    <form method="post" >
+      {% csrf_token %}
+      {{ form.media }}
+      {{ form.as_p }}
+      
+      <button type="submit">Đăng bài</button>
+    </form>
+  </div>
+</div>
+{% endblock main_content %}

@@ -1,0 +1,39 @@
+
+{% extends "app/base.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block main_content %}
+<div class="d-flex justify-content-center">
+  <div class="col-11"> 
+    <h1>{{ post.title }}</h1>
+    <div><i>Ngày đăng: {{ post.created_at }}</i></div>
+    <div>Tác giả: {{ post.username.username }}</div>
+    <p>{{ post.content|safe }}</p>
+
+    {% if user.username %}
+      <h2>Thêm Bình Luận</h2>
+      <form method="post" action="{% url 'add-comment-to-post' post.id %}" autocomplete="off">
+        {% csrf_token %}
+        {{ comment_form|crispy }}
+        <button type="submit">Đăng Bình Luận</button>
+      </form>
+    {% else %}
+      <div><a href="{% url 'login' %}">Đăng nhập </a> để bình luận </div>
+    {% endif %}
+
+    <h2>Bình luận</h2>
+    {% for comment in comments %}
+      <div>
+        <b>Người đăng:</b> {{ comment.username.username }}
+        <br><i> {{ comment.created_at }}</i>
+        <br>
+        {{ comment.content|linebreaks }}
+      </div>
+    {% endfor %}
+
+  </div>
+</div>
+
+
+{% endblock main_content %}

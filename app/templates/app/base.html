@@ -34,7 +34,7 @@
         {% endfor %}
           <nav class="navbar navbar-expand-lg py-0" style="background-color: #ffffff; user-select: none;">
             <div class="container-fluid container">
-              <a class="navbar-brand py-0" href= {% url 'home' %}>
+              <a class="navbar-brand py-0" href="{% url 'home' %}">
                 <img src="{% static 'app\images\logo\main-logo-1.png' %}" width="70" class="py-0"/> 
               </a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +43,7 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href= {% url 'home' %}>Trang chủ</a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Trang chủ</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="#">Danh sách</a>
