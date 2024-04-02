@@ -1,15 +1,16 @@
 from django.contrib.auth.models import User
 from app.models import UserInfo
 
-def username(request):
+def get_user_info(request):
     info = {}  # Khởi tạo info ngay cả khi không có người dùng xác thực
     if request.user.is_authenticated:
         user = request.user
         try:
-            infoUser = UserInfo.objects.get(username=user)
-            info['InfoUser'] = infoUser
+            info_user = UserInfo.objects.get(username=user)
+            info['InfoUser'] = info_user
         except UserInfo.DoesNotExist:
-            pass  # Xử lý trường hợp UserInfo không tồn tại cho user đã xác thực
+            info['error'] = "Thông tin người dùng không tồn tại."
+    print(info['InfoUser'].img_avatar)
     return info
 
 

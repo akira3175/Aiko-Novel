@@ -29,7 +29,7 @@ def register(request):
             )
 
             # Tạo một đối tượng UserInfo và liên kết với người dùng mới
-            UserInfo.objects.create(username=myuser, full_name=myuser.username, date_join=date_join, role_id = -999)
+            UserInfo.objects.create(username=myuser, full_name=myuser.username, date_join=date_join)
 
             messages.success(request, "Your account has been registered")
             return redirect('home')

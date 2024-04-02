@@ -7,7 +7,7 @@ conn = sqlite3.connect('db.sqlite3')
 cursor = conn.cursor()
 
 # Thực hiện truy vấn SELECT
-cursor.execute("SELECT * FROM app_member")
+cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
 
 # Lấy kết quả của truy vấn
 rows = cursor.fetchall()
