@@ -132,6 +132,16 @@ input:-webkit-autofill {
     text-decoration: none;
 }
 
+.btn-transparent {
+    color: #fff !important;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: transparent;
+}
+
+.btn-transparent:focus, .btn-transparent:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
 .login-btn {
     background-color: hsla(240, 7%, 70%, .22);
     color: #039be5;
@@ -151,4 +161,64 @@ input:-webkit-autofill {
     border: 1px solid transparent;
     -webkit-box-shadow: 0 1px 10px 0 rgba(34,34,34,.08), 0 4px 5px 0 rgba(34,34,34,.1);
     box-shadow: 0 1px 10px 0 rgba(34,34,34,.08), 0 4px 5px 0 rgba(34,34,34,.1);
+}
+
+.porel {
+    position: relative;
+    height: inherit;
+}
+
+.poabs {
+    position: absolute;
+    height: inherit;
+}
+
+.parallax-section {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.custom-scrollbar {
+    overflow-y: auto !important;;
+    height: 100vh; /* Chiều cao của phần tử cuộn */
+    cursor: move;;
+}
+
+/* Tạo thanh cuộn tùy chỉnh */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 0; /* Ẩn thanh cuộn trên trình duyệt Chrome và Safari */
+}
+
+.custom-scrollbar {
+    scrollbar-width: none; /* Ẩn thanh cuộn trên trình duyệt Firefox */
+}
+
+.bg-w {
+    background-color: white;
+}
+
+.btn-circle {
+    border-radius: 50% !important;
+}
+
+.bkgr {
+    background-color: #e4e6eb !important;
+}
+
+.cir35 {
+    border-radius: 50% !important;    
+    width: 35px !important;
+    height: 35px !important; 
+}
+
+.cir168 {
+    border-radius: 50% !important;
+    width: 168px !important;
+    height: 168px !important; 
+}
+
+.font-large {
+    font-size: large;
 }

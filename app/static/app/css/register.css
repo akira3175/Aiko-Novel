@@ -147,6 +147,11 @@
     color: #039be5;
 }
 
+.el-input-inner.error:focus + .input-label,
+.el-input-inner.error:not(:placeholder-shown) + .input-label {
+    color: red;
+}
+
 .error-text {
     color: red;
     word-break: break-word;
@@ -154,6 +159,10 @@
     font-size: 12px;
     text-align: left;
     margin-top: 4px;
+}
+
+.error {
+    border-color: red;
 }
 
 .agreement-item-list {
@@ -235,12 +244,18 @@
     min-height: 48px;
     padding: 12px;
     border-radius: 12px;
-    border-width: none;
+    border: none;
     color: white;
     background-color: #039be5;
     margin: 20px 0 12px;
     user-select: none;
     cursor: pointer;
+}
+
+.disable {
+    background-color: #e7e8ee;
+    color: #b9bcc6;
+    cursor: not-allowed;
 }
 
 .account-exiting {

@@ -1,0 +1,89 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block banner_slider %}
+{% endblock banner_slider %}
+{% block main_content %}
+    <div id="profile" class="w-100">
+        <div class="">
+            <div class="info w-100">
+                <div>
+                    {% if userInfo %}
+                    <div role="main" style="height: 300vh">
+                        <div class="background-img w-100">
+                            <div class="save-edit-background w-100" style="display: none">
+                                <div class="text-content">
+                                    Bạn muốn thay đổi ảnh bìa?
+                                </div>
+                                <div class="save-button">
+                                    <button class="btn btn-transparent">
+                                        Hủy
+                                    </button>
+                                    <button class="btn btn-blue btn primary" onclick="saveBackgroundImage()">
+                                        Lưu
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="background-img-main col-lg-8 col-md-10 col-sm-12 col-12">
+                                <div class="porel w-100" style="z-index: 1;">
+                                    <div class="edit-background-container w-100">
+                                        <div class="edit-background">
+                                            <div class="input-edit-background icon-upload">
+                                                <input type="file" id="background-image-upload" accept="image/*" onchange="previewImageBackground(event)" >
+                                                <label for="background-image-upload">
+                                                    <i class="fa-regular fa-image"></i>
+                                                    <span class="text-icon">Chỉnh sửa ảnh bìa</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="background-img-data-container w-100 porel">
+                                    <div class="porel w-100">
+                                        <div class="background-sub w-100" position="{{ userInfo.img_background_position | default_if_none:'#' }}">
+                                            {% if userInfo.img_background %}
+                                            <img src="{{ userInfo.img_background.url | default_if_none:'#' }}" alt="" class="background-img-data">
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="background-img-overlay" style="background-image: url('{{ userInfo.img_background.url|default_if_none:"#"}}');">
+                                <div class="background-img-container"></div>
+                            </div>
+                        </div>
+                        <div class="detail w-100">
+                            <div class="detail-main col-lg-8 col-md-10 col-sm-12 col-12">
+                                <div class="avatar w-100">
+                                    <div class="avatar-main col-sm-12 col-12" >
+                                        <div class="avatar-main-data poabs">
+                                            <div class="porel w-100 page_user cir168 bdavt" style="background-image: url('{{ userInfo.img_avatar.url | default_if_none:'#' }}');">
+                                                <div class="input-edit-avatar icon-upload bkgr btn-circle cir35 align-items-end">
+                                                    <input type="file" id="avatar-upload" accept="image/*" onchange="saveAvatarImage()">
+                                                    <label for="avatar-upload">
+                                                        <i class="fa-regular fa-image font-large"></i>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="info-user col-lg-5 col-md-5 col-sm-12 col-12"> 
+                                        <div class="user-fullname">
+                                            {{ userInfo.full_name }}
+                                        </div>
+                                    </div>
+                                    <div class="another col-lg-5 col-md-5 col-sm-12 col-12">
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                    {% else %}
+                    <p>No user information found.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main_content %}

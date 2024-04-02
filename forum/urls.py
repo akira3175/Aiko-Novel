@@ -3,7 +3,7 @@
 from django.urls import path
 from .views import PostListView, PostDetailView, CreatePostView, add_comment_to_post
 from django.conf.urls import include
-#from django.urls import re_path
+
 
 urlpatterns = [
     path('posts/', PostListView.as_view(), name='forum-post-list'),
