@@ -1,10 +1,7 @@
 {% extends "app/base.html" %}
 {% load static %}
-{% block banner_slider %}
-
-{% endblock banner_slider %}
+{% block banner_slider %}{% endblock banner_slider %}
 {% block main_content %}
-
     <div id="app-container">
         <div id="content-works" class="container">
             <div>
@@ -24,6 +21,7 @@
                             </div>
                             <section class="item-lists row" role="list">
                                 <div class="works-list">
+                                    {% for group_info in group_member_counts %}
                                     <div class="works-item">
                                         <div class="row-container">
                                             <div class="left-container">
@@ -32,9 +30,9 @@
                                                         <img src="" alt="" height="70" class="page_aiko_31758421 cover cover-sm-works">
                                                     </div>
                                                     <div class="item-info">
-                                                        <h3 class="item-name"><a href=""><strong>Aiko Team</strong></a></h3>
-                                                        <div class="counts"><strong>4 thành viên</strong></div>
-                                                        <!--<div class="counts"><strong>7 truyện</strong></div>-->
+                                                        <h3 class="item-name"><a href=""><strong>{{ group_info.groupname }}</strong></a></h3>
+                                                        <div class="counts"><strong>{{ group_info.member_count }} thành viên</strong></div>
+                                                        <div class="counts"><strong>{{ group_info.join }}</strong></div>
                                                     </div>
                                                     <div class="meta-wrapper">
 
@@ -48,44 +46,18 @@
                                                     </buton>
                                                     <div class="triangle"></div>
                                                     <ul class="dropdown-menu">
-                                                        <li><a href="#" class="dropdown-item">Xem thông tin nhóm</a></li>
-                                                        <li><a href="#" class="dropdown-item">Xem truyện của nhóm</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="works-item">
-                                        <div class="row-container">
-                                            <div class="left-container">
-                                                <div class="item-wrapper">
-                                                    <div class="item-img">
-                                                        <img src="" alt="" height="70" class="page_aiko_31758421 cover cover-sm-works">
-                                                    </div>
-                                                    <div class="item-info">
-                                                        <h3 class="item-name"><a href=""><strong>Akira Team</strong></a></h3>
-                                                        <div class="counts"><strong>5 thành viên</strong></div>
-                                                        <!--<div class="counts"><strong>7 truyện</strong></div>-->
-                                                    </div>
-                                                    <div class="meta-wrapper">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="actions-wrapper">
-                                                <div class="dropdown parts-dropdown">
-                                                    <buton class="btn btn-blue btn-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <span class="text">Xem nhóm</span>
-                                                    </buton>
-                                                    <div class="triangle"></div>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a href="#" class="dropdown-item">Xem thông tin nhóm</a></li>
+                                                        <li><a href="#" class="dropdown-item">Xem thông tin nhóm </a></li>
                                                         <li><a href= {% url 'novel-of-trans-team' %} class="dropdown-item">Xem truyện của nhóm</a></li>
+                                                        <li><a href= {% url 'member-of-trans-team' group_id=group_info.groupid %} class="dropdown-item">Xem thành viên nhóm</a></li>
+                                                        {% if not group_info.is_member %}
+                                                        <li><a href= {% url 'want_to_join' group_id=group_info.groupid %} class="dropdown-item">Tham gia nhóm</a></li>
+                                                        {% endif %}
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    {% endfor%}
                                 </div>
                             </section>
                         </div>

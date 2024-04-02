@@ -38,7 +38,6 @@ class UserInfo(models.Model):
         return self.username.username
 
 class UserInfoForm(forms.ModelForm):
-    """role_id = forms.ModelChoiceField(queryset=Role.objects.all(), empty_label=None)"""
     class Meta:
         model = UserInfo
         fields = ['username', 'full_name', 'date_join', 'img_avatar', 'img_background'] 
@@ -85,6 +84,11 @@ class CategoryForm(forms.ModelForm):
 class Group(models.Model):
     id = models.AutoField(primary_key=True)
     groupname = models.CharField(max_length=40, db_index=True)
+    
+class GroupForm(forms.ModelForm):
+    class Meta:
+        model = Group
+        fields = ['groupname']
 
 class Member(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)  
