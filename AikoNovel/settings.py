@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'storages',
     'ckeditor',
     'forum', 
+    'crispy_forms', "crispy_bootstrap5",
+    
 ]
 
 MIDDLEWARE = [
