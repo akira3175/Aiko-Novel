@@ -1,0 +1,193 @@
+{% extends "app/base.html" %} {% load static %} {% block banner_slider %}
+{%endblock banner_slider %} {% block main_content %}
+<div id="app-container">
+  <div id="content-works" class="container">
+    <div>
+      <div class="row">
+        <div class="col-md-9">
+          <header>
+            <div>
+              <h2>
+                <strong aria-label="Translation Teams"
+                  >Nhóm {{Group.groupname}}</strong
+                >
+                {% if is_member %}
+                <form
+                  action="{% url 'out_group' group_id=Group.id %}"
+                  method="post"
+                >
+                  {% csrf_token %}
+                  <button
+                    type="submit"
+                    class="btn btn-blue btn-right-align pull-right trans-teams"
+                  >
+                    - Rời nhóm
+                  </button>
+                </form>
+                {% endif %}
+              </h2>
+            </div>
+          </header>
+          <div class="panel">
+            <div class="works-type-select">
+              <button class="on-switch-type">Danh sách thành viên</button>
+            </div>
+            <section class="item-lists row" role="list">
+              <div class="works-list">
+                {% for member in Members %}
+                <div class="works-item">
+                  <div class="row-container">
+                    <div class="left-container">
+                      <div class="item-wrapper">
+                        <div class="item-img">
+                          <img
+                            src=""
+                            alt=""
+                            height="70"
+                            class="page_aiko_31758421 cover cover-sm-works"
+                          />
+                        </div>
+                        <div class="item-info">
+                          <h3 class="item-name">
+                            <a href=""
+                              ><strong>{{member.auth_user.username}}</strong></a
+                            >
+                          </h3>
+                          <div class="counts">
+                            <strong>{{member.teamrole}}</strong>
+                          </div>
+                        </div>
+                        <div class="meta-wrapper"></div>
+                      </div>
+                    </div>
+                    <div class="actions-wrapper">
+                      <div class="dropdown parts-dropdown">
+                        <button
+                          class="btn btn-blue btn-primary"
+                          type="button"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          <span class="text">Chi tiết</span>
+                        </button>
+                        <div class="triangle"></div>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <a href="#" class="dropdown-item"
+                              >Xem thông tin cá nhân</a
+                            >
+                          </li>
+                          {% if is_owner%}
+                          <li>
+                            <a
+                              href="{% url 'change_role_to_owner' group_id=member.group.id member_id=member.id %}"
+                              class="dropdown-item"
+                              >Sang nhượng nhóm</a
+                            >
+                          </li>
+                          <li>
+                            <a
+                              href="{% url 'delete_role_of_admin' group_id=member.group.id member_id=member.id %}"
+                              class="dropdown-item"
+                              >Xóa vai trò admin</a
+                            >
+                          </li>
+                          {% endif %} {% if is_admin or is_owner %}
+                          <li>
+                            <a
+                              href="{% url 'change_role_to_admin' group_id=member.group.id member_id=member.id %}"
+                              class="dropdown-item"
+                              >Đổi vai trò admin</a
+                            >
+                          </li>
+                          <li>
+                            <a
+                              href="{% url 'delete_member' group_id=member.group.id member_id=member.id %}"
+                              class="dropdown-item"
+                              >Xóa khỏi nhóm</a
+                            >
+                          </li>
+                          {% endif %}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </section>
+          </div>
+          <div class="panel">
+            <div class="works-type-select">
+              <button class="on-switch-type"><b>Danh sách chờ duyệt</b></button>
+            </div>
+            <section class="item-lists row" role="list">
+              <div class="works-list">
+                {% for member in Waiters %}
+                <div class="works-item">
+                  <div class="row-container">
+                    <div class="left-container">
+                      <div class="item-wrapper">
+                        <div class="item-img">
+                          <img
+                            src=""
+                            alt=""
+                            height="70"
+                            class="page_aiko_31758421 cover cover-sm-works"
+                          />
+                        </div>
+                        <div class="item-info">
+                          <h3 class="item-name">
+                            <a href=""
+                              ><strong>{{member.auth_user.username}}</strong></a
+                            >
+                          </h3>
+                          <div class="counts">
+                            <strong>{{member.teamrole}}</strong>
+                          </div>
+                        </div>
+                        <div class="meta-wrapper"></div>
+                      </div>
+                    </div>
+                    <div class="actions-wrapper">
+                      <div class="dropdown parts-dropdown">
+                        <form
+                          action="{% url 'approve_member' group_id=member.group.id member_id=member.id %}"
+                          method="post"
+                        >
+                          {% csrf_token %}
+                          <button
+                            class="btn btn-blue btn-primary"
+                            type="submit"
+                          >
+                            Duyệt
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </section>
+          </div>
+          {% if is_owner %}
+          <form
+            action="{% url 'delete_group' group_id=Group.id %}"
+            method="post"
+          >
+            {% csrf_token %}
+            <button
+              type="submit"
+              class="btn btn-blue btn-right-align pull-right trans-teams"
+            >
+              - Xóa nhóm
+            </button>
+          </form>
+          {% endif%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% include 'app/addgroup.html' %} {% endblock main_content %}
