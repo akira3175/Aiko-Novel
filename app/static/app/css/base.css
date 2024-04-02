@@ -49,7 +49,8 @@ input:-webkit-autofill {
 }
 
 .navbar .account {
-    width: 220px;
+    display: flex;
+    width: 280px;
 }
 
 .navbar .account .avatar {
@@ -62,14 +63,23 @@ input:-webkit-autofill {
 }
 
 .navbar .account .user-name {
-    display: table-cell;
+    display: flex;
+    align-items: center;
     vertical-align: middle;
     font-size: 18px;
     font-weight: 700;
-    width: 124px;
+    width: 194px;
     box-sizing: border-box;
     overflow: hidden;
     padding-left: 10px;
+    transform: translateY(5px);
+}
+
+.user-name p {
+    width: inherit;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
 }
 
 #search-form {

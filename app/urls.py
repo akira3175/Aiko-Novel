@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls.static import static
+from django.conf import settings
 from . import views
 
 urlpatterns = [
@@ -18,5 +20,4 @@ urlpatterns = [
     path('profile/<str:username>/', views.profile, name='profile'),
     path('save-background/', views.saveBackground, name='save-background'), 
     path('save-avatar/', views.saveAvatar, name='save-avatar'), 
-]
- 
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

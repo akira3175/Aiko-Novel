@@ -1,16 +1,13 @@
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
-from app.models import Book, UserInfo, Category, Role
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, JsonResponse
+from app.models import Book, UserInfo, Category, Role, Member, Group
 import json
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout # thu vien xac thuc
 from django.contrib.auth.models import User
 from django.contrib import messages # thu vien thong bao
 from django.views.decorators.csrf import csrf_exempt
-from .models import Book, Member, User, Group
 from django import forms
 
 # Create your views here.

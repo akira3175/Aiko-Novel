@@ -33,7 +33,7 @@ class UserInfo(models.Model):
     img_avatar = models.ImageField(upload_to='avatar_images/', null=True)
     img_background = models.ImageField(upload_to='background_images/', null=True, blank=True)
     img_background_position = models.IntegerField(default=0)
-    role_id = models.ForeignKey(Role, on_delete=models.CASCADE, default=-999)
+    role_id = models.ForeignKey(Role, on_delete=models.CASCADE, default=-900)
     def __str__(self):
         return self.username.username
 
@@ -50,7 +50,7 @@ class Book(models.Model):
     title = models.CharField(max_length=100, null=True, blank=True)
     description = models.TextField(max_length=2000, null=True, blank=True)
     anothername = models.CharField(max_length=200, null=True) 
-    img = models.ImageField(max_length=100, null=True)
+    img = models.ImageField(upload_to='books_images/', null=True)
     author = models.CharField(max_length=100, null=True)
     artist = models.CharField(max_length=100, null=True)
     isCompleted = models.BooleanField(null=True, blank=True)
