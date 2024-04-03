@@ -12,6 +12,6 @@ urlpatterns = [
     path('novel-of-trans-team', views.novelOfTransTeam, name="novel-of-trans-team"),
     path('novel-works', views.novelWorks, name="novel-works"),
     path('saveBook', views.saveBook, name='saveBook'),
-    path('novel', views.novel, name='novel')
+    path('novel/<int:id>/', views.novel, name='novel')
 ]
  

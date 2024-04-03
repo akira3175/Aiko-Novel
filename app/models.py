@@ -44,8 +44,6 @@ class Book(models.Model):
     quantityVol = models.IntegerField(default=0)
     dateUpload = models.DateField(null=True)
     dateUpdate = models.DateField(null=True)
-    category = models.CharField(max_length=100, null=True) 
-
 class BookForm(forms.ModelForm):
     class Meta:
         model = Book

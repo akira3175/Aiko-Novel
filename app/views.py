@@ -71,8 +71,9 @@ def novelOfTransTeam(request):
 def novelWorks(request):
     categories = Category.objects.all()
     return render(request, 'app/novelworks.html', {'categories': categories})
-def novel(request):
-    return render(request, 'app/novel.html')
+def novel(request,id):
+    book = Book.objects.get(id=id)
+    return render(request, 'app/novel.html',{'book': book})
 
 @csrf_exempt
 def saveBook(request):

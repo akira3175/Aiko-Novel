@@ -105,7 +105,7 @@
     font-weight: 700;
 }
 
-.basic-section .sect-header, .detail-list header.section-title, .modal-header, .private-tabs header, table.broad-table tr th {
+.basic-section, .detail-list header.section-title, .modal-header, .private-tabs header, table.broad-table tr th {
     background-color: #f4f5f6;
     border-bottom: 1px solid #dadbdd;
     padding: 10px;
@@ -160,7 +160,4 @@ section.basic-section main {
 .other-facts .fact-name {
     font-weight: 700;
     margin-bottom: 6px;
-}
-#sharing-box  , #open-sharing{
-    display: none;
 }
