@@ -16,8 +16,8 @@
     <div class="col-md-12">
       {% if post.username == user %}
         <br>
-        <button class="btn btn-warning">Sửa</button>
-        <button class="btn btn-danger">Xóa</button>
+        <button class="btn btn-warning" onclick="window.location.href='{% url 'edit-post' post.id %}'">Sửa</button>
+        <button class="btn btn-danger" onclick="window.location.href='{% url 'delete-post' post.id %}'">Xóa</button>
       {% endif %}
       <h1 class="mb-4">{{ post.title }}</h1>
       <div class="text-muted mb-3"><i>Ngày đăng: {{ post.created_at|date:"d/m/Y h:m" }}</i></div>
