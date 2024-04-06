@@ -49,9 +49,8 @@
                         </div>
                         <div class="item-info">
                           <h3 class="item-name">
-                            <a href=""
-                              ><strong>{{member.auth_user.username}}</strong></a
-                            >
+                            <a href= {% url 'profile' username=member.auth_user.username %}
+                              ><strong>{{member.auth_user.username}}</strong></a>
                           </h3>
                           <div class="counts">
                             <strong>{{member.teamrole}}</strong>
@@ -73,10 +72,9 @@
                         <div class="triangle"></div>
                         <ul class="dropdown-menu">
                           <li>
-                            <a href="#" class="dropdown-item"
+                            <a href="{% url 'profile' username=member.auth_user.username %}" class="dropdown-item"
                               >Xem thông tin cá nhân</a
                             >
-                          </li>
                           {% if is_owner%}
                           <li>
                             <a
@@ -138,9 +136,8 @@
                         </div>
                         <div class="item-info">
                           <h3 class="item-name">
-                            <a href=""
-                              ><strong>{{member.auth_user.username}}</strong></a
-                            >
+                            <a href= {% url 'profile' username=member.auth_user.username %}
+                              ><strong>{{member.auth_user.username}}</strong></a>
                           </h3>
                           <div class="counts">
                             <strong>{{member.teamrole}}</strong>
@@ -149,6 +146,7 @@
                         <div class="meta-wrapper"></div>
                       </div>
                     </div>
+                    {% if is_admin or is_owner%}
                     <div class="actions-wrapper">
                       <div class="dropdown parts-dropdown">
                         <form
@@ -165,6 +163,7 @@
                         </form>
                       </div>
                     </div>
+                    {% endif %}
                   </div>
                 </div>
                 {% endfor %}

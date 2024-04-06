@@ -43,10 +43,15 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Trang chủ</a>
+                      <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Trang chủ</a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Danh sách</a>
+                  <li class="nav-item dropdown"> 
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Danh sách 
+                    <a/>
+                    {% comment %} <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href= {% url 'transteam' %}>Danh sách nhóm</a></li>
+                    </ul> {% endcomment %}
                   </li>
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -102,7 +107,7 @@
                       <li><a class="dropdown-item" href="#">Lịch sử</a></li>
                       <li><a class="dropdown-item" href="#">Yêu thích</a></li>
                       <li><a class="dropdown-item" href="#">Cài đặt</a></li>
-                      <li><a class="dropdown-item" href= {% url 'transteam' %}>Nhóm dịch của bạn</a></li>
+                      <li><a class="dropdown-item" href= {% url 'transteam' %}>Danh sách nhóm</a></li>
                       <li><a class="dropdown-item" href= {% url 'logout' %}>Đăng xuất</a></li>
                     </ul>
                   </li>

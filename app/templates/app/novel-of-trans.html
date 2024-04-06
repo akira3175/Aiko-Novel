@@ -53,16 +53,19 @@
                                             </div>
                                         </div>
                                     </div>
+                                    {% for novel in novels %}
                                     <div class="works-item">
                                         <div class="row-container">
                                             <div class="left-container">
                                                 <div class="item-wrapper">
                                                     <div class="item-img">
-                                                        <img src="" alt="" height="70" class="page_aiko_31758421 cover cover-sm-works">
+                                                        {% if novel.img %}
+                                                        <img alt="" height="70" class="page_aiko_31758421 cover cover-sm-works" src="{{ novel.img.url }}" />
+                                                        {% endif %}
                                                     </div>
                                                     <div class="item-info">
-                                                        <h3 class="item-name"><a href=""><strong>Akira one punch</strong></a></h3>
-                                                        <div class="counts"><strong>10 tập</strong></div>
+                                                        <h3 class="item-name"><a href=""><strong>{{novel.title}}</strong></a></h3>
+                                                        <div class="counts"><strong>{{novel.quantityVol}}</strong></div>
                                                         <!--<div class="counts"><strong>7 truyện</strong></div>-->
                                                     </div>
                                                     <div class="meta-wrapper">
@@ -84,6 +87,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    {% endfor %}
                                 </div>
                             </section>
                         </div>

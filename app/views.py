@@ -135,7 +135,8 @@ def transTeam(request):
     return render(request, 'app/transteam.html', context)
 
 def novelOfTransTeam(request):
-    return render(request, 'app/novel-of-trans.html')
+    novels = Book.objects.all()
+    return render(request, 'app/novel-of-trans.html', {'novels':novels})
 
 def novelWorks(request):
     categories = Category.objects.all()
@@ -257,7 +258,8 @@ def memberOfTransTeam(request, group_id):
     is_member = Member.objects.filter(auth_user=request.user, group=group).exists()
     is_owner = Member.objects.filter(auth_user=request.user, group=group, teamrole='owner').exists()
     is_admin = Member.objects.filter(auth_user=request.user, group=group, teamrole='admin').exists()
-    context = {'Members' : members, 'Group':group, 'Waiters': waiters, 'is_member': is_member, 'is_admin': is_admin, 'is_owner': is_owner}
+    context = {'Members' : members, 'Group':group, 'Waiters': waiters, 
+               'is_member': is_member,'is_admin': is_admin, 'is_owner': is_owner}
     
     return render(request, 'app/member-of-trans.html', context)
 
