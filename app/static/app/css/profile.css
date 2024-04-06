@@ -157,7 +157,7 @@
     align-items: center;
     position: relative;
     height: auto;
-    overflow: hidden;
+    z-index: 2;
     padding: 0 30px;
 }
 
@@ -180,12 +180,11 @@
 }
 
 .avatar-main-data {
-    position: fixed;
     height: 172px;
     width: 172px;
     border-radius: 50%;
     background: white;
-    z-index: 4;
+    top: -72px;
     display: flex;
     justify-content: center;
     align-items: center;

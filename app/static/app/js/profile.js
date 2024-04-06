@@ -69,11 +69,6 @@ function resetPosition() {
     document.querySelector('.background-sub').style.top = '-100%';
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    positionBackground();
-    setTopAvatar();
-});
-
 function moveBackground() {
     var isMouseDown = false; // Biến để theo dõi xem người dùng có đang giữ chuột không
     var startY = 0;
@@ -108,17 +103,6 @@ function moveBackground() {
         }
     });
 }
-
-function setTopAvatar() {
-    var navbarHeight = document.querySelector('.navbar').offsetHeight;
-    var backgroundImgHeight = document.querySelector('.background-img').offsetHeight;
-    var scrollYValue = window.scrollY;
-    document.querySelector('.avatar-main-data').style.top = - scrollYValue + navbarHeight + backgroundImgHeight - 60 + 'px';
-}
-
-window.addEventListener('scroll', function() {
-    setTopAvatar();
-});
  
 function saveAvatarImage() {
     var avatarImage = document.getElementById('avatar-upload').files[0];

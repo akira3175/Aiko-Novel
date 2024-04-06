@@ -10,7 +10,6 @@ def get_user_info(request):
             info['InfoUser'] = info_user
         except UserInfo.DoesNotExist:
             info['error'] = "Thông tin người dùng không tồn tại."
-    print(info['InfoUser'].img_avatar)
     return info
 
 

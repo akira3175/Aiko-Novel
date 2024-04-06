@@ -33,7 +33,7 @@
                         <button class="btn on-edit-cancel" onclick="goBack()">
                             <i class="fa-solid fa-angle-left"></i>
                         </button>
-                        <div class="works-item-metadata" id-novel="-1">
+                        <div class="works-item-metadata" novel-id="{{ book.id }}">
                             <p class="group-title">Chỉnh sửa thông tin truyện</p>
                             <span><h4>Truyện chưa có tên</h4></span>
                         </div>
@@ -61,7 +61,7 @@
                                                     <span class="text-icon">Đăng ảnh</span>
                                                 </label>
                                         </div>
-                                        <img id="preview" src="" alt="" class="cover edit-cover page_aiko_31758421" height="256">
+                                        <img id="preview" src="{{ book.img_path }}" alt="" class="cover edit-cover page_aiko_31758421" height="256">
                                     </div>
                                 </div>
                                 <div class="required-form-wrapper col-lg-8 col-md-3 col-sm-12">
@@ -69,23 +69,23 @@
                                         <label for="title">Tiêu đề</label>
                                         <span class="empty-warning" id="title-warning"></span>
                                         <div class="novel-title has-title" contenteditable="true">
-                                            Truyện chưa có tên
+                                            {{ book.title }}
                                         </div>
                                     </div>
                                     <div class="form-group author-form">
                                         <label for="">Tác giả</label>
                                         <span class="empty-warning" id="author-warning"></span>
-                                        <div class="novel-author" contenteditable="true"></div>
+                                        <div class="novel-author" contenteditable="true">{{ book.author }}</div>
                                     </div>
                                     <div class="form-group artist-form">
                                         <label for="">Họa sĩ</label>
                                         <span class="empty-warning" id="artist-warning"></span>
-                                        <div class="novel-artist" contenteditable="true"></div>
+                                        <div class="novel-artist" contenteditable="true">{{ book.artist }}</div>
                                     </div>
                                     <div class="form-group trans-team-form">
                                         <label for="">Nhóm dịch</label>
                                         <span class="empty-warning" id="trans-team-warning"></span>
-                                        <div class="novel-trans-team" contenteditable="false" worker-id="0001">Aiko Team</div>
+                                        <div class="novel-trans-team" contenteditable="false" worker-id="{{ group.id }}">{{ group.groupname }}</div>
                                     </div>
                                     <div class="form-group category-form">
                                         <label for="">Thể loại</label>
@@ -106,7 +106,7 @@
                                     <div class="form-group description-form">
                                         <label for="">Mô tả</label>
                                         <span class="empty-warning" id="description-warning"></span>
-                                        <textarea id="" cols="30" rows="10" class="novel-description"></textarea>
+                                        <textarea id="" cols="30" rows="10" class="novel-description">{{ book.description }}</textarea>
                                     </div>
                                     <div class="form-group status-form">
                                         <label for="">Tình trạng</label>
@@ -121,7 +121,7 @@
                                     </div>
                                     <div class="form-group time-form">
                                         <label for="">Thời gian đăng</label>
-                                        <div class="novel-time" contenteditable="false"></div>
+                                        <div class="novel-time" contenteditable="false">{{ book.dateUpload |date:"j/m/Y" }}</div>
                                     </div>
                                 </div>
                             </form>

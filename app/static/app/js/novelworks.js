@@ -4,6 +4,7 @@
 const mainEditButton = $('.main-edit-form')
 const TOCButton = $('.table-of-contents')
 const noteButton = $('.note-works')
+const novelId = $('.works-item-metadata').attr('novel-id')
 
 function switchToMainEdit() {
     mainEditButton.show();
@@ -26,6 +27,16 @@ function switchToNote() {
 $('.on-switch-type').click(function() {
     $('.on-switch-type').removeClass('active');
     $(this).addClass('active');
+});
+
+$(document).ready(function() {
+    if (novelId == 0) {
+        switchToMainEdit();
+        $('.on-switch-type').eq(0).addClass('active'); 
+    } else {
+        switchToTOC();
+        $('.on-switch-type').eq(1).addClass('active');
+    }
 });
 
 //Main Edit
@@ -222,7 +233,7 @@ function getCookie(name) {
 }
 
 function saveBook() {
-    var novelid = document.querySelector('.works-item-metadata').getAttribute('id-novel');
+    var novelid = document.querySelector('.works-item-metadata').getAttribute('novel-id');
     var title = document.querySelector('.novel-title').innerText;
     var author = document.querySelector('.novel-author').innerText;
     var artist = document.querySelector('.novel-artist').innerText;
@@ -243,7 +254,7 @@ function saveBook() {
     formData.append('checkboxChecked', checkboxChecked);
     formData.append('image', file);
 
-    fetch('saveBook', {
+    fetch('/saveBook', {
         method: 'POST',
         body: formData,
         headers: {

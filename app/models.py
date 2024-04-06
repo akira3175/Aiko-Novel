@@ -81,6 +81,21 @@ class CategoryForm(forms.ModelForm):
         model = Category
         fields = ['id', 'name']
 
+"""Category-Book model"""
+
+class CategoryBook(models.Model):
+    book = models.OneToOneField(Book, on_delete=models.CASCADE)
+    category = models.OneToOneField(Category, on_delete=models.CASCADE)
+    def __str__(self):
+        return f"{self.book.title} - {self.category.name}"
+    
+class CategoryBookForm(forms.ModelForm):
+    class Meta:
+        model = CategoryBook
+        fields = '__all__'
+
+"""Translate Group"""
+
 class Group(models.Model):
     id = models.AutoField(primary_key=True)
     groupname = models.CharField(max_length=40, db_index=True)

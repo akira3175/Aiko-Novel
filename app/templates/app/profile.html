@@ -40,9 +40,9 @@
                                 <div class="background-img-data-container w-100 porel">
                                     <div class="porel w-100">
                                         <div class="background-sub w-100" position="{{ userInfo.img_background_position | default_if_none:'#' }}">
-                                            {% if userInfo.img_background %}
-                                            <img src="{{ userInfo.img_background.url | default_if_none:'#' }}" alt="" class="background-img-data">
-                                            {% endif %}
+                                           
+                                            <img src=" {% if userInfo.img_background %}{{ userInfo.img_background.url | default_if_none:'#' }}{% endif %}" alt="" class="background-img-data">
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -57,6 +57,9 @@
                                     <div class="avatar-main col-sm-12 col-12" >
                                         <div class="avatar-main-data poabs">
                                             <div class="porel w-100 page_user cir168 bdavt" {% if userInfo.img_avatar %} style="background-image: url('{{ userInfo.img_avatar.url }}');" {% endif %}>
+                                                <script> 
+                                                    positionBackground();
+                                                </script>
                                                 <div class="input-edit-avatar icon-upload bkgr btn-circle cir35 align-items-end">
                                                     <input type="file" id="avatar-upload" accept="image/*" onchange="saveAvatarImage()">
                                                     <label for="avatar-upload">
