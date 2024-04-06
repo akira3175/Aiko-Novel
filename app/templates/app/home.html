@@ -130,14 +130,18 @@
               <div class="b_title">
                 <a href="{% url "forum-post-list"%}"> 
                   <strong>
-                    <i class=""> </i>Forum
+                    <i class=""> </i>Diễn đàn
                   </strong>
                 </a>
               </div>
               {% for post in latest_posts %}
               <div class="row">
-                <div class="col 9"><a href="{% url 'post-detail' pk=post.pk %}">{{ post.title }}</a></div>
-                <div class="col 3 text-right">{{ post.created_at|date:"d/m/Y" }}</div>
+                  <div class="col-9">
+                      <a href="{% url 'post-detail' pk=post.pk %}">
+                          <div class="title-container">{{ post.title }}</div>
+                      </a>
+                  </div>
+                  <div class="col-3 text-right date">{{ post.created_at|date:"d/m/Y" }}</div>
               </div>
               {% endfor %} 
             </div>

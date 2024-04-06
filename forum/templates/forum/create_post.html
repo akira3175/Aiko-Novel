@@ -1,15 +1,26 @@
 {% extends "app/base.html" %}
 
-{% block main_content %} 
+{% block main_content %}
+{% load static %}
+
+{% block extra_css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'forum.css' %}">
+{% endblock extra_css %}
+
+<div class="mt-3">
+  <button class="back-to-forum-btn" onclick="window.location.href='{% url 'forum-post-list' %}'">
+    Quay lại Diễn đàn
+  </button>
+</div>
+
 <h1>Đăng bài mới</h1>
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-end">
   <div class="col-10">
     <form method="post" >
       {% csrf_token %}
       {{ form.media }}
       {{ form.as_p }}
-      
-      <button type="submit">Đăng bài</button>
+      <button class="back-to-forum-btn" type="submit">Đăng bài</button>
     </form>
   </div>
 </div>

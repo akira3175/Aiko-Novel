@@ -31,4 +31,7 @@ class CommentForm(forms.ModelForm):
                 'required': 'Nhập nội dung bình luận',
             }
         }
+        widgets = {
+            'content': forms.Textarea(attrs={'rows': 5, 'style': 'width:100%;'}),
+        }
         
