@@ -64,7 +64,7 @@
                                         <img id="preview" src="{{ book.img_path }}" alt="" class="cover edit-cover page_aiko_31758421" height="256">
                                     </div>
                                 </div>
-                                <div class="required-form-wrapper col-lg-8 col-md-3 col-sm-12">
+                                <div class="required-form-wrapper col-lg-8 col-md-9 col-sm-12">
                                     <div class="form-group title-form">
                                         <label for="title">Tiêu đề</label>
                                         <span class="empty-warning" id="title-warning"></span>
@@ -126,9 +126,13 @@
                                 </div>
                             </form>
                             <div class="table-of-contents" style="display: none">
-
+                                <div class="works-item-toc">
+                                    <div class="add-volume-container w-100 d-flex justify-content-end">
+                                        <button class="btn btn-blue" >+ Thêm tập mới</button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="note-works">
+                            <div class="note-works" style="display: none">
 
                             </div>
                         </section>
@@ -136,6 +140,7 @@
                 </div>
             </div>
         </div>
+        {% include 'app/add-volume-form.html' %}
         <!-- footer-->
         
 

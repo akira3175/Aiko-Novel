@@ -272,30 +272,34 @@ def saveAvatar(request):
 
 def forOfTransTeam(group_member_counts, groups, join):
     for group in groups:
-        member = Member.objects.filter(group=group, teamrole__in = ['owner', 'admin', 'member'])
+        member = Member.objects.filter(group=group, teamrole__in=['owner', 'admin', 'member'])
         group_member_info = {
             'groupname': group.groupname,
             'groupid': group.id,
             'member_count': member.count(),
-            'join' : join,
-            'is_member': (join == 'Đã tham gia')
+            'join': join,
+            'is_member': (join == 'Đã tham gia'),  # Đã tham gia: True, Chưa tham gia: False
         }
         group_member_counts.append(group_member_info)
 
 def transTeam(request):
     user = request.user
-    user_groups = Member.objects.filter(auth_user=user).values_list('group', flat=True)
-    groups = Group.objects.filter(id__in=user_groups)
-    other_groups = Group.objects.exclude(id__in=user_groups)
+    member_groups = Member.objects.filter(auth_user=user, teamrole__in=['admin', 'owner', 'member']).values_list('group', flat=True)
+    waiter_groups = Member.objects.filter(auth_user=user, teamrole='waiter').values_list('group', flat=True)
+    groups = Group.objects.filter(id__in=member_groups)
+    groups_waiter = Group.objects.filter(id__in=waiter_groups)
+    other_groups = Group.objects.exclude(id__in=member_groups).exclude(id__in=waiter_groups)
     
     group_member_counts = []
     forOfTransTeam(group_member_counts, groups, 'Đã tham gia')
+    forOfTransTeam(group_member_counts, groups_waiter, 'Chờ duyệt')
     forOfTransTeam(group_member_counts, other_groups, 'Chưa tham gia')
     
     context = {
         'group_member_counts': group_member_counts,
     }
     return render(request, 'app/transteam.html', context)
+
 
 def novelOfTransTeam(request, group_id):
     group = Group.objects.get(pk=group_id)
