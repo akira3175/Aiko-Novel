@@ -1,5 +1,8 @@
 //Switch types
 
+//dùng để xem người dùng đang ở Main Edit, TOC hay Note
+let value = 0;
+
 //Tạo 3 nut chuyển đôỉ qua lại cho chỉnh sửa truyện
 const mainEditButton = $('.main-edit-form')
 const TOCButton = $('.table-of-contents')
@@ -21,6 +24,7 @@ function switchToTOC() {
 }
 
 function switchToNote() {
+    value = 3;
     mainEditButton.hide();
     TOCButton.hide();
     noteButton.show();
@@ -189,7 +193,6 @@ function removeCategory(item) {
     item.remove();
 }
 
-let value = 0;
 
 //Cho người dùng xem trước ảnh
 function previewImage(event) {
@@ -294,12 +297,12 @@ function openAddVolumeForm(value) {
     let text = "";
     let textButton = "";
     if (value == 0) {
-        text = "Thêm chương mới";
-        textButton = "Thêm chương";
+        text = "Thêm tập mới";
+        textButton = "Thêm tập";
     }
     else {
-        text = "Sửa chương";
-        textButton = "Sửa chương"
+        text = "Sửa tập";
+        textButton = "Sửa tập"
     }
     $('.form-title').text(text);
     $('#add-volume-form .el-button').text(textButton);
