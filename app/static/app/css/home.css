@@ -286,3 +286,15 @@ a.series-name {
     }
 
 }
+
+.title-container {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #333;
+}
+
+.date {
+    font-size: 14px;
+    color: #666;
+}

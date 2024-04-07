@@ -12,6 +12,8 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.views.generic.edit import FormMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import UpdateView, DeleteView
 
 # hien thi danh sach bai dang theo thu tu som nhat
 class PostListView(ListView):
@@ -84,3 +86,28 @@ def add_comment_to_post(request, post_id):
         form = CommentForm()
 
     return render(request, 'forum/forum_post_detail.html', {'comment_form': form, 'post': post})
+
+# UpdateView cho phép người dùng cập nhật bài đăng
+class EditPostView(LoginRequiredMixin, UpdateView):
+    model = ForumPost
+    form_class = ForumPostForm
+    template_name = 'forum/edit_post.html'
+
+    def form_valid(self, form):
+        form.instance.username = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('post-detail', kwargs={'pk': self.object.pk})
+
+# DeleteView cho phép người dùng xóa bài đăng
+class DeletePostView(LoginRequiredMixin, DeleteView):
+    model = ForumPost
+    template_name = 'forum/delete_post_confirm.html'
+
+    def get_success_url(self):
+        return reverse('forum-post-list')
+    
+def delete_post_confirm(request, post_id):
+    post = get_object_or_404(ForumPost, pk=post_id)
+    return render(request, 'forum/delete_post_confirm.html', {'post': post})

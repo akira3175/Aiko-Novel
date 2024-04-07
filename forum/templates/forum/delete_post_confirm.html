@@ -1,0 +1,14 @@
+{% extends 'app/base.html' %}
+
+{% block main_content %}
+  <div class="d-flex justify-content-end">
+    <div class="col-10">
+        <h2>Xác nhận xóa</h2>
+        <p>Bạn chắc chắn muốn xóa bài này ?</p>
+        <form method="post" >
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Xóa</button>
+        </form>
+    </div>
+  </div>
+{% endblock main_content %}

@@ -8,6 +8,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout # thu vien xac thuc
 from django.contrib.auth.models import User
 from django.contrib import messages # thu vien thong bao
+from .models import UserForm
+from forum.models import ForumPost
 from django.views.decorators.csrf import csrf_exempt
 from django import forms
 
@@ -97,6 +99,9 @@ def logoutPage(request):
 """Home page"""
     
 def home(request):
+    latest_posts = ForumPost.objects.all().order_by('-created_at')[:5]
+    
+    return render(request, 'app/home.html',{"latest_posts": latest_posts}) 
     novels = Book.objects.all()
     return render(request, 'app/home.html', {'novels': novels}) 
 
