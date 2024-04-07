@@ -7,12 +7,14 @@ const noteButton = $('.note-works')
 const novelId = $('.works-item-metadata').attr('novel-id')
 
 function switchToMainEdit() {
+    value = 1;
     mainEditButton.show();
     TOCButton.hide();
     noteButton.hide();
 }
 
 function switchToTOC() {
+    value = 2;
     mainEditButton.hide();
     TOCButton.show();
     noteButton.hide();
@@ -187,14 +189,25 @@ function removeCategory(item) {
     item.remove();
 }
 
+let value = 0;
+
 //Cho người dùng xem trước ảnh
 function previewImage(event) {
+    console.log(value);
     var input = event.target;
     var reader = new FileReader();
+    var preview;
+    console.log(value == 1)
+    if (value == "1") {
+        preview = document.querySelector('.preview');
+    }
+    else if (value == "2") {
+        preview = document.querySelector('.preview-volume');
+    }
     reader.onload = function(){
         var dataURL = reader.result;
-        var preview = document.getElementById('preview');
         preview.src = dataURL;
+        
     };
     reader.readAsDataURL(input.files[0]);
 }
@@ -276,10 +289,44 @@ function saveBook() {
     });
 }
 
-
-
-
-
 //Table of Contents
+function openAddVolumeForm(value) {
+    let text = "";
+    let textButton = "";
+    if (value == 0) {
+        text = "Thêm chương mới";
+        textButton = "Thêm chương";
+    }
+    else {
+        text = "Sửa chương";
+        textButton = "Sửa chương"
+    }
+    $('.form-title').text(text);
+    $('#add-volume-form .el-button').text(textButton);
+    $("#add-volume-form").toggle();
+    toggleModalOpen();
+}
+
+function closeAddVolumeForm() {
+    $("#add-volume-form").toggle();
+    toggleModalOpen();
+}
+
+$(document).ready(function() {
+    $('.see-more-chapters').click(function() {
+        $(this).hide();
+        $(this).parent().css('max-height', 'none');
+    });
+    // Kiểm tra số lượng chương của mỗi tập và ẩn hiện class show-more-chapters
+    $('.works-item-volume').each(function() {
+        var chapterCount = $(this).find('.volume-chapter-details').length;
+        if (chapterCount <= 6) {
+            console.log(2)
+            $(this).find('.see-more-chapters').hide(); // Ẩn nút "Xem thêm chương"
+        }
+    });
+});
+
+
 
 //Note

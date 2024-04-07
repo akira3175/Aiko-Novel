@@ -100,10 +100,9 @@ def logoutPage(request):
     
 def home(request):
     latest_posts = ForumPost.objects.all().order_by('-created_at')[:5]
-    
-    return render(request, 'app/home.html',{"latest_posts": latest_posts}) 
     novels = Book.objects.all()
-    return render(request, 'app/home.html', {'novels': novels}) 
+    context = {'latest_posts': latest_posts, 'novels': novels}
+    return render(request, 'app/home.html', context) 
 
 """Search page"""
     
@@ -284,6 +283,7 @@ def forOfTransTeam(group_member_counts, groups, join):
             'member_count': member.count(),
             'join': join,
             'is_member': (join == 'Đã tham gia'),  # Đã tham gia: True, Chưa tham gia: False
+            'is_waiter': (join == 'Chờ duyệt'),
         }
         group_member_counts.append(group_member_info)
 
@@ -321,7 +321,8 @@ def memberOfTransTeam(request, group_id):
     is_member = Member.objects.filter(auth_user=request.user, group=group).exists()
     is_owner = Member.objects.filter(auth_user=request.user, group=group, teamrole='owner').exists()
     is_admin = Member.objects.filter(auth_user=request.user, group=group, teamrole='admin').exists()
-    context = {'Members' : members, 'Group':group, 'Waiters': waiters, 'is_member': is_member, 'is_admin': is_admin, 'is_owner': is_owner}
+    context = {'Members' : members, 'Group':group, 'Waiters': waiters, 
+               'is_member': is_member,'is_admin': is_admin, 'is_owner': is_owner}
     
     return render(request, 'app/member-of-trans.html', context)
 

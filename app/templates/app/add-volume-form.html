@@ -1,42 +1,38 @@
-<div id="add-volume-form" style=" height: 100vh; position: fixed; z-index: 1031">
+<div id="add-volume-form" style=" height: 100vh; position: fixed; z-index: 1031; display: none";>
     <div class="overlay">
       <div class="overlay-dialog">
-        <div class="col-8 dialog">
+        <div class="add-volume dialog">
           <div class="dialog-body">
             <div class="dialog-container">
-              <form action= {% url 'login' %} class="cmn-form-web" method="POST">
+              <form action=  class="cmn-form-web" method="POST">
                 {% csrf_token %}
-                <div class="form-title">Thêm chương mới</div>
-                <div class="form-input ">
-                  <div class="el-input">
-                    <input
-                      type="text"
-                      name="username"
-                      id="username"
-                      autocomplete="off"
-                      class="el-input-inner"
-                      placeholder=""
-                    />
-                    <label for="" class="input-label">Tên người dùng</label>
+                <div class="form-title"></div>
+                <div class="d-flex">
+                  <div class="col-3">
+                    <div class="image-placeholder-volume file-upload file-drop" data-file-upload="drop">
+                      <div class="icon-upload">
+                          <input type="file" id="image-upload" accept="image/*" onchange="previewImage(event)">
+                          <label for="image-upload">
+                              <i class="fa-regular fa-image"></i>
+                              <span class="text-icon">Đăng ảnh</span>
+                          </label>
+                      </div>
+                      <img id="preview-volume" src="" alt="" class="cover edit-cover page_aiko_31758421 preview-volume" height="256">
+                    </div>
                   </div>
-                  <div class="error-text" id="username-error" style="display: none;"></div>
-                </div>
-                <div class="form-input">
-                  <div class="el-input">
-                    <input
-                      type="text"
-                      name="password"
-                      id="password"
-                      autocomplete="new-password"
-                      class="el-input-inner"
-                      placeholder=""
-                    />
-                    <label for="" class="input-label">Mật khẩu</label>
+                  <div class="col-9">
+                    <div class="form-input ">
+                      <div class="el-input">
+                        <input type="text" name="volume-name" id="volume-name" autocomplete="off" class="el-input-inner" placeholder=""/>
+                        <label for="" class="input-label">Tên chương</label>
+                      </div>
+                      <div class="error-text" id="username-error" style="display: none;"></div>
+                    </div>
+                    
                   </div>
-                  <div class="error-text" id="password-error" style="display: none;"></div>
                 </div>
-                <button type="submit" class="el-button disable"><span>Đăng Nhập</span></button>
-              <div class="dialog-close" onclick="closeLoginForm()">
+                <button type="submit" class="el-button w-auto"><span></span></button>
+              <div class="dialog-close" onclick="closeAddVolumeForm()">
                 <i class="fa-solid fa-x"></i>
               </div>
             </div>

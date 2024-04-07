@@ -1,3 +1,7 @@
+:root {
+    --blue-color: #039be5;
+  }
+
 body {
     font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;;
     font-size: 16px;
@@ -15,7 +19,7 @@ b, strong {
 }
 
 a {
-    color: #039be5 !important;
+    color: var(--blue-color) !important;
     text-decoration: none;
 }
 

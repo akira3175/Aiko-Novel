@@ -80,11 +80,11 @@
     height: 45px;
     border-bottom: 3px solid blue;
     font-weight: 600;
-} 
+}
 
 .works-type-select button:hover {
     font-weight: 600;
-} 
+}
 
 /* Main Edit */
 
@@ -221,7 +221,7 @@
     width: 60px;
     height: 34px;
 }
-  
+
 .switch input {
     opacity: 0;
     width: 0;
@@ -239,7 +239,7 @@
     -webkit-transition: .4s;
     transition: .4s;
 }
-  
+
 .slider:before {
     position: absolute;
     content: "";
@@ -251,26 +251,26 @@
     -webkit-transition: .4s;
     transition: .4s;
 }
-  
-input:checked + .slider {
+
+input:checked+.slider {
     background-color: #2196F3;
 }
-  
-input:focus + .slider {
+
+input:focus+.slider {
     box-shadow: 0 0 1px #2196F3;
 }
-  
-input:checked + .slider:before {
+
+input:checked+.slider:before {
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
     transform: translateX(26px);
 }
-  
-  /* Rounded sliders */
+
+/* Rounded sliders */
 .slider.round {
     border-radius: 34px;
 }
-  
+
 .slider.round:before {
     border-radius: 50%;
 }
@@ -300,3 +300,99 @@ input:checked + .slider:before {
 
 /* Table of Contents */
 
+#add-volume-form .add-volume {
+    flex: 0 0 auto;
+    width: 66.66666667% !important;
+}
+
+.image-placeholder-volume {
+    width: 77%;
+    height: auto;
+    margin: 0 25px 20px 40px;
+    position: relative;
+}
+
+.image-placeholder-volume .icon-upload {
+    bottom: 5px;
+    position: absolute;
+    right: 5px;
+}
+
+.works-item-volume {
+    border-top: 0.8px solid rgba(0, 0, 0, .2)
+}
+
+.volume-name {
+    color: var(--blue-color);
+    font-size: larger;
+    font-weight: 700;
+} 
+
+.volume-img-main {
+    width: 175px;
+    height: 247px;
+}
+
+.volume-details {
+    max-height: 237px;
+    overflow: hidden;
+}
+
+.table-striped tbody tr:nth-of-type(even) {
+    background-color: red; /* Màu xen kẽ cho hàng lẻ */
+}
+
+.table-striped {
+    border: transparent;
+}
+
+.chapter-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.see-more-chapters {
+    display: flex;
+    bottom: 0;
+    width: 100%;
+    height: 48px;
+    justify-content: center;
+    align-items: flex-end;
+    background: linear-gradient(180deg, hsla(0, 0%, 100%, 0) 0, #fff 75%, #fff);
+    border: none;
+}
+
+.see-more-chapters i {
+    font-size: x-large;
+}
+
+@media (min-width: 0px) {
+    .chapter-name {
+        max-width: 200px;
+    }
+}
+
+@media (min-width: 425px) {
+    .chapter-name {
+        max-width: 378px;
+    }
+}
+
+@media (min-width: 768px) {
+    .chapter-name {
+        max-width: 223px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .chapter-name {
+        max-width: 350px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .chapter-name {
+        max-width: 550px;
+    }
+}

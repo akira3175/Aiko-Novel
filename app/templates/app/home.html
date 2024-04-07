@@ -138,7 +138,7 @@
               <div class="row">
                   <div class="col-9">
                       <a href="{% url 'post-detail' pk=post.pk %}">
-                          <div class="title-container">{{ post.title }}</div>
+                          <div class="title-container">● {{ post.title }}</div>
                       </a>
                   </div>
                   <div class="col-3 text-right date">{{ post.created_at|date:"d/m/Y" }}</div>
@@ -167,8 +167,7 @@
                     <div class="chap" title="Mở đầu">Mở đầu</div>
                   </div>
                 </a>
-                <a class="series-name" title="I Was Caught up in a Hero Summoning, but That World Is at Peace"
-                href="#">
+                <a class="series-name" title="" href="#">
                   {{novel.title}}
                 </a>
               </div>
