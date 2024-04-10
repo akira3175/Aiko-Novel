@@ -1,99 +1,87 @@
-{% extends "app/base.html" %}
-{% load static %}
-{% block banner_slider %}
-{% endblock banner_slider %}
-{% block main_content %}
-    <div id="app-container">
-        <div id="content-works" class="container">
+{% extends "app/base.html" %} {% load static %} {% block banner_slider %} {%
+endblock banner_slider %} {% block main_content %}
+<div id="app-container">
+  <div id="content-works" class="container">
+    <div>
+      <div class="row">
+        <div class="col-md-9">
+          <header>
             <div>
-                <div class="row">
-                    <div class="col-md-9">
-                        <header>
-                            <div>
-                                <h2>
-                                    <strong aria-label="Novel of Translation Teams">Truyện của nhóm</strong>
-                                    <a href={% url 'novel-works' %} class="btn btn-blue btn-right-align pull-right trans-teams">+ Truyện mới</a>
-                                </h2>
-                            </div>
-                        </header>
-                        <div class="panel">
-                            <div class="works-type-select">
-                                <button class="on-switch-type">Danh sách truyện</button>
-                            </div>
-                            <section class="item-lists row" role="list">
-                                <div class="works-list">
-                                    <div class="works-item">
-                                        <div class="row-container">
-                                            <div class="left-container">
-                                                <div class="item-wrapper">
-                                                    <div class="item-img">
-                                                        <img src="" alt="" height="70" class="page_aiko_31758421 cover cover-sm-works">
-                                                    </div>
-                                                    <div class="item-info">
-                                                        <h3 class="item-name"><a href=""><strong>Travaler of Aiko</strong></a></h3>
-                                                        <div class="counts"><strong>5 tập</strong></div>
-                                                        <!--<div class="counts"><strong>7 truyện</strong></div>-->
-                                                    </div>
-                                                    <div class="meta-wrapper">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="actions-wrapper">
-                                                <div class="dropdown parts-dropdown">
-                                                    <buton class="btn btn-blue btn-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <span class="text">Quản lý</span>
-                                                    </buton>
-                                                    <div class="triangle"></div>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a href="#" class="dropdown-item">Cập nhật</a></li>
-                                                        <li><a href="#" class="dropdown-item">Xóa</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {% for novel in novels %}
-                                    <div class="works-item">
-                                        <div class="row-container">
-                                            <div class="left-container">
-                                                <div class="item-wrapper">
-                                                    <div class="item-img">
-                                                        {% if novel.img %}
-                                                        <img alt="" height="70" class="page_aiko_31758421 cover cover-sm-works" src="{{ novel.img.url }}" />
-                                                        {% endif %}
-                                                    </div>
-                                                    <div class="item-info">
-                                                        <h3 class="item-name"><a href=""><strong>{{novel.title}}</strong></a></h3>
-                                                        <div class="counts"><strong>{{novel.quantityVol}}</strong></div>
-                                                        <!--<div class="counts"><strong>7 truyện</strong></div>-->
-                                                    </div>
-                                                    <div class="meta-wrapper">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="actions-wrapper">
-                                                <div class="dropdown parts-dropdown">
-                                                    <buton class="btn btn-blue btn-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <span class="text">Quản lý</span>
-                                                    </buton>
-                                                    <div class="triangle"></div>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a href="#" class="dropdown-item">Cập nhật</a></li>
-                                                        <li><a href="#" class="dropdown-item">Xóa</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {% endfor %}
-                                </div>
-                            </section>
-                        </div>
-                    </div>
-                </div>
+              <h2>
+                <strong aria-label="Novel of Translation Teams"
+                  >Truyện của nhóm</strong
+                >
+                <a
+                  href="{% url 'novel-works' group_id=group.id book_id=0 %}"
+                  class="btn btn-blue btn-right-align pull-right trans-teams"
+                  >+ Truyện mới</a
+                >
+              </h2>
             </div>
+          </header>
+          <div class="panel">
+            <div class="works-type-select">
+              <button class="on-switch-type">Danh sách truyện</button>
+            </div>
+            <section class="item-lists row" role="list">
+              <div class="works-list">
+                {% for book in books %}
+                <div class="works-item">
+                  <div class="row-container">
+                    <div class="left-container">
+                      <div class="item-wrapper">
+                        <div class="item-img">
+                          <img
+                            src="{{ book.img.url }}"
+                            alt="{{ book.title }}"
+                            height="70"
+                            class="page_aiko_31758421 cover cover-sm-works"
+                          />
+                        </div>
+                        <div class="item-info">
+                          <h3 class="item-name">
+                            <a href=""><strong>{{ book.title }}</strong></a>
+                          </h3>
+                          <div class="counts"><strong>5 tập</strong></div>
+                          <!--<div class="counts"><strong>7 truyện</strong></div>-->
+                        </div>
+                        <div class="meta-wrapper"></div>
+                      </div>
+                    </div>
+                    <div class="actions-wrapper">
+                      <div class="dropdown parts-dropdown">
+                        <buton
+                          class="btn btn-blue btn-primary"
+                          type="button"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          <span class="text">Quản lý</span>
+                        </buton>
+                        <div class="triangle"></div>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <a
+                              href="{% url 'novel-works' group_id=group.id book_id=book.id %}"
+                              class="dropdown-item"
+                              >Cập nhật</a
+                            >
+                          </li>
+                          <li><a href="#" class="dropdown-item">Xóa</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% empty %}
+                <p>Không có sách nào được tìm thấy.</p>
+                {% endfor %}
+              </div>
+            </section>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
+</div>
 {% endblock main_content %}
