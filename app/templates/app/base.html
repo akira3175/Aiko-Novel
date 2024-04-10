@@ -106,7 +106,7 @@
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="#">Lịch sử</a></li>
                       <li><a class="dropdown-item" href="#">Yêu thích</a></li>
-                      <li><a class="dropdown-item" href="#">Cài đặt</a></li>
+                      <li><a class="dropdown-item" href="#" onclick="loadChangePasswordForm()">Đổi mật khẩu</a></li>
                       <li><a class="dropdown-item" href= {% url 'transteam' %}>Danh sách nhóm</a></li>
                       <li><a class="dropdown-item" href= {% url 'logout' %}>Đăng xuất</a></li>
                     </ul>
@@ -122,6 +122,7 @@
         {% block register %}  {% endblock register %}
         {% include 'app/register.html' %}
         {% include 'app/login.html' %}
+        {% include 'app/changepassword.html' %}
         <!-- footer-->
         <footer class="container--fluid bg-success text-center b-2 mt-5">
           Aiko Novel - All rights reserved

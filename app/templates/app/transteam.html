@@ -48,8 +48,10 @@
                                                     <ul class="dropdown-menu">
                                                         <li><a href="#" class="dropdown-item">Xem thông tin nhóm </a></li>
                                                         <li><a href= {% url 'novel-of-trans-team' group_id=group_info.groupid %} class="dropdown-item">Xem truyện của nhóm</a></li>
+                                                        {% if group_info.is_member%}
                                                         <li><a href= {% url 'member-of-trans-team' group_id=group_info.groupid %} class="dropdown-item">Xem thành viên nhóm</a></li>
-                                                        {% if not group_info.is_member %}
+                                                        {% endif %}
+                                                        {% if not group_info.is_member and not group_info.is_waiter %}
                                                         <li><a href= {% url 'want_to_join' group_id=group_info.groupid %} class="dropdown-item">Tham gia nhóm</a></li>
                                                         {% endif %}
                                                     </ul>
