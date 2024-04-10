@@ -34,4 +34,5 @@ urlpatterns = [
     path('out-group/<int:group_id>', views.outGroup, name='out_group'),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('admin/ckeditor/', views.ckeditor_admin, name='ckeditor_admin'),
+    path('novel/<int:id>/', views.novel, name='novel'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

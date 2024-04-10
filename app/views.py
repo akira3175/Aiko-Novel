@@ -164,6 +164,10 @@ def novelWorks(request, group_id, book_id):
 
     return render(request, 'app/novelworks.html', context)
 
+def novel(request,id):
+    book = Book.objects.get(id=id)
+    return render(request, 'app/novel.html',{'book': book})
+
 @csrf_exempt
 def saveBook(request):
     if request.method == 'POST':

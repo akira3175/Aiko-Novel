@@ -1,0 +1,166 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block main_content %}
+    <body>
+    <main id="mainpart" class="project-page" style="min-height: 872px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-breadcrumb">
+                        <span class="breadcrum-level">
+                            <a href="https://docln.net"><i class="fas fa-home"></i></a>
+                        </span>
+                        <span class="next-icon"><i class="fas fa-chevron-right"></i></span>
+                        <span class="breadcrum-level"><a href="{% url 'home'%}">Truyện dịch</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row d-block clearfix">
+                <div class="col-12 col-lg-9 float-left">
+                    <section class="feature-section at-series clear">
+                        <main class="section-body">
+                            <div class="top-part">
+                                <div class="row">
+                                    <div class="left-column col-12 col-md-3">
+                                        <div class="series-cover">
+                                            <div class="series-type">
+                                                <span>Truyện dịch</span>
+                                            </div>
+                                            <div class="a6-ratio">
+                                                <div class="content img-in-ratio" style="background-image: url('{{book.img.url}}');"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-9 flex flex-col">
+                                        <div class="flex-1">
+                                            <div class="series-name-group">
+                                                <div class="series-name">{{book.title}}</div>
+                                            </div>
+                                            <div class="series-information mb-0 flex flex-col">
+                                                <div class="series-gernes">
+                                                    {% for category in book.category %}
+                                                        <a class="series-gerne-item" href="">{{category}}</a>
+                                                    {% endfor %}
+                                                </div>
+                                                <div class="info-item">
+                                                    <span class="info-name">Tác giả:</span>
+                                                    <span class="info-value"><a href="">{{book.author}}</a></span>
+                                                </div>
+                                                <div class="info-item">
+                                                    <span class="info-name">Họa sĩ:</span>
+                                                    <span class="info-value"><a href="">{{book.artist}}</a></span>                                                </div>
+                                                <div class="info-item">
+                                                    <span class="info-name">Tình trạng:</span>
+                                                    <span class="info-value">
+                                                        <a href="https://docln.net/truyen-dang-tien-hanh">
+                                                            {% if book.isCompleted %}
+                                                                Đã hoàn thành
+                                                            {% else %}
+                                                                Đang tiến hành
+                                                            {% endif %}</a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="side-features flex-none">
+                                            <div class="row">
+                                                <div class="col-4 col-md feature-item width-auto-xl">
+                                                    <a id="collect" class="side-feature-button button-follow follow" >
+                                                        <span class="block feature-value"><i class="far fa-heart"></i></span>
+                                                        <span class="block feature-name"> 97 </span>
+                                                    </a>
+                                                </div>
+                                                
+                                                <div class="col-4 col-md feature-item width-auto-xl">
+                                                    <div class="catalog-icon side-feature-button">
+                                                        <span class="block feature-value"><i class="fas fa-list"></i></span>
+                                                        <span class="block feature-name">Mục lục</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4 col-md feature-item width-auto-xl">
+                                                    <a href="https://docln.net/truyen/17382-teniireta-saimin-apuri-de-yume-no-haremu-seikatsu-o-okuritai#series-comments" class="side-feature-button">
+                                                        <span class="block feature-value"><i class="fas fa-comments"></i></span>
+                                                        <span class="block feature-name">Bàn luận</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bottom-part">
+                                <div class="row">
+                                    <div class="summary-wrapper other-facts col-12">
+                                        <div class="fact-item">
+                                            <div class="fact-name">Tên khác:</div>
+                                            <div class="fact-value">{{book.anothername}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="summary-wrapper col-12">
+                                        <div class="series-summary">
+                                            <h4 class="font-bold">Tóm tắt</h4>
+                                            <div class="summary-content">
+                                                {{book.description}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </main>
+                    </section>
+                </div>
+                <div id="rd-sidebar" class="col-12 col-lg-3 float-right">
+                    <div class="row top-group">
+                        <div class="col-12 no-push push-3-m col-md-6 no-push-l col-lg-12">
+                            <section class="series-users">
+                                <main>
+                                    <div class="series-owner group-mem">
+                                        <img width="50px" height="50px" src="" alt=""/>
+                                        <div class="series-owner-title">
+                                            <span class="series-owner_name"><a href=""></a></span>
+                                        </div>
+                                    </div>
+                                    <div class="fantrans-section">
+                                        <div class="fantrans-name">Nhóm dịch</div>
+                                        <div class="fantrans-value"><a href=""></a></div>
+                                    </div>
+                                    <div class="owner-donate" style="padding: 0;"></div>
+                                </main>
+                            </section>
+                        </div>
+                    </div>
+                    <section class="series-note basic-section gradual-mobile">
+                        <header class="sect-header">
+                            <span class="sect-title">Chú thích thêm</span><span class="mobile-icon"></span>
+                        </header>
+                        <main class="d-lg-block">
+                            <div class="long-text" style="word-wrap: break-word;">{{book.note}}</div>
+                        </main>
+                    </section>
+                </div>
+                <div class="col-12 col-lg-9 float-left">
+                    <div style="text-align: center; margin: 0 auto 10px auto;"></div>
+                    <section class="volume-list at-series basic-section volume-mobile gradual-mobile">
+                        <header id="volume_23798" class="sect-header">
+                            <span class="sect-title"> Mục Lục</span>
+                        </header>
+                        <main class="d-lg-block">
+                            
+                        </main>
+                    </section>
+                    <section id="series-comments" class="basic-section">
+                        <header class="sect-header tab-list">
+                            <span class="sect-title tab-title" data-tab-index="1">Tổng bình luận <span class="comments-count"></span></span>
+                        </header>
+                        <main id="fbcmt_root" class="comment-wrapper d-lg-block clear">
+                        </main>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="{% static 'app/js/novel.js'%}"> </script>
+</body>
+{% endblock main_content %}
