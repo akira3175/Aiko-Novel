@@ -67,7 +67,16 @@ class BookForm(forms.ModelForm):
         model = Book
         fields = ['id', 'title', 'description', 'anothername', 'author', 'artist', 'isCompleted', 'workerid', 'note', 'quantityVol', 'dateUpdate', 'dateUpload']
 
-
+class Contents(models.Model):
+    id = models.AutoField(primary_key=True)
+    book = models.ForeignKey(Book, related_name='contents', on_delete=models.CASCADE)
+    content_text = models.TextField()
+    def __str__(self):
+        return self.content_text
+class Chapter(models.Model):
+    id = models.AutoField(primary_key=True)
+    contents = models.ForeignKey('Contents', related_name='chapters', on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
 """Category model"""
 
 class Category(models.Model):
@@ -80,6 +89,21 @@ class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = ['id', 'name']
+
+"""Category-Book model"""
+
+class CategoryBook(models.Model):
+    book = models.OneToOneField(Book, on_delete=models.CASCADE)
+    category = models.OneToOneField(Category, on_delete=models.CASCADE)
+    def __str__(self):
+        return f"{self.book.title} - {self.category.name}"
+    
+class CategoryBookForm(forms.ModelForm):
+    class Meta:
+        model = CategoryBook
+        fields = '__all__'
+
+"""Translate Group"""
 
 class Group(models.Model):
     id = models.AutoField(primary_key=True)

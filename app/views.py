@@ -8,10 +8,14 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout # thu vien xac thuc
 from django.contrib.auth.models import User
 from django.contrib import messages # thu vien thong bao
+from .models import Chapter, Contents, UserForm
+from forum.models import ForumPost
 from django.views.decorators.csrf import csrf_exempt
 from django import forms
 
 # Create your views here.
+
+"""Login and Register"""
 def register(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -91,10 +95,16 @@ def loginPage(request):
 def logoutPage(request):
     logout(request)
     return redirect('home')
+
+"""Home page"""
     
 def home(request):
+    latest_posts = ForumPost.objects.all().order_by('-created_at')[:5]
     novels = Book.objects.all()
-    return render(request, 'app/home.html', {'novels': novels}) 
+    context = {'latest_posts': latest_posts, 'novels': novels}
+    return render(request, 'app/home.html', context) 
+
+"""Search page"""
     
 def search(request):
     keywords = request.GET.get('keywords')
@@ -106,41 +116,141 @@ def search(request):
                 matched_books.append(book)
     return render(request, 'app/search.html', {'keywords': keywords,'matched_books': matched_books})
 
-def forOfTransTeam(group_member_counts, groups, join):
-    for group in groups:
-        member = Member.objects.filter(group=group, teamrole__in = ['owner', 'admin', 'member'])
-        group_member_info = {
-            'groupname': group.groupname,
-            'groupid': group.id,
-            'member_count': member.count(),
-            'join' : join,
-            'is_member': (join == 'Đã tham gia')
+"""Novel works"""
+
+def novelWorks(request, group_id, book_id):
+    if int(book_id) == 0:
+        book = {
+            'id': 0,
+            'title': 'Truyện không có tiêu đề',
+            'description': '',
+            'img_path': None,
+            'anothername': '',
+            'author': '',
+            'artist': '',
+            'isCompleted': None,
+            'workerid': None,
+            'note': None,
+            'quantityVol': None,
+            'dateUpload': None,
+            'dateUpdate': None,
+            'category': None,
         }
-        group_member_counts.append(group_member_info)
-    
-
-def transTeam(request):
-    user = request.user
-    user_groups = Member.objects.filter(auth_user=user).values_list('group', flat=True)
-    groups = Group.objects.filter(id__in=user_groups)
-    other_groups = Group.objects.exclude(id__in=user_groups)
-    
-    group_member_counts = []
-    forOfTransTeam(group_member_counts, groups, 'Đã tham gia')
-    forOfTransTeam(group_member_counts, other_groups, 'Chưa tham gia')
-    
-    context = {
-        'group_member_counts': group_member_counts,
-    }
-    return render(request, 'app/transteam.html', context)
-
-def novelOfTransTeam(request):
-    return render(request, 'app/novel-of-trans.html')
-
-def novelWorks(request):
+    else:
+        # Lấy thông tin từ model Book
+        try:
+            book_obj = Book.objects.get(pk=book_id)
+            book = {
+                'id': book_obj.id,
+                'title': book_obj.title,
+                'description': book_obj.description,
+                'img_path': book_obj.img.url if book_obj.img else '',
+                'anothername': book_obj.anothername,
+                'author': book_obj.author,
+                'artist': book_obj.artist,
+                'isCompleted': book_obj.isCompleted,
+                'workerid': book_obj.workerid,
+                'note': book_obj.note,
+                'quantityVol': book_obj.quantityVol,
+                'dateUpload': book_obj.dateUpload,
+                'dateUpdate': book_obj.dateUpdate,
+                'category': book_obj.category,
+            }
+        except Book.DoesNotExist:
+            book = None  # Không tìm thấy đối tượng Book
     categories = Category.objects.all()
-    return render(request, 'app/novelworks.html', {'categories': categories})
+    group = Group.objects.get(pk=group_id)
+    contents = Contents.objects.filter(book_id=book_id)
+    data = {
+        'contents': [],
+    }  
+    for content in contents:
+        content_data = {
+        'id': content.id,
+        'content_text': content.content_text,
+        'chapters': []
+        }
+        chapters = Chapter.objects.filter(contents__id=content.id)
+        for chapter in chapters:
+            content_data['chapters'].append({
+            'id': chapter.id,
+            'title': chapter.title,
+        })
+        data['contents'].append(content_data)
+    context = {'categories': categories, 'book': book, 'group': group,'data':data}
 
+    return render(request, 'app/novelworks.html', context)
+@csrf_exempt
+def deleteContents(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        id = data.get('id')  
+        try:
+            content_to_delete = Contents.objects.get(id=id)
+            content_to_delete.delete()
+            data = {
+                'status': 'deleted',
+                'message': f'Content with ID {id} has been deleted'
+            }
+        except Contents.DoesNotExist:
+            data = {
+                'status': 'error',
+                'message': f'Content with ID {id} does not exist'
+            }
+    else:
+        data = {
+            'status': 'error',
+            'message': 'Invalid Request Method'
+        }
+
+    return JsonResponse(data)
+    
+    return JsonResponse(data)
+@csrf_exempt
+def saveContents(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        book_id = data['book_id']
+        content_text = data['content']
+
+        if 'id' in data:
+            contents_id = data['id']
+            content_to_update = Contents.objects.get(pk=contents_id)
+            content_to_update.content_text = content_text
+            content_to_update.save()
+            
+            data = {
+                'id': contents_id,
+                'status': 'updated'
+            }
+        else:
+            new_content = Contents.objects.create(book_id=book_id, content_text=content_text)
+            data = {
+                'id': new_content.id,
+                'status': 'created'
+            }
+
+    else:
+        data = {
+            'status': 'error',
+            'message': 'Invalid Request Method'
+        }
+    
+    return JsonResponse(data)
+
+@csrf_exempt
+def saveChapter(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        contents_id = data['contents_id']
+        title = data['title']
+        new_content  = Chapter.objects.create(contents_id=contents_id, title=title)
+        data = {
+            'id':new_content.id,
+            'status': 'success'
+        }
+    
+    return JsonResponse(data)
 @csrf_exempt
 def saveBook(request):
     if request.method == 'POST':
@@ -156,8 +266,8 @@ def saveBook(request):
         isCompleted = checkboxChecked.lower() == 'true' if checkboxChecked else False
         image = request.FILES.get('image')
 
-        # Kiểm tra xem id có phải là -1 (tạo mới) hay không
-        if id == -1:
+        # Kiểm tra xem id có phải là 0 (tạo mới) hay không
+        if id == 0:
             # Tạo mới đối tượng Book
             new_book = Book.objects.create(
                 title=title,
@@ -172,7 +282,7 @@ def saveBook(request):
                 dateUpdate=timezone.now()
             )
             # Trả về phản hồi thành công
-            return redirect('novel-of-trans-team')
+            return redirect('novel-of-trans-team', group_id=novelTransTeam)
         else:
             # Cập nhật thông tin của đối tượng Book đã tồn tại
             try:
@@ -189,18 +299,18 @@ def saveBook(request):
                     existing_book.img = image
                 existing_book.save()
                 # Trả về phản hồi thành công
-                return redirect('novel-of-trans-team')
+                return redirect('novel-of-trans-team', group_id=novelTransTeam)
             except Book.DoesNotExist:
                 return JsonResponse({'error': 'Không tìm thấy đối tượng Book với id đã cho.'}, status=404)
 
     else:
         return JsonResponse({'error': 'Yêu cầu không hợp lệ.'}, status=405)
     
+"""Profile page"""
+    
 def profile(request, username):
     userInfo, created = UserInfo.objects.get_or_create(username__username=username) 
     return render(request, 'app/profile.html', {'userInfo': userInfo})
-
-from django.shortcuts import get_object_or_404
 
 def saveBackground(request):
     if request.method == 'POST':
@@ -248,6 +358,47 @@ def saveAvatar(request):
     else:
         return JsonResponse({'success': False, 'error': 'Method not allowed'}, status=405)
     
+
+"""Translation Group page"""
+
+def forOfTransTeam(group_member_counts, groups, join):
+    for group in groups:
+        member = Member.objects.filter(group=group, teamrole__in=['owner', 'admin', 'member'])
+        group_member_info = {
+            'groupname': group.groupname,
+            'groupid': group.id,
+            'member_count': member.count(),
+            'join': join,
+            'is_member': (join == 'Đã tham gia'),  # Đã tham gia: True, Chưa tham gia: False
+            'is_waiter': (join == 'Chờ duyệt'),
+        }
+        group_member_counts.append(group_member_info)
+
+def transTeam(request):
+    user = request.user
+    member_groups = Member.objects.filter(auth_user=user, teamrole__in=['admin', 'owner', 'member']).values_list('group', flat=True)
+    waiter_groups = Member.objects.filter(auth_user=user, teamrole='waiter').values_list('group', flat=True)
+    groups = Group.objects.filter(id__in=member_groups)
+    groups_waiter = Group.objects.filter(id__in=waiter_groups)
+    other_groups = Group.objects.exclude(id__in=member_groups).exclude(id__in=waiter_groups)
+    
+    group_member_counts = []
+    forOfTransTeam(group_member_counts, groups, 'Đã tham gia')
+    forOfTransTeam(group_member_counts, groups_waiter, 'Chờ duyệt')
+    forOfTransTeam(group_member_counts, other_groups, 'Chưa tham gia')
+    
+    context = {
+        'group_member_counts': group_member_counts,
+    }
+    return render(request, 'app/transteam.html', context)
+
+
+def novelOfTransTeam(request, group_id):
+    group = Group.objects.get(pk=group_id)
+    books = Book.objects.filter(workerid=group_id)
+    context = {'books': books, 'group': group}
+    return render(request, 'app/novel-of-trans.html', context)
+    
 def memberOfTransTeam(request, group_id):
     group = Group.objects.get(pk=group_id)
     members = Member.objects.filter(group=group, teamrole__in = ['owner', 'admin', 'member'])
@@ -257,7 +408,8 @@ def memberOfTransTeam(request, group_id):
     is_member = Member.objects.filter(auth_user=request.user, group=group).exists()
     is_owner = Member.objects.filter(auth_user=request.user, group=group, teamrole='owner').exists()
     is_admin = Member.objects.filter(auth_user=request.user, group=group, teamrole='admin').exists()
-    context = {'Members' : members, 'Group':group, 'Waiters': waiters, 'is_member': is_member, 'is_admin': is_admin, 'is_owner': is_owner}
+    context = {'Members' : members, 'Group':group, 'Waiters': waiters, 
+               'is_member': is_member,'is_admin': is_admin, 'is_owner': is_owner}
     
     return render(request, 'app/member-of-trans.html', context)
 
