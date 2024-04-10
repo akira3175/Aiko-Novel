@@ -1,7 +1,7 @@
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
-from app.models import Book, UserInfo, Category, Role, Member, Group
+from app.models import *
 from app.models import GroupForm
 import json
 from django.contrib.auth.forms import UserCreationForm
@@ -219,6 +219,30 @@ def saveBook(request):
     else:
         return JsonResponse({'error': 'Yêu cầu không hợp lệ.'}, status=405)
     
+"""Write page"""
+    
+def write(request):
+    form = ChapterForm()
+    context = {'form': form}
+    return render(request, 'app/write.html', context)
+
+def saveChapter(request):
+    if request.method == 'POST':
+        chapterId = request.POST.get('chapter-id')
+        content = request.POST.get('content')
+        
+        try:
+            chapter = Chapter.objects.get(id=chapterId)
+            chapter.content = content
+            chapter.save()
+            return JsonResponse({'message': 'Data saved successfully'})
+        except Chapter.DoesNotExist:
+            return JsonResponse({'error': 'Chapter not found'}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
+
 """Profile page"""
     
 def profile(request, username):
@@ -271,6 +295,14 @@ def saveAvatar(request):
     else:
         return JsonResponse({'success': False, 'error': 'Method not allowed'}, status=405)
     
+def saveFullName(request):
+    if request.method == 'POST':
+        newFullName = request.POST.get('fullname')
+        userInfo = UserInfo.objects.get(username=request.user)
+        userInfo.full_name = newFullName
+        userInfo.save()
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False})
 
 """Translation Group page"""
 
@@ -480,3 +512,8 @@ def outGroup(request, group_id):
         return redirect('member-of-trans-team', group_id=group_id)
     
     return redirect('member-of-trans-team', group_id=group_id)
+
+"""Ckeditor"""
+def ckeditor_admin(request):
+    # Xử lý request ở đây
+    return render(request, 'admin/ckeditor.html')

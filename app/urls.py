@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 from django.conf.urls.static import static
 from django.conf import settings
 from . import views
@@ -16,10 +16,13 @@ urlpatterns = [
     path('trans-team', views.transTeam, name="transteam"),
     path('novel-of-trans-team/<int:group_id>/', views.novelOfTransTeam, name="novel-of-trans-team"),
     path('novel-works/<int:group_id>/<int:book_id>/', views.novelWorks, name="novel-works"),
+    path('write', views.write, name="write"),
     path('saveBook', views.saveBook, name='saveBook'),
+    path('save-chapter/', views.saveChapter, name='save-chapter'),
     path('profile/<str:username>/', views.profile, name='profile'),
     path('save-background/', views.saveBackground, name='save-background'), 
     path('save-avatar/', views.saveAvatar, name='save-avatar'), 
+    path('save-fullname/', views.saveFullName, name="save-fullname"),
     path('member-of-trans-team/<int:group_id>', views.memberOfTransTeam, name="member-of-trans-team"),
     path('want-to-join/<int:group_id>', views.wantToJoin, name='want_to_join'),
     path('approve-member/<int:group_id>/<int:member_id>', views.approveMember, name='approve_member'),
@@ -29,4 +32,6 @@ urlpatterns = [
     path('delete-group/<int:group_id>', views.deleteGroup, name='delete_group'),
     path('delete-member/<int:group_id>/<int:member_id>', views.deleteMember, name='delete_member'),
     path('out-group/<int:group_id>', views.outGroup, name='out_group'),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('admin/ckeditor/', views.ckeditor_admin, name='ckeditor_admin'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

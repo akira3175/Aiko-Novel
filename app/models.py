@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.utils import timezone
+from ckeditor.fields import RichTextField
 
 
 # Create your models here.
@@ -67,6 +68,22 @@ class BookForm(forms.ModelForm):
         model = Book
         fields = ['id', 'title', 'description', 'anothername', 'author', 'artist', 'isCompleted', 'workerid', 'note', 'quantityVol', 'dateUpdate', 'dateUpload']
 
+"""Chapters"""
+class Chapter(models.Model):
+    id = models.AutoField(primary_key=True,)
+    volume = models.IntegerField(null=True, blank=True)
+    title = models.TextField()
+    content = RichTextField()
+    view = models.IntegerField()
+    date_upload = models.DateTimeField()
+
+    def __str__(self):
+        return self.title
+
+class ChapterForm(forms.ModelForm):
+    class Meta:
+        model = Chapter
+        fields = ['title', 'content']
 
 """Category model"""
 

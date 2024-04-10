@@ -74,7 +74,29 @@
                                             {{ userInfo.full_name }}
                                         </div>
                                     </div>
-                                    <div class="another col-lg-5 col-md-5 col-sm-12 col-12">
+                                    <div class="another col-lg col-md col-sm-12 col-12 porel">
+                                        <div class="btn btn-grey edit-profile-btn" onclick="loadEditProfileForm()">Chỉnh sửa hồ sơ</div>
+                                        <div id="edit-profile-form" style="display: none; height: 100vh; position: fixed">
+                                            <div class="overlay">
+                                                <div class="overlay-dialog">
+                                                    <div class="edit-profile dialog">
+                                                        <div class="dialog-title w-100">
+                                                            <div class="form-title">Chỉnh sửa hồ sơ</div>
+                                                        </div>
+                                                        <div class="dialog-body w-100">
+                                                            <div class="dialog-close" onclick="closeEditProfileForm()">
+                                                                <i class="fa-solid fa-x"></i>
+                                                            </div>
+                                                            <h5 class="title">Chỉnh sửa tên</h5>
+                                                            <div class="edit-profile-name">
+                                                                <div class="profile-name-data col" contenteditable="true">{{ userInfo.full_name }}</div>
+                                                                <button class="btn btn-blue" onclick="saveFullName()">Lưu</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -45,12 +45,6 @@
     padding: 10px 15px;
 }
 
-.owl-carousel .owl-wrapper-outer {
-    overflow: hidden;
-    position: relative;
-    width: 100%;
-}
-
 .slide-item {
     display: block;
     position: relative;
@@ -200,14 +194,6 @@ a.series-name {
         height: 200px;
     }
 
-    .owl-wrapper {
-        width: 1000%;
-    }
-
-    .owl-item {
-        width: 5.2%;
-    }
-
     .gridlist .glitem {
         width: 110px;
         height: 140px;
@@ -223,15 +209,6 @@ a.series-name {
         width: 170px;
         height: 200px;
     }
-    
-    .owl-wrapper {
-        width: 1000%;
-    }
-
-    .owl-item {
-        width: 192px;
-    }
-
     
     .gridlist .glitem {
         width: 150px;
@@ -249,10 +226,6 @@ a.series-name {
         width: 170px;
         height: 200px;
     }
-
-    .owl-item {
-        width: 172px;
-    }
     
     .gridlist .glitem {
         width: 120px;
@@ -269,15 +242,6 @@ a.series-name {
     .slide-item {
         width: 200px;
         height: 260px;  
-    }
-
-    
-    .owl-wrapper {
-        width: 500%;
-    }
-
-    .owl-item {
-        width: 252px;
     }
 
     .gridlist .glitem {

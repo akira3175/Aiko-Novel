@@ -1,0 +1,62 @@
+.is-upload {
+    color: #6f6f6f;
+    font-size: small;
+}
+
+#cke_id_content {
+    font-size: 18px !important;
+}
+
+#writer-editor-container {
+    background-color: #e9f8fd;
+}
+
+#writer-editor {
+    position: relative;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 50px 90px;
+}
+
+#writer-editor .chapter-title {
+    
+}
+
+#chapter-title-input {
+    width: 100%;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    font-size: xx-large;
+    text-align: center;
+    border-bottom: 1px solid grey;
+    outline: none;
+}
+
+#chapter-content {
+    font-size: 18px;
+    outline: none;
+    min-height: 80vh;
+}
+
+#chapter-content br
+{   content: "" !important;
+    display: block !important;
+    padding-bottom: 1.3em !important;
+}
+
+.chapter-detail {
+    padding: 48px 100px;
+}
+
+.placeholder-chapter {
+    font-size: 18px;
+    position: absolute;
+    pointer-events: none; 
+    color: #aaa;
+}
+
+#chapter-content img {
+    width: 60%;
+    margin-left: 20%;
+}

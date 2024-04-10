@@ -1,8 +1,9 @@
 from django.contrib import admin
-from app.models import Book, Category, UserInfo, Role, Group, Member, CategoryBook
+from app.models import *
 
 # Register your models here.
 admin.site.register(Book)
+admin.site.register(Chapter)
 admin.site.register(Category)
 admin.site.register(UserInfo)
 admin.site.register(Role)

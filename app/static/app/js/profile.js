@@ -3,7 +3,7 @@ function previewImageBackground(event) {
     moveBackground();
     var input = event.target;
     var reader = new FileReader();
-    reader.onload = function(){
+    reader.onload = function () {
         var dataURL = reader.result;
         var divPreview = document.querySelector('.background-img-overlay');
         var preview = document.querySelector('.background-img-data');
@@ -34,11 +34,11 @@ function saveBackgroundImage() {
         },
         processData: false,
         contentType: false,
-        success: function(response) {
+        success: function (response) {
             console.log("Vị trí cuộn của phần tử nền đã được lưu vào cơ sở dữ liệu.");
             location.reload();
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error("Đã xảy ra lỗi khi gửi vị trí cuộn của phần tử nền lên máy chủ:", error);
         }
     });
@@ -62,7 +62,7 @@ function getCookie(name) {
 
 function positionBackground() {
     var position = parseInt(document.querySelector('.background-sub').getAttribute('position'));
-    document.querySelector('.background-sub').style.top = 'calc(-100% - ' + ( position ) + 'px)';
+    document.querySelector('.background-sub').style.top = 'calc(-100% - ' + (position) + 'px)';
 };
 
 function resetPosition() {
@@ -74,19 +74,19 @@ function moveBackground() {
     var startY = 0;
     var backgroundSub = document.querySelector('.background-img-main');
 
-    document.addEventListener('mousedown', function(event) {
+    document.addEventListener('mousedown', function (event) {
         // Khi người dùng nhấn giữ chuột, đặt biến isMouseDown thành true
         isMouseDown = true;
         startY = event.clientY;
         event.preventDefault();
     });
 
-    document.addEventListener('mouseup', function() {
+    document.addEventListener('mouseup', function () {
         // Khi người dùng thả chuột, đặt biến isMouseDown thành false
         isMouseDown = false;
     });
 
-    document.addEventListener('mousemove', function(event) {
+    document.addEventListener('mousemove', function (event) {
         // Khi người dùng di chuyển chuột
         if (isMouseDown) {
             // Nếu người dùng đang giữ chuột, thực hiện cuộn .background-img-main
@@ -99,11 +99,11 @@ function moveBackground() {
             } else {
                 backgroundSub.scrollTop += Math.abs(deltaY); // Cuộn lên
             }
-            startY = event.clientY; 
+            startY = event.clientY;
         }
     });
 }
- 
+
 function saveAvatarImage() {
     var avatarImage = document.getElementById('avatar-upload').files[0];
     var formData = new FormData();
@@ -118,12 +118,41 @@ function saveAvatarImage() {
         },
         processData: false,
         contentType: false,
-        success: function(response) {
+        success: function (response) {
             console.log("Đã lưu ảnh vào cơ sở dữ liệu.");
             location.reload();
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error("Đã xảy ra lỗi khi lưu ảnh lên máy chủ:", error);
         }
     })
+}
+
+function loadEditProfileForm() {
+    $("#edit-profile-form").show();
+    toggleModalOpen();
+}
+
+function closeEditProfileForm() {
+    $("#edit-profile-form").hide();
+    toggleModalOpen();
+}
+
+function saveFullName() {
+    // Lấy thông tin mới từ trường chỉnh sửa
+    var newFullName = document.querySelector('.profile-name-data').innerText.trim();
+    $.ajax({
+        url: '/save-fullname/',  // URL đến view xử lý lưu
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        data: { fullname: newFullName },
+        success: function(response) {
+            location.reload();
+        },
+        error: function(xhr, status, error) {
+            alert('Đã xảy ra lỗi khi lưu thông tin!');
+        }
+    });
 }

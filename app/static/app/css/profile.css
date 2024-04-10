@@ -7,7 +7,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.4); 
+    background-color: rgba(0, 0, 0, 0.4);
     position: absolute;
     top: 0;
     height: 60px;
@@ -75,14 +75,14 @@
     height: 100%;
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
     z-index: -1;
     object-fit: cover;
 }
 
 .background-img-main {
     height: 100%;
-    background-color: #ccc; 
+    background-color: #ccc;
     background-image: inherit;
     background-size: cover;
     background-position: center;
@@ -127,8 +127,7 @@
     border-radius: 0 0 10px 10px;
 }
 
-.input-edit-background {
-}
+.input-edit-background {}
 
 .icon-upload {
     display: flex;
@@ -205,7 +204,46 @@
 }
 
 .user-fullname {
+    margin-top: 12px;
     font-size: 2rem;
     font-weight: 600;
     height: inherit;
+}
+
+.edit-profile-btn {
+    position: absolute;
+    cursor: pointer;
+    right: 0;
+    top: 21px;
+}
+
+.edit-profile {
+    width: 600px !important; 
+}
+
+.edit-profile-name {
+    display: flex;
+    align-items: center;
+}
+
+.profile-name-data {
+    border: 1px solid rgba(0, 0, 0, 0.7);
+    outline: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 0.4rem;
+    padding: 8px;
+    color: var(--bs-black);
+}
+
+.edit-profile-name .btn {
+    height: 37.6px;
+    margin-left: 1rem;
+}
+
+#edit-profile-form h5 {
+    font-weight: 600;
+    color: var(--bs-black);
+    margin: 0 0 10px 10px;
 }

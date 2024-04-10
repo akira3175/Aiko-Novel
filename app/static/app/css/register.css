@@ -39,6 +39,10 @@
 
 }
 
+.dialog-title {
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
 .dialog-body {
     padding: 32px !important;
     color: #606266;

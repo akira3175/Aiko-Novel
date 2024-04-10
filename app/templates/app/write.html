@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Aiko Novel</title>
+        <!--css bootstrap-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"/>
+        <link href="{% static 'app/css/home.css' %}" rel="stylesheet"/>
+        <link href="{% static 'app/css/base.css' %}" rel="stylesheet"/>
+        <link href="{% static 'app/css/transteam.css' %}" rel="stylesheet"/>
+        <link href="{% static 'app/css/register.css' %}" rel="stylesheet"/>
+        <link href="{% static 'app/css/novelworks.css' %}" rel="stylesheet"/>
+        <link href="{% static 'app/css/write.css' %}" rel="stylesheet"/>
+        <link href="{% static 'app/css/fontawesome-free-6.5.1-web/css/all.min.css' %}" rel="stylesheet"/>
+        <!--js-->
+        <script src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+        <script src="{% static 'app/js/loadPage.js'%}"> </script>
+        <script src="{% static 'app/js/write.js'%}"> </script>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body style="background-color: #e9f8fd;">
+        <!--main-content-->
+        <div class="app-container">
+            <div>
+                <div class="works-item-edit">
+                    <div id="edit-controls" class="edit-profile">
+                        <button class="btn on-edit-cancel" onclick="goBack()">
+                            <i class="fa-solid fa-angle-left"></i>
+                        </button>
+                        <div class="works-item-metadata" novel-id="{{ book.id }}">
+                            <p class="group-title">Ta Ở Đại Lý Tự Làm Sủng Vật</p>
+                            <span><h4 id="volume-id">Tập 01 : Nụ hoa chờ đợi cưng chiều</h4></span>
+                            <h6 class="is-upload">Bản thảo</h6>
+                        </div>
+                        <div class="actions pull-right">
+                            <img src="" alt="" class="save-working">
+                            <button class="btn btn-grey on-edit-delete" onclick="deleteChapter()">Xóa</button>
+                            <button class="btn btn-grey on-edit-save" onclick="saveChapter()">Lưu</button>
+                            <button class="btn btn-blue on-edit-save" onclick="uploadChapter()">Đăng</button>
+                        </div>
+                    </div>
+                    <section id="writer-editor-container">
+                        <div id="writer-editor" chapter-id="1">
+                            <input type="text" id="chapter-title-input" value="Chương 01 : Con mèo đáng thương">
+                            <div class="chapter-detail">
+                                <label for="chapter-content" class="placeholder-chapter">Nhập nội dung ở đây...</label>
+                                <div id="chapter-content" contenteditable="true"></div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <!-- footer-->
+        
+
+        <script src="" async defer></script>
+    </body>
+</html>
