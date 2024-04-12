@@ -43,6 +43,19 @@ class UserInfoForm(forms.ModelForm):
         model = UserInfo
         fields = ['username', 'full_name', 'date_join', 'img_avatar', 'img_background'] 
 
+"""Category model"""
+
+class Category(models.Model):
+    id = models.IntegerField(primary_key = True)
+    name = models.CharField(unique=True, max_length=50)
+    def __str__(self):
+        return self.name
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ['id', 'name']
+
 """Book Model"""
 
 class Book(models.Model):
@@ -59,7 +72,8 @@ class Book(models.Model):
     quantityVol = models.IntegerField(default=0)
     dateUpload = models.DateField(null=True)
     dateUpdate = models.DateField(null=True)
-    category = models.CharField(max_length=100, null=True) 
+    categories = models.ManyToManyField(Category, related_name='books', blank=True)
+    isDeleted = models.BooleanField(default=False)
     def __str__(self):
         return self.title
 
@@ -68,35 +82,37 @@ class BookForm(forms.ModelForm):
         model = Book
         fields = ['id', 'title', 'description', 'anothername', 'author', 'artist', 'isCompleted', 'workerid', 'note', 'quantityVol', 'dateUpdate', 'dateUpload']
 
-"""Chapters"""
-class Chapter(models.Model):
-    id = models.AutoField(primary_key=True,)
-    volume = models.IntegerField(null=True, blank=True)
-    title = models.TextField()
-    content = RichTextField()
-    view = models.IntegerField()
-    date_upload = models.DateTimeField()
+"""Volumes"""
 
+class Volume(models.Model):
+    id = models.AutoField(primary_key=True)
+    book = models.ForeignKey(Book, related_name='volumes', on_delete=models.CASCADE)
+    title = models.TextField()
+    img = models.ImageField(upload_to='volume_images/')
     def __str__(self):
         return self.title
+
+"""Chapters"""
+
+class Chapter(models.Model):
+    id = models.AutoField(primary_key=True,)
+    volume = models.ForeignKey(Volume, related_name='chapters', on_delete=models.CASCADE)
+    title = models.TextField(default='')
+    content = RichTextField(default='')
+    view = models.IntegerField(default=0)
+    date_upload = models.DateTimeField(null=True, blank=True)
+
+    def increase_views(self):
+        self.view += 1  
+        self.save()  
+
+    def __str__(self):
+        return str(self.id)
 
 class ChapterForm(forms.ModelForm):
     class Meta:
         model = Chapter
         fields = ['title', 'content']
-
-"""Category model"""
-
-class Category(models.Model):
-    id = models.IntegerField(primary_key = True)
-    name = models.CharField(unique=True, max_length=50)
-    def __str__(self):
-        return self.name
-
-class CategoryForm(forms.ModelForm):
-    class Meta:
-        model = Category
-        fields = ['id', 'name']
 
 """Category-Book model"""
 

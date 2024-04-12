@@ -29,7 +29,7 @@
                                                 <span>Truyện dịch</span>
                                             </div>
                                             <div class="a6-ratio">
-                                                <div class="content img-in-ratio" style="background-image: url('{{book.img.url}}');"></div>
+                                                <div class="content img-in-ratio" {% if book.img %} style="background-image: url('{{book.img.url}}');" {% endif %}></div>
                                             </div>
                                         </div>
                                     </div>
@@ -40,7 +40,7 @@
                                             </div>
                                             <div class="series-information mb-0 flex flex-col">
                                                 <div class="series-gernes">
-                                                    {% for category in book.category %}
+                                                    {% for category in book.categories.all %}
                                                         <a class="series-gerne-item" href="">{{category}}</a>
                                                     {% endfor %}
                                                 </div>
@@ -126,7 +126,7 @@
                                         <div class="fantrans-name">Nhóm dịch</div>
                                         <div class="fantrans-value"><a href=""></a></div>
                                     </div>
-                                    <div class="owner-donate" style="padding: 0;"></div>
+                                    <div class="owner-donate" style="padding: 0; display: none"></div>
                                 </main>
                             </section>
                         </div>
@@ -142,14 +142,51 @@
                 </div>
                 <div class="col-12 col-lg-9 float-left">
                     <div style="text-align: center; margin: 0 auto 10px auto;"></div>
+                    {% for volume in volumes %}
                     <section class="volume-list at-series basic-section volume-mobile gradual-mobile">
                         <header id="volume_23798" class="sect-header">
-                            <span class="sect-title"> Mục Lục</span>
+                            <span class="sect-title">{{ volume.title }}</span>
                         </header>
-                        <main class="d-lg-block">
-                            
-                        </main>
+                        <div class="row pt-2">
+                            <div class="volume-info pb-3 d-flex flex-wrap">
+                                <div class="volume-img col-md-2 col-12 d-flex justify-content-center">
+                                    <image class="volume-img-main page_aiko_31758421" {% if volume.img %} src="{{volume.img.url}}" {% endif %}></image>
+                                </div>
+                                <div class="container volume-details col-md-10 col-12 porel" style="max-height: 224px">
+                                    <div class="volume-chapters w-100 table-responsive">
+                                      <table class="table table-striped">
+                                        <tbody>
+                                          {% for chapter in chapters %}
+                                          {% if chapter.volume == volume %}
+                                          <tr>
+                                            <td class="volume-chapter-details pe-3">
+                                              <div class="chapter-list d-flex justify-content-between">
+                                                <a class="chapter-name col-md-9 col-9" href=" {% url 'read' volume_id=volume.id chapter_id=chapter.id %}">
+                                                  {% if chapter.title %}
+                                                      {{ chapter.title }}
+                                                  {% else %}
+                                                      Chương chưa có tiêu đề
+                                                  {% endif %}
+                                                </a>
+                                                <div class="chapter-dateupload text-end d-none d-md-block">
+                                                  {{ chapter.date_upload | date:"j/m/Y"}}
+                                                </div>
+                                              </div>
+                                            </td>
+                                          </tr>
+                                          {% endif %}
+                                          {% endfor %}
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                    <div class="see-more-chapters poabs">
+                                      <i class="fa-solid fa-angles-down"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </section>
+                    {% endfor %}
                     <section id="series-comments" class="basic-section">
                         <header class="sect-header tab-list">
                             <span class="sect-title tab-title" data-tab-index="1">Tổng bình luận <span class="comments-count"></span></span>

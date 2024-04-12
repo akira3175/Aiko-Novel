@@ -3,6 +3,7 @@ from app.models import *
 
 # Register your models here.
 admin.site.register(Book)
+admin.site.register(Volume)
 admin.site.register(Chapter)
 admin.site.register(Category)
 admin.site.register(UserInfo)

@@ -1,0 +1,73 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block banner_slider %}
+{% endblock banner_slider %}
+{% block main_content %}
+<body style="background-color: #e9f8fd;">
+    <!--main-content-->
+    <div class="app-container">
+        <div>
+            <div class="read-novel">
+                <section id="read-novel-container">
+                    <div id="novel" chapter-id="{{ chapter.id }}">
+                        <div class="top-bar pt-5">
+                            <div class="index box">
+                                {% if previous_chapter %}
+                                <a href="{% url 'read' volume_id=previous_chapter.volume.id chapter_id=previous_chapter %}" id="btn-pre-chapter" class="btn btn-blue">Chương trước</a>
+                                {% endif %}
+                                <a href="{% url 'novel' id=book.id %}" id="btn-index" class="btn btn-blue mx-3">Mục lục</a>
+                                {% if next_chapter %}
+                                <a href="{% url 'read' volume_id=next_chapter.volume.id chapter_id=next_chapter %}" id="btn-next-chapter" class="btn btn-blue">Chương tiếp theo</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="chapter-info d-flex flex-column align-items-center justify-content-center pt-5 pb-4">
+                            <div class="novel">
+                                <a class="novel-title fs-5" href="{% url 'novel' id=book.id %}">
+                                    {{ book.title }}
+                                </a>
+                            </div>
+                            <div class="volume">
+                                <div class="volume-title fs-4">
+                                    {{ volume.title}}
+                                </div>
+                            </div>
+                        </div>
+                        <div id="chapter-title" placeholder=>
+                            {% if chapter.title %}
+                                {{ chapter.title }}
+                            {% else %}
+                                Chương chưa có tiêu đề
+                            {% endif %}
+                        </div>
+                        <div class="chapter-detail">
+                            <div id="chapter-content" class="col-md-9 col-12">{{ chapter.content | safe }}</div>
+                        </div>
+                        <div class="bottom-bar pt-5">
+                            <div class="index box">
+                                {% if previous_chapter %}
+                                <a href="{% url 'read' volume_id=previous_chapter.volume.id chapter_id=previous_chapter %}" id="btn-pre-chapter" class="btn btn-blue">Chương trước</a>
+                                {% endif %}
+                                <a href="{% url 'novel' id=book.id %}" id="btn-index" class="btn btn-blue mx-3">Mục lục</a>
+                                {% if next_chapter %}
+                                <a href="{% url 'read' volume_id=volume.id chapter_id=next_chapter %}" id="btn-next-chapter" class="btn btn-blue">Chương tiếp theo</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <!-- footer-->
+    
+
+    <script src="" async defer></script>
+    <script>
+        console.log(2)
+        document.addEventListener("DOMContentLoaded", function() {
+            // Kích hoạt CKEditor
+        });
+    </script>
+</body>
+{% endblock main_content %}

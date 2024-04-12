@@ -338,8 +338,8 @@ input:checked+.slider:before {
     overflow: hidden;
 }
 
-.table-striped tbody tr:nth-of-type(even) {
-    background-color: red; /* Màu xen kẽ cho hàng lẻ */
+.preview-volume {
+    width: 100%;
 }
 
 .table-striped {

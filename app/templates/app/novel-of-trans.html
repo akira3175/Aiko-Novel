@@ -22,17 +22,17 @@
                             </div>
                             <section class="item-lists row" role="list">
                                 <div class="works-list">
-                                    {% for book in books %}
+                                    {% for item in books_with_volumes_count %}
                                     <div class="works-item">
                                         <div class="row-container">
                                             <div class="left-container">
                                                 <div class="item-wrapper">
                                                     <div class="item-img">
-                                                        <img src="{{ book.img.url }}" alt="{{ book.title }}" height="70" class="page_aiko_31758421 cover cover-sm-works">
+                                                        <img if {%if item.book.img %}src="{{ item.book.img.url }}" {% endif %} alt="{{ item.book.title }}" height="70" class="page_aiko_31758421 cover cover-sm-works">
                                                     </div>
                                                     <div class="item-info">
-                                                        <h3 class="item-name"><a href=""><strong>{{ book.title }}</strong></a></h3>
-                                                        <div class="counts"><strong>5 tập</strong></div>
+                                                        <h3 class="item-name"><a href=""><strong>{{ item.book.title }}</strong></a></h3>
+                                                        <div class="counts"><strong>{{item.volume_count}} tập</strong></div>
                                                         <!--<div class="counts"><strong>7 truyện</strong></div>-->
                                                     </div>
                                                     <div class="meta-wrapper">
@@ -47,7 +47,7 @@
                                                     </buton>
                                                     <div class="triangle"></div>
                                                     <ul class="dropdown-menu">
-                                                        <li><a href="{% url 'novel-works' group_id=group.id book_id=book.id %}" class="dropdown-item">Cập nhật</a></li>
+                                                        <li><a href="{% url 'novel-works' group_id=group.id book_id=item.book.id %}" class="dropdown-item">Cập nhật</a></li>
                                                         <li><a href="#" class="dropdown-item">Xóa</a></li>
                                                     </ul>
                                                 </div>
@@ -55,7 +55,7 @@
                                         </div>
                                     </div>
                                     {% empty %}
-                                        <p>Không có sách nào được tìm thấy.</p>
+                                        <p class="no-novel-text">Không có sách nào được tìm thấy.</p>
                                     {% endfor %}
                                 </div>
                             </section>

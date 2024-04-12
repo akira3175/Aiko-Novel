@@ -109,10 +109,6 @@
     padding-left: 50px;
 } 
 
-#content-works .row-container .left-container .item-wrapper .item-img {
-    
-} 
-
 .cover-sm-works {
     width: 80px;
     height: 125px;
@@ -154,4 +150,8 @@
     padding: 9px 50px;
 }
 
-
+.no-novel-text {
+    text-align: center;
+    font-size: larger;
+    color: rgba(0,0,0,.7)
+}

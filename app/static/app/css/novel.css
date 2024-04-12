@@ -37,7 +37,7 @@
 }
 
 .feature-section .series-type {
-    background-color: #36a189;
+    background-color: var(--blue-color);
     border-radius: 4px;
     color: #fff;
     display: inline-block;
@@ -55,7 +55,6 @@
     display: block;
     font-weight: 700;
     font-size: 1.625rem;
-    font-family: OpenSans;
 }
 .feature-section .series-gerne-item{
     background-color: #eee;
@@ -74,7 +73,7 @@
     overflow: hidden;
 }
 .series-users .series-owner {
-    background-color: #36a189;
+    background-color: var(--blue-color);
     display: block;
     position: relative;
     width: 100%;
@@ -160,4 +159,27 @@ section.basic-section main {
 .other-facts .fact-name {
     font-weight: 700;
     margin-bottom: 6px;
+}
+.project-page .volume-img-main {
+    width: 122px;
+    height: 167px;
+}
+
+.project-page .see-more-chapters {
+    height: 110px;
+    background: linear-gradient(180deg, hsla(0, 0%, 100%, 0) 0, #f4f5f6 75%, #f4f5f6);
+}
+
+.project-page table {
+    --bs-table-bg: rgba(var(--bs-emphasis-color-rgb), 0.05);
+    --bs-table-striped-bg: #f4f5f6;
+}
+
+.sect-title {
+    font-size: larger;
+    font-weight: 700;
+}
+
+.summary-content {
+    padding: 0px 10px 10px;
 }

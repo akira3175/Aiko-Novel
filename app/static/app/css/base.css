@@ -9,7 +9,7 @@ body {
     line-height: 1.42857143;
 }
 
-body .modal-open {
+.modal-open {
     overflow: hidden;
 }
 
@@ -87,12 +87,12 @@ input:-webkit-autofill {
 }
 
 #search-form {
+    position: relative;
     width: 210px;
     height: 36px;
     border-radius: 20px;
     border: 1px solid #0dcaf0;
     line-height: 36px;
-    float: right;
     background-color: #ffffff;
     margin-inline-end: 25px;
 }
@@ -108,15 +108,18 @@ input:-webkit-autofill {
 }
 
 .search-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
     width: 36px;
     color: #ccc;
-    float: right;
     background: transparent;
     border: 0;
     padding: 0;
 }
 
 .anon-user {
+    transform: translateX(-0.5rem);
     display: flex !important;
     flex-wrap: nowrap !important;
 }
@@ -200,6 +203,8 @@ input:-webkit-autofill {
     cursor: move;;
 }
 
+
+
 /* Tạo thanh cuộn tùy chỉnh */
 .custom-scrollbar::-webkit-scrollbar {
     width: 0; /* Ẩn thanh cuộn trên trình duyệt Chrome và Safari */
@@ -233,10 +238,44 @@ input:-webkit-autofill {
     height: 168px !important; 
 }
 
+.cir120 {
+    border-radius: 50% !important;
+    width: 120px !important;
+    height: 120px !important;
+}
+
+.img-cover {
+    object-fit: cover;
+}
+
 .font-large {
     font-size: large;
 }
 
 .opacity-5 {
     opacity: 0.5;
+}
+
+@media (min-width: 0px) {
+    #search-form {
+        width: 100%;
+    }
+}
+
+@media (min-width: 425px) {
+
+}
+
+@media (min-width: 768px) {
+
+}
+
+@media (min-width: 992px) {
+    #search-form {
+        width: 210px;
+    }
+}
+
+@media (min-width: 1440px) {
+
 }

@@ -71,3 +71,31 @@ function onMouseMove(event) {
     window.scrollBy(0, deltaY); // Cuộn trang theo hướng di chuyển
     startY = event.clientY; // Cập nhật lại tọa độ y khi kết thúc sự kiện chuột
 }
+
+$(document).ready(function() {
+  var navbar = $('.navbar');
+  var lastScrollTop = 0;
+
+  $(window).scroll(function() {
+    var currentScroll = $(this).scrollTop();
+    if (currentScroll < lastScrollTop) {
+      // Cuộn xuống
+      navbar.addClass('sticky-top');
+    } else {
+      // Cuộn lên
+      navbar.removeClass('sticky-top');
+    }
+    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Đảm bảo lastScrollTop không âm
+  });
+
+  $(window).on('load resize', function() {
+    if ($(window).width() < 992) {
+      var searchForm = $('#search-form');
+      searchForm.prependTo(searchForm.parent());
+    }
+    else {
+      var searchForm = $('#search-form');
+      searchForm.insertAfter(searchForm.siblings().eq(0));
+    }
+  });
+});

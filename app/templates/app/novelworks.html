@@ -30,16 +30,16 @@
             <div>
                 <div class="works-item-edit">
                     <div id="edit-controls" class="edit-profile">
-                        <button class="btn on-edit-cancel" onclick="goBack()">
+                        <a class="btn on-edit-cancel" href="{% url 'novel-of-trans-team' group_id=group.id %}">
                             <i class="fa-solid fa-angle-left"></i>
-                        </button>
-                        <div class="works-item-metadata" novel-id="{{ book.id }}">
+                        </a>
+                        <div class="works-item-metadata" id="novel-id" novel-id="{{ book.id }}">
                             <p class="group-title">Chỉnh sửa thông tin truyện</p>
                             <span><h4>Truyện chưa có tên</h4></span>
                         </div>
                         <div class="actions pull-right">
                             <img src="" alt="" class="save-working">
-                            <button class="btn btn-grey on-edit-cancel" onclick="goBack()">Hủy</button>
+                            <a class="btn btn-grey on-edit-cancel" href="{% url 'novel-of-trans-team' group_id=group.id %}">Hủy</a>
                             <button class="btn btn-blue on-edit-save" onclick="saveBook()">Lưu</button>
                         </div>
                     </div>
@@ -99,6 +99,15 @@
                                                     <li><div class="dropdown-item" data-value="{{ category.id }}" onclick="removeCategory(this)">{{ category.name }}</div></li>
                                                 {% endfor %}
                                             </ul>
+                                            {% for category_id, category_name in book.categories %}
+                                            <div class="category-button" contenteditable="false">
+                                                <div data-value="{{ category_id }}" class="category-name">{{ category_name }}</div>
+                                                <div class="line"></div>
+                                                <div class="category-cancel" onclick="deleteCategory(this);">
+                                                    <i class="fa-solid fa-xmark"></i>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
                                             <input class="category-search">
                                         </div>
                                     </div>
@@ -128,224 +137,49 @@
                             <div class="table-of-contents" style="display: none">
                                 <div class="works-item-toc p-2">
                                     <div class="add-volume-container w-100 d-flex justify-content-end">
-                                        <button class="btn btn-blue" onclick="openAddVolumeForm(0)">+ Thêm tập mới</button>
+                                        <button class="btn btn-blue" onclick="openAddVolumeForm(event, 0)">+ Thêm tập mới</button>
                                     </div>
                                 </div>
-                                <div class="works-item-volume" volume-id="">
-                                    <div class="add-volume-container d-flex justify-content-between p-2">
-                                        <div class="volume-name">
-                                            Tập 01 : Nụ hoa chờ đợi cưng chiều
-                                        </div>
-                                        <div class="volume action">
-                                            <a class="btn btn-blue" href="{% url 'write' %}">Thêm chương mới</a>
-                                            <button class="btn btn-blue" onclick="openAddVolumeForm(1)">Sửa</button>
-                                            <button class="btn btn-blue">Xóa</button>
-                                        </div>
-                                    </div>
-                                    <div class="volume-info pb-3 d-flex flex-wrap">
-                                        <div class="volume-img col-md-3 col-12 d-flex justify-content-center">
-                                            <image class="volume-img-main page_aiko_31758421"></image>
-                                        </div>
-                                        <div class="container volume-details col-md-9 col-12 porel">
-                                            <div class="volume-chapters w-100 table-responsive">
-                                              <table class="table table-striped">
-                                                <tbody>
-                                                  <tr>
-                                                    <td class="volume-chapter-details pe-3">
-                                                      <div class="chapter-list d-flex justify-content-between">
-                                                        <a class="chapter-name col-md-9 col-9" href="#">
-                                                          Chương 01 : Con mèo đáng thương
-                                                        </a>
-                                                        <div class="chapter-dateupload text-end d-none d-md-block">
-                                                          19-11-2018
-                                                        </div>
-                                                      </div>
-                                                    </td>
-                                                  </tr>
-                                                  <tr>
-                                                    <td class="volume-chapter-details pe-3">
-                                                      <div class="chapter-list d-flex justify-content-between">
-                                                        <a class="chapter-name col-md-9 col-9" href="#">
-                                                          Chương 02 : Nàng là động vật quý hiếm sao?
-                                                        </a>
-                                                        <div class="chapter-dateupload text-end d-none d-md-block">
-                                                          20-11-2018
-                                                        </div>
-                                                      </div>
-                                                    </td>
-                                                  </tr>
-                                                  <tr>
-                                                    <td class="volume-chapter-details pe-3">
-                                                      <div class="chapter-list d-flex justify-content-between">
-                                                        <a class="chapter-name col-md-9 col-9" href="#">
-                                                          Chương 03 : Làm loạn ở trong y phục, xông nhầm vào khu vực cấm
-                                                        </a>
-                                                        <div class="chapter-dateupload text-end d-none d-md-block">
-                                                          21-11-2018
-                                                        </div>
-                                                      </div>
-                                                    </td>
-                                                  </tr>
-                                                  <tr>
-                                                    <td class="volume-chapter-details pe-3">
-                                                      <div class="chapter-list d-flex justify-content-between">
-                                                        <a class="chapter-name col-md-9 col-9" href="#">
-                                                          Chương 04 : Trước tiên tìm một chủ nhân để chăm sóc đã rồi tính sau
-                                                        </a>
-                                                        <div class="chapter-dateupload text-end d-none d-md-block">
-                                                          22-11-2018
-                                                        </div>
-                                                      </div>
-                                                    </td>
-                                                  </tr>
-                                                  <tr>
-                                                    <td class="volume-chapter-details pe-3">
-                                                      <div class="chapter-list d-flex justify-content-between">
-                                                        <a class="chapter-name col-md-9 col-9" href="#">
-                                                          Chương 05 : Suýt chút nữa là chết chìm ở trong chén
-                                                        </a>
-                                                        <div class="chapter-dateupload text-end d-none d-md-block">
-                                                          23-11-2018
-                                                        </div>
-                                                      </div>
-                                                    </td>
-                                                  </tr>
-                                                  <tr>
-                                                    <td class="volume-chapter-details pe-3">
-                                                      <div class="chapter-list d-flex justify-content-between">
-                                                        <a class="chapter-name col-md-9 col-9" href="#">
-                                                          Chương 06 : Gặp lại sát thủ chồn trắng
-                                                        </a>
-                                                        <div class="chapter-dateupload text-end d-none d-md-block">
-                                                          24-11-2018
-                                                        </div>
-                                                      </div>
-                                                    </td>
-                                                  </tr>
-                                                  <tr>
-                                                    <td class="volume-chapter-details pe-3">
-                                                      <div class="chapter-list d-flex justify-content-between">
-                                                        <a class="chapter-name col-md-9 col-9" href="#">
-                                                          Chương 07 : Ném lá trà vào mặt hắn 
-                                                        </a>
-                                                        <div class="chapter-dateupload text-end d-none d-md-block">
-                                                          27-11-2018
-                                                        </div>
-                                                      </div>
-                                                    </td>
-                                                  </tr>
-                                                  <tr>
-                                                    <td class="volume-chapter-details pe-3">
-                                                      <div class="chapter-list d-flex justify-content-between">
-                                                        <a class="chapter-name col-md-9 col-9" href="#">
-                                                          Chương 08 : Nội tâm ta không hề dao động chút nào 
-                                                        </a>
-                                                        <div class="chapter-dateupload text-end d-none d-md-block">
-                                                          24-11-2018
-                                                        </div>
-                                                      </div>
-                                                    </td>
-                                                  </tr>
-                                                </tbody>
-                                              </table>
-                                            </div>
-                                            <div class="see-more-chapters poabs">
-                                              <i class="fa-solid fa-angles-down"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                {% for volume in volumes %}
                                 <div class="works-item-volume" volume-id="">
                                   <div class="add-volume-container d-flex justify-content-between p-2">
                                       <div class="volume-name">
-                                          Tập 01 : Nụ hoa chờ đợi cưng chiều
+                                          {{volume.title}}
                                       </div>
                                       <div class="volume action">
-                                          <a class="btn btn-blue" href="#">Thêm chương mới</a>
-                                          <button class="btn btn-blue" onclick="openAddVolumeForm(2)">Sửa</button>
+                                          <a class="btn btn-blue" href="{% url 'write' volume_id=volume.id chapter_id=0 %}">Thêm chương mới</a>
+                                          <button class="btn btn-blue" onclick="openAddVolumeForm(event, {{volume.id}})">Sửa</button>
                                           <button class="btn btn-blue">Xóa</button>
                                       </div>
                                   </div>
                                   <div class="volume-info pb-3 d-flex flex-wrap">
                                       <div class="volume-img col-md-3 col-12 d-flex justify-content-center">
-                                          <image class="volume-img-main page_aiko_31758421"></image>
+                                          <image class="volume-img-main page_aiko_31758421" {% if volume.img %} src="{{volume.img.url}}" {% endif %}></image>
                                       </div>
                                       <div class="container volume-details col-md-9 col-12 porel">
                                           <div class="volume-chapters w-100 table-responsive">
                                             <table class="table table-striped">
                                               <tbody>
+                                                {% for chapter in chapters %}
+                                                {% if chapter.volume == volume %}
                                                 <tr>
                                                   <td class="volume-chapter-details pe-3">
                                                     <div class="chapter-list d-flex justify-content-between">
-                                                      <a class="chapter-name col-md-9 col-9" href="#">
-                                                        Chương 01 : Con mèo đáng thương
+                                                      <a class="chapter-name col-md-9 col-9" href=" {% url 'write' volume_id=volume.id chapter_id=chapter.id %}">
+                                                        {% if chapter.title %}
+                                                            {{ chapter.title }}
+                                                        {% else %}
+                                                            Chương chưa có tiêu đề
+                                                        {% endif %}
                                                       </a>
                                                       <div class="chapter-dateupload text-end d-none d-md-block">
-                                                        19-11-2018
+                                                        {{ chapter.date_upload | date:"j/m/Y"}}
                                                       </div>
                                                     </div>
                                                   </td>
                                                 </tr>
-                                                <tr>
-                                                  <td class="volume-chapter-details pe-3">
-                                                    <div class="chapter-list d-flex justify-content-between">
-                                                      <a class="chapter-name col-md-9 col-9" href="#">
-                                                        Chương 02 : Nàng là động vật quý hiếm sao?
-                                                      </a>
-                                                      <div class="chapter-dateupload text-end d-none d-md-block">
-                                                        20-11-2018
-                                                      </div>
-                                                    </div>
-                                                  </td>
-                                                </tr>
-                                                <tr>
-                                                  <td class="volume-chapter-details pe-3">
-                                                    <div class="chapter-list d-flex justify-content-between">
-                                                      <a class="chapter-name col-md-9 col-9" href="#">
-                                                        Chương 03 : Làm loạn ở trong y phục, xông nhầm vào khu vực cấm
-                                                      </a>
-                                                      <div class="chapter-dateupload text-end d-none d-md-block">
-                                                        21-11-2018
-                                                      </div>
-                                                    </div>
-                                                  </td>
-                                                </tr>
-                                                <tr>
-                                                  <td class="volume-chapter-details pe-3">
-                                                    <div class="chapter-list d-flex justify-content-between">
-                                                      <a class="chapter-name col-md-9 col-9" href="#">
-                                                        Chương 04 : Trước tiên tìm một chủ nhân để chăm sóc đã rồi tính sau
-                                                      </a>
-                                                      <div class="chapter-dateupload text-end d-none d-md-block">
-                                                        22-11-2018
-                                                      </div>
-                                                    </div>
-                                                  </td>
-                                                </tr>
-                                                <tr>
-                                                  <td class="volume-chapter-details pe-3">
-                                                    <div class="chapter-list d-flex justify-content-between">
-                                                      <a class="chapter-name col-md-9 col-9" href="#">
-                                                        Chương 05 : Suýt chút nữa là chết chìm ở trong chén
-                                                      </a>
-                                                      <div class="chapter-dateupload text-end d-none d-md-block">
-                                                        23-11-2018
-                                                      </div>
-                                                    </div>
-                                                  </td>
-                                                </tr>
-                                                <tr>
-                                                  <td class="volume-chapter-details pe-3">
-                                                    <div class="chapter-list d-flex justify-content-between">
-                                                      <a class="chapter-name col-md-9 col-9" href="#">
-                                                        Chương 06 : Gặp lại sát thủ chồn trắng
-                                                      </a>
-                                                      <div class="chapter-dateupload text-end d-none d-md-block">
-                                                        24-11-2018
-                                                      </div>
-                                                    </div>
-                                                  </td>
-                                                </tr>
+                                                {% endif %}
+                                                {% endfor %}
                                               </tbody>
                                             </table>
                                           </div>
@@ -354,6 +188,7 @@
                                           </div>
                                       </div>
                                   </div>
+                                  {% endfor %}
                               </div>
                             </div>
                             <div class="note-works" style="display: none">

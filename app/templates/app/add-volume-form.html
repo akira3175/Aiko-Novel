@@ -1,37 +1,35 @@
-<div id="add-volume-form" style=" height: 100vh; position: fixed; z-index: 1031; display: none";>
-    <div class="overlay">
-      <div class="overlay-dialog">
-        <div class="add-volume dialog">
-          <div class="dialog-body">
-            <div class="dialog-container">
-              <form action=  class="cmn-form-web" method="POST">
-                {% csrf_token %}
-                <div class="form-title"></div>
-                <div class="d-flex">
-                  <div class="col-3">
-                    <div class="image-placeholder-volume file-upload file-drop" data-file-upload="drop">
-                      <div class="icon-upload">
-                          <input type="file" id="image-upload" accept="image/*" onchange="previewImage(event)">
-                          <label for="image-upload">
-                              <i class="fa-regular fa-image"></i>
-                              <span class="text-icon">Đăng ảnh</span>
-                          </label>
-                      </div>
-                      <img id="preview-volume" src="" alt="" class="cover edit-cover page_aiko_31758421 preview-volume" height="256">
+<div id="add-volume-form" style=" height: 100vh; position: fixed; z-index: 1031; display: none" volume-id"">
+  <div class="overlay">
+    <div class="overlay-dialog">
+      <div class="add-volume dialog">
+        <div class="dialog-body">
+          <div class="dialog-container">
+            <form class="cmn-form-web" method="POST">
+              {% csrf_token %}
+              <div class="form-title"></div>
+              <div class="d-flex">
+                <div class="col-3">
+                  <div class="image-placeholder-volume file-upload file-drop" data-file-upload="drop">
+                    <div class="icon-upload">
+                      <input type="file" id="volume-image-upload" accept="image/*" onchange="previewImage(event)">
+                      <label for="volume-image-upload">                              <i class="fa-regular fa-image"></i>
+                          <span class="text-icon">Đăng ảnh</span>
+                      </label>
+                    </div>
+                      <img id="preview-volume w-100" src="" alt="" class="cover edit-cover page_aiko_31758421 preview-volume" height="256">
                     </div>
                   </div>
                   <div class="col-9">
                     <div class="form-input ">
                       <div class="el-input">
-                        <input type="text" name="volume-name" id="volume-name" autocomplete="off" class="el-input-inner" placeholder=""/>
+                        <input type="text w-100" style="min-width: 100%" name="volume-name" id="volume-name" autocomplete="off" class="el-input-inner" placeholder=""/>
                         <label for="" class="input-label">Tên tập</label>
                       </div>
                       <div class="error-text" id="username-error" style="display: none;"></div>
                     </div>
-                    
                   </div>
                 </div>
-                <button type="submit" class="el-button w-auto"><span></span></button>
+                <button type="submit" class="el-button w-auto" onclick="saveVolume()"><span></span></button>
               <div class="dialog-close" onclick="closeAddVolumeForm()">
                 <i class="fa-solid fa-x"></i>
               </div>

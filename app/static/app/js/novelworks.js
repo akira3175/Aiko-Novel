@@ -293,7 +293,8 @@ function saveBook() {
 }
 
 //Table of Contents
-function openAddVolumeForm(value) {
+function openAddVolumeForm(event, value) {
+    event.preventDefault();
     let text = "";
     let textButton = "";
     if (value == 0) {
@@ -302,10 +303,17 @@ function openAddVolumeForm(value) {
     }
     else {
         text = "Sửa tập";
-        textButton = "Sửa tập"
+        textButton = "Sửa tập";
+        var volumeContainer = event.target.closest('.works-item-volume');
+        var volumeName = volumeContainer.querySelector('.volume-name').textContent.trim();
+        var volumeImage = volumeContainer.querySelector('.volume-img-main').getAttribute('src');
+        document.getElementById('volume-name').value = volumeName;
+        document.querySelector('.preview-volume').setAttribute('src',volumeImage);
     }
     $('.form-title').text(text);
     $('#add-volume-form .el-button').text(textButton);
+    console.log(2);
+    $('#add-volume-form').attr('volume-id', value);
     $("#add-volume-form").toggle();
     toggleModalOpen();
 }
@@ -313,6 +321,37 @@ function openAddVolumeForm(value) {
 function closeAddVolumeForm() {
     $("#add-volume-form").toggle();
     toggleModalOpen();
+}
+
+function saveVolume() {
+    var bookId = document.getElementById('novel-id').getAttribute('novel-id');
+    var volumeId = document.getElementById('add-volume-form').getAttribute('volume-id');
+    var volumeImage = document.getElementById('volume-image-upload').files[0];
+    var title = document.getElementById('volume-name').value;
+
+    var formData = new FormData();
+    formData.append('book-id', bookId);
+    formData.append('volume-id', volumeId);
+    formData.append('volume-image', volumeImage);
+    formData.append('volume-title', title);
+    console.log(bookId);
+
+    $.ajax({
+        url: '/save-volume/', 
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function(response) {
+            console.log(2);
+        },
+        error: function(xhr, status, error) {
+            alert('Đã xảy ra lỗi khi lưu tập!');
+        }
+    });    
 }
 
 $(document).ready(function() {
@@ -324,7 +363,6 @@ $(document).ready(function() {
     $('.works-item-volume').each(function() {
         var chapterCount = $(this).find('.volume-chapter-details').length;
         if (chapterCount <= 6) {
-            console.log(2)
             $(this).find('.see-more-chapters').hide(); // Ẩn nút "Xem thêm chương"
         }
     });

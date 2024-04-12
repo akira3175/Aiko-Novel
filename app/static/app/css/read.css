@@ -1,0 +1,22 @@
+.read-novel .chapter-detail {
+    padding: 48px 0;
+    display: flex;
+    justify-content: center;
+}
+
+#novel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#chapter-title {
+    width: 85%;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    font-size: xx-large;
+    text-align: center;
+    border-bottom: 1px solid grey;
+    outline: none;
+}

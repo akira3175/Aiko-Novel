@@ -1,4 +1,5 @@
 from django.utils import timezone
+from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from app.models import *
@@ -11,6 +12,7 @@ from django.contrib import messages # thu vien thong bao
 from .models import UserForm
 from forum.models import ForumPost
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Sum
 from django import forms
 
 # Create your views here.
@@ -101,7 +103,14 @@ def logoutPage(request):
 def home(request):
     latest_posts = ForumPost.objects.all().order_by('-created_at')[:5]
     novels = Book.objects.all()
-    context = {'latest_posts': latest_posts, 'novels': novels}
+    trending_novels = Book.objects.annotate(total_views=Sum('volumes__chapters__view')).order_by('-total_views')[:8]
+    print(trending_novels)
+
+    context = {
+            'latest_posts': latest_posts,
+            'novels': novels,
+            'trending_novels': trending_novels,
+        }
     return render(request, 'app/home.html', context) 
 
 """Search page"""
@@ -109,7 +118,7 @@ def home(request):
 def search(request):
     keywords = request.GET.get('keywords')
     matched_books = []
-    all_book = Book.objects.all()
+    all_book = Book.objects.all(isDeleted=False)
     if all_book:
         for book in all_book:
             if keywords.lower() in book.title.lower():
@@ -134,12 +143,17 @@ def novelWorks(request, group_id, book_id):
             'quantityVol': None,
             'dateUpload': None,
             'dateUpdate': None,
-            'category': None,
+            'categories': None,
         }
+        categories = Category.objects.all()
+        volumes = None
+        chapters = None
     else:
         # Lấy thông tin từ model Book
         try:
-            book_obj = Book.objects.get(pk=book_id)
+            book_obj = Book.objects.get(id=book_id, isDeleted=False)
+            selected_categories_ids = book_obj.categories.values_list('id', flat=True)
+            categories = Category.objects.exclude(id__in=book_obj.categories.all())
             book = {
                 'id': book_obj.id,
                 'title': book_obj.title,
@@ -154,19 +168,51 @@ def novelWorks(request, group_id, book_id):
                 'quantityVol': book_obj.quantityVol,
                 'dateUpload': book_obj.dateUpload,
                 'dateUpdate': book_obj.dateUpdate,
-                'category': book_obj.category,
+                'categories': [(category.id, category.name) for category in book_obj.categories.all()],
             }
+            volumes = Volume.objects.filter(book=book_obj)
+            chapters = Chapter.objects.filter(volume__in=volumes)
         except Book.DoesNotExist:
             book = None  # Không tìm thấy đối tượng Book
-    categories = Category.objects.all()
     group = Group.objects.get(pk=group_id)
-    context = {'categories': categories, 'book': book, 'group': group}
-
+    context = {'categories': categories, 'book': book, 'group': group, 'volumes': volumes, 'chapters': chapters}
     return render(request, 'app/novelworks.html', context)
 
+"""Novel page"""
+
 def novel(request,id):
-    book = Book.objects.get(id=id)
-    return render(request, 'app/novel.html',{'book': book})
+    book = Book.objects.get(id=id, isDeleted=False)
+    volumes = Volume.objects.filter(book=book).order_by('-id')
+    chapters = Chapter.objects.filter(volume__in=volumes)
+    context = {'book': book, 'volumes': volumes, 'chapters': chapters}
+    return render(request, 'app/novel.html', context)
+
+def read(request, volume_id, chapter_id):
+    volume = Volume.objects.get(id=volume_id)
+    book = Book.objects.get(id=volume.book.id, isDeleted=False)
+    chapter = Chapter.objects.get(id=chapter_id)
+    chapter.increase_views()
+
+    previous_chapter_same_volume = Chapter.objects.filter(volume__book=book, volume__id=volume_id, id__lt=chapter.id).order_by('-id').first()
+    previous_chapter_prev_volume = None
+    prev_volume = Volume.objects.filter(book=book, id__lt=volume_id).order_by('-id').first()
+    if prev_volume:
+        previous_chapter_prev_volume = Chapter.objects.filter(volume=prev_volume).order_by('-id').first()
+
+    next_chapter_same_volume = Chapter.objects.filter(volume__book=book, volume__id=volume_id, id__gt=chapter.id).order_by('id').first()
+    next_chapter_next_volume = None
+    next_volume = Volume.objects.filter(book=book, id__gt=volume_id).order_by('id').first()
+    if next_volume:
+        next_chapter_next_volume = Chapter.objects.filter(volume=next_volume).order_by('id').first()
+
+    context = {
+        'chapter': chapter,
+        'volume': volume,
+        'book': book,
+        'previous_chapter': previous_chapter_same_volume or previous_chapter_prev_volume or None,
+        'next_chapter': next_chapter_same_volume or next_chapter_next_volume or None,
+    }
+    return render(request, 'app/read.html', context)
 
 @csrf_exempt
 def saveBook(request):
@@ -177,7 +223,7 @@ def saveBook(request):
         author = request.POST.get('author')
         artist = request.POST.get('artist')
         novelTransTeam = request.POST.get('novelTransTeam')
-        category = request.POST.get('category')
+        category_ids_str = request.POST.get('category')
         description = request.POST.get('description')
         checkboxChecked = request.POST.get('checkboxChecked')
         isCompleted = checkboxChecked.lower() == 'true' if checkboxChecked else False
@@ -191,55 +237,158 @@ def saveBook(request):
                 author=author,
                 artist=artist,
                 workerid=novelTransTeam,
-                category=category,
                 description=description,
                 isCompleted=isCompleted,
                 img=image,
                 dateUpload=timezone.now(),
                 dateUpdate=timezone.now()
             )
+            # Thêm categories cho đối tượng mới
+            if category_ids_str:
+                category_ids = [int(cat_id) for cat_id in category_ids_str.split(',')]
+                categories = Category.objects.filter(id__in=category_ids)
+                new_book.categories.add(*categories)
+
             # Trả về phản hồi thành công
             return redirect('novel-of-trans-team', group_id=novelTransTeam)
         else:
             # Cập nhật thông tin của đối tượng Book đã tồn tại
-            try:
-                existing_book = Book.objects.get(id=id)
-                existing_book.title = title
-                existing_book.author = author
-                existing_book.artist = artist
-                existing_book.workerid = novelTransTeam
-                existing_book.category = category
-                existing_book.description = description
-                existing_book.isCompleted = isCompleted
-                existing_book.dateUpdate = timezone.now()
-                if image:
-                    existing_book.img = image
-                existing_book.save()
-                # Trả về phản hồi thành công
-                return redirect('novel-of-trans-team', group_id=novelTransTeam)
-            except Book.DoesNotExist:
-                return JsonResponse({'error': 'Không tìm thấy đối tượng Book với id đã cho.'}, status=404)
+            existing_book = get_object_or_404(Book, id=id)
+            existing_book.title = title
+            existing_book.author = author
+            existing_book.artist = artist
+            existing_book.workerid = novelTransTeam
+            existing_book.description = description
+            existing_book.isCompleted = isCompleted
+            existing_book.dateUpdate = timezone.now()
+            if image:
+                existing_book.img = image
 
+            # Xóa hết categories cũ và thêm lại categories mới
+            existing_book.categories.clear()
+            if category_ids_str:
+                category_ids = [int(cat_id) for cat_id in category_ids_str.split(',')]
+                categories = Category.objects.filter(id__in=category_ids)
+                existing_book.categories.add(*categories)
+
+            existing_book.save()
+            # Trả về phản hồi thành công
+            return redirect('novel-of-trans-team', group_id=novelTransTeam)
     else:
         return JsonResponse({'error': 'Yêu cầu không hợp lệ.'}, status=405)
     
+@csrf_exempt
+def saveVolume(request):
+    if request.method == 'POST':
+        book_id = int(request.POST.get('book-id'))
+        volume_id = int(request.POST.get('volume-id'))
+        volume_image = request.FILES.get('volume-image')
+        volume_title = request.POST.get('volume-title')
+        
+        try:
+            book = Book.objects.get(id=book_id)
+        except Book.DoesNotExist:
+            return JsonResponse({'error': 'Sách không tồn tại'}, status=404)
+
+        if volume_id == 0:  # Nếu volume_id là '0', tạo tập mới
+            volume = Volume.objects.create(book=book, title=volume_title)
+            if volume_image:
+                volume.img = volume_image
+                volume.save()
+            return JsonResponse({'message': 'Tạo tập mới thành công'})
+
+        else:  # Ngược lại, sửa tập đã tồn tại
+            try:
+                volume = Volume.objects.get(id=volume_id)
+                volume.title = volume_title
+                if volume_image:
+                    volume.img = volume_image
+                volume.save()
+                return JsonResponse({'message': 'Sửa tập thành công'})
+
+            except Volume.DoesNotExist:
+                return JsonResponse({'error': 'Tập không tồn tại'}, status=404)
+
+    return JsonResponse({'error': 'Phương thức yêu cầu không hợp lệ'}, status=400)
+    
 """Write page"""
     
-def write(request):
-    form = ChapterForm()
-    context = {'form': form}
+def write(request, volume_id, chapter_id):
+    volume = Volume.objects.get(id=volume_id)
+    book = Book.objects.get(id=volume.book.id, isDeleted=False)
+    if chapter_id == 0:
+        chapter = Chapter.objects.create(volume=volume)
+    else: 
+        chapter = Chapter.objects.get(id=chapter_id)
+    context = {'chapter': chapter, 'volume': volume, 'book': book}
     return render(request, 'app/write.html', context)
 
 def saveChapter(request):
     if request.method == 'POST':
         chapterId = request.POST.get('chapter-id')
+        novelId = request.POST.get('novel-id')
         content = request.POST.get('content')
+        title = request.POST.get('title')
         
+
         try:
+            book = Book.objects.get(id=novelId)
             chapter = Chapter.objects.get(id=chapterId)
+            chapter.title = title
             chapter.content = content
             chapter.save()
-            return JsonResponse({'message': 'Data saved successfully'})
+            # Redirect đến trang novelWorks với các tham số group_id và book_id
+            redirect_url = f'/novel-works/{book.workerid}/{book.id}'  # Tạo chuỗi URL trực tiếp
+            return JsonResponse({'redirect_url': redirect_url})
+        except Book.DoesNotExist:
+            return JsonResponse({'error': 'Book not found'}, status=404)
+        except Chapter.DoesNotExist:
+            return JsonResponse({'error': 'Chapter not found'}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+def uploadChapter(request):
+    if request.method == 'POST':
+        chapterId = request.POST.get('chapter-id')
+        novelId = request.POST.get('novel-id')
+        content = request.POST.get('content')
+        title = request.POST.get('title')
+        
+
+        try:
+            book = Book.objects.get(id=novelId)
+            chapter = Chapter.objects.get(id=chapterId)
+            chapter.title = title
+            chapter.content = content
+            chapter.date_upload = timezone.now()
+            chapter.save()
+            # Redirect đến trang novelWorks với các tham số group_id và book_id
+            redirect_url = f'/novel-works/{book.workerid}/{book.id}'  # Tạo chuỗi URL trực tiếp
+            return JsonResponse({'redirect_url': redirect_url})
+        except Book.DoesNotExist:
+            return JsonResponse({'error': 'Book not found'}, status=404)
+        except Chapter.DoesNotExist:
+            return JsonResponse({'error': 'Chapter not found'}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+def deleteChapter(request):
+    if request.method == 'POST':
+        chapterId = request.POST.get('chapter-id')
+        novelId = request.POST.get('novel-id')
+        
+        try:
+            book = Book.objects.get(id=novelId)
+            chapter = Chapter.objects.get(id=chapterId)
+            chapter.delete()
+            redirect_url = f'/novel-works/{book.workerid}/{book.id}'  
+            return JsonResponse({'redirect_url': redirect_url})
+        except Book.DoesNotExist:
+            return JsonResponse({'error': 'Book not found'}, status=404)
         except Chapter.DoesNotExist:
             return JsonResponse({'error': 'Chapter not found'}, status=404)
         except Exception as e:
@@ -263,7 +412,6 @@ def saveBackground(request):
             try:
                 user = get_object_or_404(User, username=username)
                 user_info, created = UserInfo.objects.get_or_create(username=user)  # Đảm bảo UserInfo liên quan đến User
-                print(1)
 
                 # Nếu background_image không phải None, xóa hình ảnh cũ và lưu hình ảnh mới
                 if background_image:
@@ -344,23 +492,52 @@ def transTeam(request):
 
 def novelOfTransTeam(request, group_id):
     group = Group.objects.get(pk=group_id)
-    books = Book.objects.filter(workerid=group_id)
-    context = {'books': books, 'group': group}
+    books = Book.objects.filter(workerid=group_id, isDeleted=False)
+    books_with_volumes_count = []
+    
+    for book in books:
+        volume_count = book.volumes.count()
+        books_with_volumes_count.append({'book': book, 'volume_count': volume_count})
+    context = {'group': group, 'books_with_volumes_count': books_with_volumes_count}
     return render(request, 'app/novel-of-trans.html', context)
     
 def memberOfTransTeam(request, group_id):
     group = Group.objects.get(pk=group_id)
-    members = Member.objects.filter(group=group, teamrole__in = ['owner', 'admin', 'member'])
+    members = Member.objects.filter(group=group, teamrole__in=['owner', 'admin', 'member'])
     waiters = Member.objects.filter(group=group, teamrole='waiter')
+
+    for member in members:
+        try:
+            info_user = UserInfo.objects.get(username=member.auth_user)
+            member.full_name = info_user.full_name
+            member.img_avatar = info_user.img_avatar if info_user.img_avatar else None
+        except UserInfo.DoesNotExist:
+            member.full_name = None
+            member.img_avatar = None
     
-    # Kiểm tra xem người dùng hiện tại có phải là thành viên của nhóm không
+    for waiter in waiters:
+        try:
+            info_user = UserInfo.objects.get(username=waiter.auth_user)
+            waiter.full_name = info_user.full_name
+            waiter.img_avatar = info_user.img_avatar if info_user.img_avatar else None
+        except UserInfo.DoesNotExist:
+            waiter.full_name = None
+            waiter.img_avatar = None
+    
     is_member = Member.objects.filter(auth_user=request.user, group=group).exists()
     is_owner = Member.objects.filter(auth_user=request.user, group=group, teamrole='owner').exists()
     is_admin = Member.objects.filter(auth_user=request.user, group=group, teamrole='admin').exists()
-    context = {'Members' : members, 'Group':group, 'Waiters': waiters, 
-               'is_member': is_member,'is_admin': is_admin, 'is_owner': is_owner}
-    
-    return render(request, 'app/member-of-trans.html', context)
+
+    context = {
+        'Members': members,
+        'Waiters': waiters,
+        'Group': group,
+        'is_member': is_member,
+        'is_admin': is_admin,
+        'is_owner': is_owner,
+    }
+
+    return render(request, 'app/member-of-trans.html', context)   
 
 def addGroup(request):
     form = GroupForm()

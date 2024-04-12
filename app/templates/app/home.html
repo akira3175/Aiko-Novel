@@ -29,71 +29,16 @@
               </strong>
             </div>
             <div id="slider" class="owl-carousel owl-theme" style="opacity: 1; display: block">
+              {% for novel in trending_novels %}
               <div class="slide-item">
-                <a title="Otonari no Tenshi-sama ni Itsu no Aida ni ka Dame Ningen ni Sareteiru ken" href="#">
-                  <div class="image lazy page_aiko_31758421"></div>
+                <a title="{{ novel.title }}" href="#">
+                  <div class="image lazy page_aiko_31758421" {% if novel.img %} style="background-image: url('{{ novel.img.url }}')" {% endif %}></div>
                   <div class="series-info"> 
-                    <div class="series">Otonari no Tenshi-sama ni Itsu no Aida ni ka Dame Ningen ni Sareteiru ken</div>
+                    <div class="series">{{ novel.title }}</div>
                   </div> 
                 </a>
               </div>
-              <div class="slide-item">
-                <a title="Otonari no Tenshi-sama ni Itsu no Aida ni ka Dame Ningen ni Sareteiru ken" href="#">
-                  <div class="image lazy page_aiko_31758421"></div>
-                  <div class="series-info"> 
-                    <div class="series">Otonari no Tenshi-sama ni Itsu no Aida ni ka Dame Ningen ni Sareteiru ken</div>
-                  </div> 
-                </a>
-              </div>
-              <div class="slide-item">
-                <a title="Otonari no Tenshi-sama ni Itsu no Aida ni ka Dame Ningen ni Sareteiru ken" href="#">
-                  <div class="image lazy page_aiko_31758421"></div>
-                  <div class="series-info"> 
-                    <div class="series">Otonari no Tenshi-sama ni Itsu no Aida ni ka Dame Ningen ni Sareteiru ken</div>
-                  </div> 
-                </a>
-              </div>
-              <div class="slide-item">
-                <a title="Otonari no Tenshi-sama ni Itsu no Aida ni ka Dame Ningen ni Sareteiru ken" href="#">
-                  <div class="image lazy page_aiko_31758421"></div>
-                  <div class="series-info"> 
-                    <div class="series">Otonari no Tenshi-sama ni Itsu no Aida ni ka Dame Ningen ni Sareteiru ken</div>
-                  </div> 
-                </a>
-              </div>
-              <div class="slide-item">
-                <a title="Otonari no Tenshi-sama ni Itsu no Aida ni ka Dame Ningen ni Sareteiru ken" href="#">
-                  <div class="image lazy page_aiko_31758421"></div>
-                  <div class="series-info"> 
-                    <div class="series">Otonari no Tenshi-sama ni Itsu no Aida ni ka Dame Ningen ni Sareteiru ken</div>
-                  </div> 
-                </a>
-              </div>
-              <div class="slide-item">
-                <a title="Otonari no Tenshi-sama ni Itsu no Aida ni ka Dame Ningen ni Sareteiru ken" href="#">
-                  <div class="image lazy page_aiko_31758421"></div>
-                  <div class="series-info"> 
-                    <div class="series">Otonari no Tenshi-sama ni Itsu no Aida ni ka Dame Ningen ni Sareteiru ken</div>
-                  </div> 
-                </a>
-              </div>
-              <div class="slide-item">
-                <a title="Otonari no Tenshi-sama ni Itsu no Aida ni ka Dame Ningen ni Sareteiru ken" href="#">
-                  <div class="image lazy page_aiko_31758421"></div>
-                  <div class="series-info"> 
-                    <div class="series">Otonari no Tenshi-sama ni Itsu no Aida ni ka Dame Ningen ni Sareteiru ken</div>
-                  </div> 
-                </a>
-              </div>
-              <div class="slide-item">
-                <a title="Otonari no Tenshi-sama ni Itsu no Aida ni ka Dame Ningen ni Sareteiru ken" href="#">
-                  <div class="image lazy page_aiko_31758421"></div>
-                  <div class="series-info"> 
-                    <div class="series">Otonari no Tenshi-sama ni Itsu no Aida ni ka Dame Ningen ni Sareteiru ken</div>
-                  </div> 
-                </a>
-              </div>
-              <!-- Thêm các phần tử slide khác tương tự ở đây -->
+              {% endfor %}
             </div>
           </div>
           <div class="col-xs-12 col-sm-12 col-md-3">
@@ -132,7 +77,7 @@
               {% if forloop.counter <= 14 %}
               <div class = "glitem">
                 <a title="Mở đầu" href="#">
-                  <img class="image lazy page_aiko_31758421" style="" src="{{novel.img.url}}"></img>
+                  <img class="image lazy page_aiko_31758421" style="" {% if novel.img %}src="{{novel.img.url}} {% endif %}"></img>
                   <div class="series-info">
                     <div class="vol" title="Tập 01">Tập 01</div>
                     <div class="chap" title="Mở đầu">Mở đầu</div>

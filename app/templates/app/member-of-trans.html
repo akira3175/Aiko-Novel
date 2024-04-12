@@ -44,16 +44,15 @@
                       <div class="item-wrapper">
                         <div class="item-img">
                           <img
-                            src=""
-                            alt=""
-                            height="70"
-                            class="page_aiko_31758421 cover cover-sm-works"
+                            src="{{ member.img_avatar.url}}"
+                            alt="{{ member.full_name }}"
+                            class="page_aiko_31758421 cover cover-sm-works cir120 img-cover"
                           />
                         </div>
                         <div class="item-info">
                           <h3 class="item-name">
-                            <a href=""
-                              ><strong>{{member.auth_user.username}}</strong></a
+                            <a href="{% url 'profile' username=member.auth_user %}"
+                              ><strong>{{member.full_name}}</strong></a
                             >
                           </h3>
                           <div class="counts">
@@ -133,16 +132,16 @@
                       <div class="item-wrapper">
                         <div class="item-img">
                           <img
-                            src=""
-                            alt=""
+                            src="{{ member.img_avatar.url }}"
+                            alt="{{ member.full_name }}"
                             height="70"
-                            class="page_aiko_31758421 cover cover-sm-works"
+                            class="page_aiko_31758421 cover cover-sm-works cir120 img-cover"
                           />
                         </div>
                         <div class="item-info">
                           <h3 class="item-name">
-                            <a href=""
-                              ><strong>{{member.auth_user.username}}</strong></a
+                            <a href="{% url 'profile' username=member.auth_user %}"
+                              ><strong>{{member.full_name}}</strong></a
                             >
                           </h3>
                           <div class="counts">
