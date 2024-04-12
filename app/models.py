@@ -114,6 +114,26 @@ class ChapterForm(forms.ModelForm):
         model = Chapter
         fields = ['title', 'content']
 
+class ChapterComment(models.Model):
+    chapter = models.ForeignKey('Chapter', on_delete=models.CASCADE, related_name='chapter_comments')
+    content = models.TextField()
+    user_info = models.ForeignKey(UserInfo, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+class ChapterCommentForm(forms.ModelForm):
+    class Meta:
+        model = ChapterComment
+        fields = ['content']
+        labels = {'content': ''}
+        error_messages = {
+            'content': {
+                'required': 'Nhập nội dung bình luận',
+            }
+        }
+        widgets = {
+            'content': forms.Textarea(attrs={'rows': 5, 'style': 'width:100%;'}),
+        }
+        
 """Category-Book model"""
 
 class CategoryBook(models.Model):

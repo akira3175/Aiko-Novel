@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.views.generic import ListView
 from django.views.generic import DetailView
 from .models import ForumPost
+from app.models import UserInfo
 from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
 from .forms import ForumPostForm, CommentForm
@@ -60,7 +61,7 @@ def CreatePostView(request):
         form = ForumPostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
-            post.username = request.user
+            post.user_info = UserInfo.objects.get(username=request.user)
             post.save()
             return redirect('forum-post-list')
         else:
@@ -79,7 +80,7 @@ def add_comment_to_post(request, post_id):
         if form.is_valid():
             comment = form.save(commit=False)
             comment.post = post
-            comment.username = request.user
+            comment.user_info = UserInfo.objects.get(username=request.user)
             comment.save()
             return redirect('post-detail', pk=post_id)
     else:

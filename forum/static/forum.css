@@ -18,3 +18,28 @@
     font-size: 16px;
     transition: background-color 0.3s;
 }
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.avatar-container img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.user-info-details {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px; /* Thêm khoảng cách giữa avatar và thông tin */
+}
+
+.comment-details {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px; /* Thêm khoảng cách giữa avatar và thông tin */
+}
+

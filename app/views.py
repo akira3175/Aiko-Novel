@@ -185,6 +185,14 @@ def novel(request,id):
     volumes = Volume.objects.filter(book=book).order_by('-id')
     chapters = Chapter.objects.filter(volume__in=volumes)
     context = {'book': book, 'volumes': volumes, 'chapters': chapters}
+    
+    # Tính tổng số bình luận của tất cả các chương
+    total_comments = 0
+    for chapter in chapters:
+        total_comments += ChapterComment.objects.filter(chapter=chapter).count()
+
+    context['total_comments'] = total_comments
+    
     return render(request, 'app/novel.html', context)
 
 def read(request, volume_id, chapter_id):
@@ -204,7 +212,7 @@ def read(request, volume_id, chapter_id):
     next_volume = Volume.objects.filter(book=book, id__gt=volume_id).order_by('id').first()
     if next_volume:
         next_chapter_next_volume = Chapter.objects.filter(volume=next_volume).order_by('id').first()
-
+        
     context = {
         'chapter': chapter,
         'volume': volume,
@@ -212,6 +220,21 @@ def read(request, volume_id, chapter_id):
         'previous_chapter': previous_chapter_same_volume or previous_chapter_prev_volume or None,
         'next_chapter': next_chapter_same_volume or next_chapter_next_volume or None,
     }
+    
+    if request.method == 'POST':
+        form = ChapterCommentForm(request.POST)
+        if form.is_valid():
+            chapter_comment = form.save(commit=False)
+            chapter_comment.chapter = chapter
+            chapter_comment.user_info = UserInfo.objects.get(username=request.user)
+            chapter_comment.save()
+            return redirect('read', volume_id=volume_id, chapter_id=chapter_id)
+    else:
+        form = ChapterCommentForm()
+
+    context['chapter_comment_form'] = form
+    context['chapter_comments'] = ChapterComment.objects.filter(chapter=chapter).order_by('-created_at')
+    
     return render(request, 'app/read.html', context)
 
 @csrf_exempt
