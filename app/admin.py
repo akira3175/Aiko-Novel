@@ -5,6 +5,7 @@ from app.models import *
 admin.site.register(Book)
 admin.site.register(Volume)
 admin.site.register(Chapter)
+admin.site.register(ChapterComment)
 admin.site.register(Category)
 admin.site.register(UserInfo)
 admin.site.register(Role)

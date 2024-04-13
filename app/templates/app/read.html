@@ -59,6 +59,47 @@
             </div>
         </div>
     </div>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            {% if user.username %}
+            <div class="comment-section col-12 mt-5 mb-4 ">
+                <h2>Thêm Bình Luận</h2>
+                <form method="post" action="{% url 'read' volume_id=volume.id chapter_id=chapter.id %}" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="row">
+                    <div class="col"> {{ chapter_comment_form.as_p }} </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Đăng Bình Luận</button>
+                </form>
+            </div>
+            {% else %}
+            <div class="mt-5 mb-4"><button onclick="loadLoginForm()" class="btn btn-primary">Đăng nhập</button> để bình luận</div>
+            {% endif %}
+
+            <h2 class="col-12 mt-5 mb-4">Bình luận</h2>
+                {% for comment in chapter_comments %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        {% if comment.user_info.img_avatar %}        
+                        <div class="user-info">
+                            <div class="avatar-container">
+                                <img src="{{ comment.user_info.img_avatar.url }}">
+                            </div>
+                            <div class="comment-details">
+                                <p><b>Người đăng:</b> {{ comment.user_info }}</p>
+                                <p class="text-muted"><i>{{ comment.created_at|date:"d/m/Y h:m" }}</i></p>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <hr>
+                        <p class="card-text">{{ comment.content|linebreaks }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+
+        </div>
+    </div>
     <!-- footer-->
     
 

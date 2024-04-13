@@ -1,8 +1,7 @@
 {% extends "app/base.html" %}
-
-{% block main_content %}
 {% load static %}
 
+{% block main_content %}
 <link rel="stylesheet" type="text/css" href="{% static 'forum.css' %}">
 
 <div class="mt-3">
@@ -14,15 +13,23 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-12">
-      {% if post.username == user %}
+      {% if post.user_info.username == user %}
         <br>
         <button class="btn btn-warning" onclick="window.location.href='{% url 'edit-post' post.id %}'">Sửa</button>
         <button class="btn btn-danger" onclick="window.location.href='{% url 'delete-post' post.id %}'">Xóa</button>
       {% endif %}
       <h1 class="mb-4">{{ post.title }}</h1>
-      <div class="text-muted mb-3"><i>Ngày đăng: {{ post.created_at|date:"d/m/Y h:m" }}</i></div>
-      <div class="mb-3"><b>Đăng bởi:</b> {{ post.username }}</div>
-      
+      {% if post.user_info.img_avatar %}        
+        <div class="user-info">
+            <div class="avatar-container">
+                <img src="{{ post.user_info.img_avatar.url }}">
+            </div>
+            <div class="user-info-details">
+                <p><b>Đăng bởi:</b> {{ post.user_info.username }}</p>   
+                <p class="text-muted"><i>{{ post.created_at|date:"d/m/Y h:m" }}</i></p>
+            </div>
+        </div>
+      {% endif %}
       <div class="border rounded p-3 mb-4">
         <p>{{ post.content|safe }}</p>
       </div>
@@ -46,8 +53,17 @@
       {% for comment in comments %}
       <div class="card mb-3">
         <div class="card-body">
-          <div><b>Người đăng:</b> {{ comment.username }}</div>
-          <div class="text-muted"><i>{{ comment.created_at|date:"d/m/Y h:m" }}</i></div>
+          {% if comment.user_info.img_avatar %}        
+            <div class="user-info">
+                <div class="avatar-container">
+                    <img src="{{ comment.user_info.img_avatar.url }}">
+                </div>
+                <div class="comment-details">
+                    <p><b>Người đăng:</b> {{ comment.user_info }}</p>
+                    <p class="text-muted"><i>{{ comment.created_at|date:"d/m/Y h:m" }}</i></p>
+                </div>
+            </div>
+          {% endif %}
           <hr>
           <p class="card-text">{{ comment.content|linebreaks }}</p>
         </div>
@@ -59,3 +75,5 @@
 </div>
 
 {% endblock main_content %}
+
+

@@ -6,15 +6,12 @@ conn = sqlite3.connect('db.sqlite3')
 # Tạo một đối tượng cursor để thực hiện các truy vấn SQL
 cursor = conn.cursor()
 
-# Thực hiện truy vấn SELECT
-cursor.execute("PRAGMA table_info(app_chapter)")
-
-# Lấy kết quả của truy vấn
-rows = cursor.fetchall()
-
-# In ra các hàng trong kết quả
-for row in rows:
-    print(row)
+try:
+    # Thực hiện lệnh DROP TABLE
+    cursor.execute("DROP TABLE IF EXISTS forum_comment")
+    print("Bảng app_chapter đã được xóa thành công.")
+except sqlite3.Error as e:
+    print(f"Lỗi xảy ra khi xóa bảng app_chapter: {e}")
 
 # Đóng kết nối
 conn.close()
