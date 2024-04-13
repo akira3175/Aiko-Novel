@@ -196,11 +196,9 @@ function removeCategory(item) {
 
 //Cho người dùng xem trước ảnh
 function previewImage(event) {
-    console.log(value);
     var input = event.target;
     var reader = new FileReader();
     var preview;
-    console.log(value == 1)
     if (value == "1") {
         preview = document.querySelector('.preview');
     }
@@ -227,8 +225,6 @@ function getValueForCategory() {
     });
     // Chuyển mảng thành chuỗi bằng cách sử dụng phương thức join
     const dataValuesString = dataValues.join(',');
-    // In ra chuỗi các giá trị data-value
-    console.log(dataValuesString);
     return dataValuesString;
 }
 
@@ -292,6 +288,76 @@ function saveBook() {
     });
 }
 
+function saveBookSub() {
+    return new Promise((resolve, reject) => {
+        var novelid = document.querySelector('.works-item-metadata').getAttribute('novel-id');
+        var title = document.querySelector('.novel-title').innerText;
+        var author = document.querySelector('.novel-author').innerText;
+        var artist = document.querySelector('.novel-artist').innerText;
+        var novelTransTeam = document.querySelector('.novel-trans-team').getAttribute('worker-id');
+        var category = getValueForCategory();
+        var description = document.querySelector('.novel-description').value;
+        var checkboxChecked = document.querySelector('.novel-status input[type="checkbox"]').checked;
+        var file = document.getElementById('image-upload').files[0];
+
+        var formData = new FormData();
+        formData.append('novelid', novelid);
+        formData.append('title', title);
+        formData.append('author', author);
+        formData.append('artist', artist);
+        formData.append('novelTransTeam', novelTransTeam);
+        formData.append('category', category);
+        formData.append('description', description);
+        formData.append('checkboxChecked', checkboxChecked);
+        formData.append('image', file);
+
+        fetch('/saveBookSub', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Xử lý phản hồi từ máy chủ
+            if (data.book_id) {
+                document.querySelector('.works-item-metadata').setAttribute('novel-id', data.book_id);
+                novelid = data.book_id;
+                console.log(novelid);
+                resolve();
+            }
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            reject(error);
+        });
+    });
+}
+
+var bookIsEdited = false;
+
+// Sự kiện khi người dùng chỉnh sửa input ảnh
+document.getElementById('image-upload').addEventListener('change', function() {
+    bookIsEdited = true;
+});
+
+// Sự kiện khi người dùng chỉnh sửa các div có thuộc tính contenteditable
+var editableDivs = document.querySelectorAll('[contenteditable="true"]');
+editableDivs.forEach(function(div) {
+    div.addEventListener('input', function() {
+        bookIsEdited = true;
+        console.log(bookIsEdited);
+    });
+});
+
+// Sự kiện khi người dùng thay đổi checkbox
+var checkbox = document.querySelector('.novel-status input[type="checkbox"]');
+checkbox.addEventListener('change', function() {
+    bookIsEdited = true;
+});
+
 //Table of Contents
 function openAddVolumeForm(event, value) {
     event.preventDefault();
@@ -312,7 +378,6 @@ function openAddVolumeForm(event, value) {
     }
     $('.form-title').text(text);
     $('#add-volume-form .el-button').text(textButton);
-    console.log(2);
     $('#add-volume-form').attr('volume-id', value);
     $("#add-volume-form").toggle();
     toggleModalOpen();
@@ -323,7 +388,11 @@ function closeAddVolumeForm() {
     toggleModalOpen();
 }
 
-function saveVolume() {
+async function saveVolume(event) {
+    event.preventDefault();
+    if (bookIsEdited) {
+        await saveBookSub();
+    }
     var bookId = document.getElementById('novel-id').getAttribute('novel-id');
     var volumeId = document.getElementById('add-volume-form').getAttribute('volume-id');
     var volumeImage = document.getElementById('volume-image-upload').files[0];
@@ -346,7 +415,11 @@ function saveVolume() {
         contentType: false,
         processData: false,
         success: function(response) {
-            console.log(2);
+            if (response.redirect_url) {
+                window.location.href = response.redirect_url;
+            } else {
+                console.log('Lưu tập thành công!');
+            }
         },
         error: function(xhr, status, error) {
             alert('Đã xảy ra lỗi khi lưu tập!');
@@ -368,6 +441,28 @@ $(document).ready(function() {
     });
 });
 
+document.getElementById('add-chapter-link').addEventListener('click', function(event) {
+    event.preventDefault();
 
+    saveBookSub()
+        .then(function() {
+            window.location.href = event.target.href;
+        })
+        .catch(function(error) {
+            console.error('Lỗi khi lưu dữ liệu:', error);
+        });
+});
+
+document.querySelector('.chapter-name-link').addEventListener('click', function(event) {
+    event.preventDefault();
+
+    saveBookSub()
+        .then(function() {
+            window.location.href = event.target.href;
+        })
+        .catch(function(error) {
+            console.error('Lỗi khi lưu dữ liệu:', error);
+        });
+});
 
 //Note

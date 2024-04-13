@@ -25,13 +25,13 @@
                                     {% for item in books_with_volumes_count %}
                                     <div class="works-item">
                                         <div class="row-container">
-                                            <div class="left-container">
+                                            <div class="left-container col-xl-8 col-md-6 col-sm-5 col-4">
                                                 <div class="item-wrapper">
                                                     <div class="item-img">
                                                         <img if {%if item.book.img %}src="{{ item.book.img.url }}" {% endif %} alt="{{ item.book.title }}" height="70" class="page_aiko_31758421 cover cover-sm-works">
                                                     </div>
-                                                    <div class="item-info">
-                                                        <h3 class="item-name"><a href=""><strong>{{ item.book.title }}</strong></a></h3>
+                                                    <div class="item-info w-100">
+                                                        <h3 class="item-name"><a href="{% url 'novel' id=item.book.id %}"><strong>{{ item.book.title }}</strong></a></h3>
                                                         <div class="counts"><strong>{{item.volume_count}} tập</strong></div>
                                                         <!--<div class="counts"><strong>7 truyện</strong></div>-->
                                                     </div>

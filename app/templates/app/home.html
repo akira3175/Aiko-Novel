@@ -31,7 +31,7 @@
             <div id="slider" class="owl-carousel owl-theme" style="opacity: 1; display: block">
               {% for novel in trending_novels %}
               <div class="slide-item">
-                <a title="{{ novel.title }}" href="#">
+                <a title="{{ novel.title }}" href="{% url 'novel' id=novel.id %}">
                   <div class="image lazy page_aiko_31758421" {% if novel.img %} style="background-image: url('{{ novel.img.url }}')" {% endif %}></div>
                   <div class="series-info"> 
                     <div class="series">{{ novel.title }}</div>
@@ -73,21 +73,19 @@
               <strong>Mới cập nhật</strong>
             </div>
             <main class="gridlist">
-              {% for novel in novels %}
-              {% if forloop.counter <= 14 %}
+              {% for item in new_update_novels %}
               <div class = "glitem">
-                <a title="Mở đầu" href="#">
-                  <img class="image lazy page_aiko_31758421" style="" {% if novel.img %}src="{{novel.img.url}} {% endif %}"></img>
+                <a title="Mở đầu" href="{% url 'read' volume_id=item.volume.id chapter_id=item.chapter.id %}">
+                  <img class="image lazy page_aiko_31758421" style="" {% if item.book.img %}src="{{item.book.img.url}} {% endif %}"></img>
                   <div class="series-info">
-                    <div class="vol" title="Tập 01">Tập 01</div>
-                    <div class="chap" title="Mở đầu">Mở đầu</div>
+                    <div class="vol" title="Tập 01">{{item.volume.title}}</div>
+                    <div class="chap" title="Mở đầu">{{item.chapter.title}}</div>
                   </div>
                 </a>
-                <a class="series-name" title="" href="{% url 'novel' id=novel.id %}">
-                  {{novel.title}}
+                <a class="series-name" title="" href="{% url 'novel' id=item.book.id %}">
+                  {{item.book.title}}
                 </a>
               </div>
-              {% endif %}
               {% endfor %}
               <div class = "glitem">
                 <a title="Xem thêm" href="#">

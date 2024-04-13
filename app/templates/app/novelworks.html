@@ -147,7 +147,7 @@
                                           {{volume.title}}
                                       </div>
                                       <div class="volume action">
-                                          <a class="btn btn-blue" href="{% url 'write' volume_id=volume.id chapter_id=0 %}">Thêm chương mới</a>
+                                          <a class="btn btn-blue" href="{% url 'write' volume_id=volume.id chapter_id=0 %}" id="add-chapter-link">Thêm chương mới</a>
                                           <button class="btn btn-blue" onclick="openAddVolumeForm(event, {{volume.id}})">Sửa</button>
                                           <button class="btn btn-blue">Xóa</button>
                                       </div>
@@ -165,7 +165,7 @@
                                                 <tr>
                                                   <td class="volume-chapter-details pe-3">
                                                     <div class="chapter-list d-flex justify-content-between">
-                                                      <a class="chapter-name col-md-9 col-9" href=" {% url 'write' volume_id=volume.id chapter_id=chapter.id %}">
+                                                      <a class="chapter-name col-md-9 col-9 chapter-name-link" href=" {% url 'write' volume_id=volume.id chapter_id=chapter.id %}">
                                                         {% if chapter.title %}
                                                             {{ chapter.title }}
                                                         {% else %}
@@ -173,7 +173,11 @@
                                                         {% endif %}
                                                       </a>
                                                       <div class="chapter-dateupload text-end d-none d-md-block">
-                                                        {{ chapter.date_upload | date:"j/m/Y"}}
+                                                        {% if chapter.date_upload %}
+                                                            {{ chapter.date_upload | date:"j/m/Y"}}
+                                                        {% else %}
+                                                            Bản thảo
+                                                        {% endif %}
                                                       </div>
                                                     </div>
                                                   </td>

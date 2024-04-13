@@ -18,6 +18,7 @@ urlpatterns = [
     path('novel-works/<int:group_id>/<int:book_id>/', views.novelWorks, name="novel-works"),
     path('write/<int:volume_id>/<int:chapter_id>/', views.write, name="write"),
     path('saveBook', views.saveBook, name='saveBook'),
+    path('saveBookSub', views.saveBookSub, name='saveBookSub'),
     path('save-chapter/', views.saveChapter, name='save-chapter'),
     path('upload-chapter/', views.uploadChapter, name='upload-chapter'),
     path('delete-chapter/', views.deleteChapter, name='delete-chapter'),

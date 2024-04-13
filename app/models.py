@@ -71,7 +71,7 @@ class Book(models.Model):
     note = models.TextField(null=True)
     quantityVol = models.IntegerField(default=0)
     dateUpload = models.DateField(null=True)
-    dateUpdate = models.DateField(null=True)
+    dateUpdate = models.DateTimeField(null=True)
     categories = models.ManyToManyField(Category, related_name='books', blank=True)
     isDeleted = models.BooleanField(default=False)
     def __str__(self):

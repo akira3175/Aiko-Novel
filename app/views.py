@@ -12,7 +12,7 @@ from django.contrib import messages # thu vien thong bao
 from .models import UserForm
 from forum.models import ForumPost
 from django.views.decorators.csrf import csrf_exempt
-from django.db.models import Sum
+from django.db.models import Sum, Max
 from django import forms
 
 # Create your views here.
@@ -102,23 +102,44 @@ def logoutPage(request):
     
 def home(request):
     latest_posts = ForumPost.objects.all().order_by('-created_at')[:5]
-    novels = Book.objects.all()
+    novels = Book.objects.filter(isDeleted=False)
     trending_novels = Book.objects.annotate(total_views=Sum('volumes__chapters__view')).order_by('-total_views')[:8]
-    print(trending_novels)
+    latest_chapters = Chapter.objects.values('volume_id').annotate(
+        latest_chapter_date=Max('date_upload')
+    ).order_by('-latest_chapter_date')
+    
+    new_update_novels = []
+    book_ids_added = set()  # Set để lưu trữ các book_id đã thêm vào danh sách
+    for chapter_info in latest_chapters:
+        if len(new_update_novels) >= 14:
+            break  # Đã lấy đủ 14 sách, dừng vòng lặp
+
+        latest_chapter = Chapter.objects.filter(
+            volume_id=chapter_info['volume_id'],
+            date_upload=chapter_info['latest_chapter_date']
+        ).first()
+
+        if latest_chapter and latest_chapter.volume.book_id not in book_ids_added:
+            volume = latest_chapter.volume
+            book = volume.book
+            new_update_novels.append({'book': book, 'volume': volume, 'chapter': latest_chapter})
+            book_ids_added.add(latest_chapter.volume.book_id)  # Đánh dấu book_id đã thêm vào danh sách
+
 
     context = {
             'latest_posts': latest_posts,
             'novels': novels,
             'trending_novels': trending_novels,
+            'new_update_novels': new_update_novels,
         }
-    return render(request, 'app/home.html', context) 
+    return render(request, 'app/home.html', context)
 
 """Search page"""
     
 def search(request):
     keywords = request.GET.get('keywords')
     matched_books = []
-    all_book = Book.objects.all(isDeleted=False)
+    all_book = Book.objects.filter(isDeleted=False)
     if all_book:
         for book in all_book:
             if keywords.lower() in book.title.lower():
@@ -152,7 +173,6 @@ def novelWorks(request, group_id, book_id):
         # Lấy thông tin từ model Book
         try:
             book_obj = Book.objects.get(id=book_id, isDeleted=False)
-            selected_categories_ids = book_obj.categories.values_list('id', flat=True)
             categories = Category.objects.exclude(id__in=book_obj.categories.all())
             book = {
                 'id': book_obj.id,
@@ -183,23 +203,23 @@ def novelWorks(request, group_id, book_id):
 def novel(request,id):
     book = Book.objects.get(id=id, isDeleted=False)
     volumes = Volume.objects.filter(book=book).order_by('-id')
-    chapters = Chapter.objects.filter(volume__in=volumes)
+    chapters = Chapter.objects.filter(volume__in=volumes, date_upload__isnull=False)
     context = {'book': book, 'volumes': volumes, 'chapters': chapters}
     return render(request, 'app/novel.html', context)
 
 def read(request, volume_id, chapter_id):
     volume = Volume.objects.get(id=volume_id)
     book = Book.objects.get(id=volume.book.id, isDeleted=False)
-    chapter = Chapter.objects.get(id=chapter_id)
+    chapter = Chapter.objects.get(id=chapter_id, date_upload__isnull=False)
     chapter.increase_views()
 
-    previous_chapter_same_volume = Chapter.objects.filter(volume__book=book, volume__id=volume_id, id__lt=chapter.id).order_by('-id').first()
+    previous_chapter_same_volume = Chapter.objects.filter(volume__book=book, volume__id=volume_id, id__lt=chapter.id, date_upload__isnull=False).order_by('-id').first()
     previous_chapter_prev_volume = None
     prev_volume = Volume.objects.filter(book=book, id__lt=volume_id).order_by('-id').first()
     if prev_volume:
         previous_chapter_prev_volume = Chapter.objects.filter(volume=prev_volume).order_by('-id').first()
 
-    next_chapter_same_volume = Chapter.objects.filter(volume__book=book, volume__id=volume_id, id__gt=chapter.id).order_by('id').first()
+    next_chapter_same_volume = Chapter.objects.filter(volume__book=book, volume__id=volume_id, id__gt=chapter.id, date_upload__isnull=False).order_by('id').first()
     next_chapter_next_volume = None
     next_volume = Volume.objects.filter(book=book, id__gt=volume_id).order_by('id').first()
     if next_volume:
@@ -278,6 +298,69 @@ def saveBook(request):
         return JsonResponse({'error': 'Yêu cầu không hợp lệ.'}, status=405)
     
 @csrf_exempt
+def saveBookSub(request):
+    if request.method == 'POST':
+        # Nhận dữ liệu từ yêu cầu POST
+        id = int(request.POST.get('novelid', -1))  # Chuyển đổi id sang kiểu int
+        title = request.POST.get('title')
+        author = request.POST.get('author')
+        artist = request.POST.get('artist')
+        novelTransTeam = request.POST.get('novelTransTeam')
+        category_ids_str = request.POST.get('category')
+        description = request.POST.get('description')
+        checkboxChecked = request.POST.get('checkboxChecked')
+        isCompleted = checkboxChecked.lower() == 'true' if checkboxChecked else False
+        image = request.FILES.get('image')
+
+        # Kiểm tra xem id có phải là 0 (tạo mới) hay không
+        if id == 0:
+            # Tạo mới đối tượng Book
+            new_book = Book.objects.create(
+                title=title,
+                author=author,
+                artist=artist,
+                workerid=novelTransTeam,
+                description=description,
+                isCompleted=isCompleted,
+                img=image,
+                dateUpload=timezone.now(),
+                dateUpdate=timezone.now()
+            )
+            # Thêm categories cho đối tượng mới
+            if category_ids_str:
+                category_ids = [int(cat_id) for cat_id in category_ids_str.split(',')]
+                categories = Category.objects.filter(id__in=category_ids)
+                new_book.categories.add(*categories)
+
+            # Trả về phản hồi thành công
+            return JsonResponse({'book_id': new_book.id})
+        else:
+            # Cập nhật thông tin của đối tượng Book đã tồn tại
+            existing_book = get_object_or_404(Book, id=id)
+            existing_book.title = title
+            existing_book.author = author
+            existing_book.artist = artist
+            existing_book.workerid = novelTransTeam
+            existing_book.description = description
+            existing_book.isCompleted = isCompleted
+            existing_book.dateUpdate = timezone.now()
+            if image:
+                existing_book.img = image
+
+            # Xóa hết categories cũ và thêm lại categories mới
+            existing_book.categories.clear()
+            if category_ids_str:
+                category_ids = [int(cat_id) for cat_id in category_ids_str.split(',')]
+                categories = Category.objects.filter(id__in=category_ids)
+                existing_book.categories.add(*categories)
+
+            existing_book.save()
+            # Trả về phản hồi thành công
+            return JsonResponse({'book_id': existing_book.id})
+    else:
+        return JsonResponse({'error': 'Yêu cầu không hợp lệ.'}, status=405)
+    
+@csrf_exempt
 def saveVolume(request):
     if request.method == 'POST':
         book_id = int(request.POST.get('book-id'))
@@ -295,7 +378,8 @@ def saveVolume(request):
             if volume_image:
                 volume.img = volume_image
                 volume.save()
-            return JsonResponse({'message': 'Tạo tập mới thành công'})
+            redirect_url = f'/novel-works/{book.workerid}/{book.id}'  # Tạo chuỗi URL trực tiếp
+            return JsonResponse({'redirect_url': redirect_url})
 
         else:  # Ngược lại, sửa tập đã tồn tại
             try:
@@ -304,7 +388,8 @@ def saveVolume(request):
                 if volume_image:
                     volume.img = volume_image
                 volume.save()
-                return JsonResponse({'message': 'Sửa tập thành công'})
+                redirect_url = f'/novel-works/{book.workerid}/{book.id}'  # Tạo chuỗi URL trực tiếp
+                return JsonResponse({'redirect_url': redirect_url})
 
             except Volume.DoesNotExist:
                 return JsonResponse({'error': 'Tập không tồn tại'}, status=404)
@@ -492,7 +577,7 @@ def transTeam(request):
 
 def novelOfTransTeam(request, group_id):
     group = Group.objects.get(pk=group_id)
-    books = Book.objects.filter(workerid=group_id, isDeleted=False)
+    books = Book.objects.filter(workerid=group_id, isDeleted=False).order_by('-dateUpdate')
     books_with_volumes_count = []
     
     for book in books:
