@@ -83,11 +83,11 @@
                     <div class="card-body">
                         {% if comment.user_info.img_avatar %}        
                         <div class="user-info">
-                            <div class="avatar-container">
+                            <a href="{% url 'profile' username=comment.user_info.username%}" class="avatar-container">
                                 <img src="{{ comment.user_info.img_avatar.url }}">
-                            </div>
+                            </a>
                             <div class="comment-details">
-                                <p><b>Người đăng:</b> {{ comment.user_info }}</p>
+                                <a href="{% url 'profile' username=comment.user_info.username%}"><b>Người đăng:</b> {{ comment.user_info }}</a>
                                 <p class="text-muted"><i>{{ comment.created_at|date:"d/m/Y h:m" }}</i></p>
                             </div>
                         </div>
@@ -104,11 +104,5 @@
     
 
     <script src="" async defer></script>
-    <script>
-        console.log(2)
-        document.addEventListener("DOMContentLoaded", function() {
-            // Kích hoạt CKEditor
-        });
-    </script>
 </body>
 {% endblock main_content %}

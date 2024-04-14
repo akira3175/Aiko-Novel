@@ -7,7 +7,7 @@ from app.models import GroupForm
 import json
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout # thu vien xac thuc
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AnonymousUser
 from django.contrib import messages # thu vien thong bao
 from .models import UserForm
 from forum.models import ForumPost
@@ -156,7 +156,12 @@ def novel(request,id):
     volumes = Volume.objects.filter(book=book).order_by('-id')
     chapters = Chapter.objects.filter(volume__in=volumes, date_upload__isnull=False)
     group = Group.objects.get(id=book.workerid)
-    is_follow = BookFollowing.objects.filter(user=request.user, book=book).exists()
+    if isinstance(request.user, AnonymousUser):
+        is_follow = False  # Đối với người dùng không xác định, không có trạng thái follow
+        number_followers = BookFollowing.objects.filter(book=book).count()
+    else:
+        is_follow = BookFollowing.objects.filter(user=request.user, book=book).exists()
+        number_followers = BookFollowing.objects.filter(book=book).count()
     follow_status = 'follow' if not is_follow else 'unfollow'
     number_followers = BookFollowing.objects.filter(book=book).count()
     context = {'book': book, 'volumes': volumes, 'chapters': chapters, 'follow_status': follow_status, 'number_followers': number_followers, 'group': group}
@@ -591,8 +596,6 @@ def group(request, group_id):
     group = Group.objects.get(id=group_id)
     novels = Book.objects.filter(isDeleted=False, workerid=group_id).order_by('-dateUpdate')
     context = {'novels': novels, 'group': group}
-    print(group)
-    print(novels)
     return render(request, 'app/group.html', context)
 
 def forOfTransTeam(group_member_counts, groups, join):
@@ -857,8 +860,6 @@ def library(request):
 def followBook(request, book_id):
     action = request.POST.get('action') 
     user = request.user 
-    print(action == 'follow')
-    print(user)
 
     if action == 'follow':
         BookFollowing.objects.get_or_create(user=user, book_id=book_id)
