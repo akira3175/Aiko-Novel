@@ -149,7 +149,7 @@
                                       <div class="volume action">
                                           <a class="btn btn-blue" href="{% url 'write' volume_id=volume.id chapter_id=0 %}" id="add-chapter-link">Thêm chương mới</a>
                                           <button class="btn btn-blue" onclick="openAddVolumeForm(event, {{volume.id}})">Sửa</button>
-                                          <button class="btn btn-blue">Xóa</button>
+                                          <a class="btn btn-blue" href=" {% url 'delete-volume' volume_id=volume.id %}">Xóa</a>
                                       </div>
                                   </div>
                                   <div class="volume-info pb-3 d-flex flex-wrap">

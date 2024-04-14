@@ -29,7 +29,7 @@
                                                 <span>Truyện dịch</span>
                                             </div>
                                             <div class="a6-ratio">
-                                                <div class="content img-in-ratio" {% if book.img %} style="background-image: url('{{book.img.url}}');" {% endif %}></div>
+                                                <div class="content img-in-ratio page_aiko_31758421" {% if book.img %} style="background-image: url('{{book.img.url}}');" {% endif %}></div>
                                             </div>
                                         </div>
                                     </div>
@@ -67,9 +67,9 @@
                                         <div class="side-features flex-none">
                                             <div class="row">
                                                 <div class="col-4 col-md feature-item width-auto-xl">
-                                                    <a id="collect" class="side-feature-button button-follow follow" >
-                                                        <span class="block feature-value"><i class="far fa-heart"></i></span>
-                                                        <span class="block feature-name"> 97 </span>
+                                                    <a id="collect" class="side-feature-button button-follow follow" id="follow-btn" data-book-id="{{ book.id }}" data-action="{{ follow_status }}" title="Theo dõi" >
+                                                        <span class="block feature-value"><i class="far fa-heart" {% if follow_status == 'unfollow' %} style="font-weight: 900" {% endif %}></i></span>
+                                                        <span class="block feature-name"> {{ number_followers }} </span>
                                                     </a>
                                                 </div>
                                                 
@@ -80,10 +80,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-4 col-md feature-item width-auto-xl">
-                                                    <a href="https://docln.net/truyen/17382-teniireta-saimin-apuri-de-yume-no-haremu-seikatsu-o-okuritai#series-comments" class="side-feature-button">
+                                                    <div class="side-feature-button">
                                                         <span class="block feature-value"><i class="fas fa-comments"></i></span>
-                                                        <span class="block feature-name">Bàn luận</span>
-                                                    </a>
+                                                        <span class="block feature-name">Bình luận</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -95,14 +95,14 @@
                                     <div class="summary-wrapper other-facts col-12">
                                         <div class="fact-item">
                                             <div class="fact-name">Tên khác:</div>
-                                            <div class="fact-value">{{book.anothername}}</div>
+                                            <div class="fact-value">{{book.anothername|linebreaks}}</div>
                                         </div>
                                     </div>
                                     <div class="summary-wrapper col-12">
                                         <div class="series-summary">
                                             <h4 class="font-bold">Tóm tắt</h4>
                                             <div class="summary-content">
-                                                {{book.description}}
+                                                {{book.description|linebreaks}}
                                             </div>
                                         </div>
                                     </div>
@@ -116,15 +116,9 @@
                         <div class="col-12 no-push push-3-m col-md-6 no-push-l col-lg-12">
                             <section class="series-users">
                                 <main>
-                                    <div class="series-owner group-mem">
-                                        <img width="50px" height="50px" src="" alt=""/>
-                                        <div class="series-owner-title">
-                                            <span class="series-owner_name"><a href=""></a></span>
-                                        </div>
-                                    </div>
                                     <div class="fantrans-section">
                                         <div class="fantrans-name">Nhóm dịch</div>
-                                        <div class="fantrans-value"><a href=""></a></div>
+                                        <div class="fantrans-value"><a href="{% url 'group' group_id=group.id%}">{{group.groupname}}</a></div>
                                     </div>
                                     <div class="owner-donate" style="padding: 0; display: none"></div>
                                 </main>
@@ -161,7 +155,7 @@
                                           <tr>
                                             <td class="volume-chapter-details pe-3">
                                               <div class="chapter-list d-flex justify-content-between">
-                                                <a class="chapter-name col-md-9 col-9" href=" {% url 'read' volume_id=volume.id chapter_id=chapter.id %}">
+                                                <a class="chapter-name col-md-9 col-9" href=" {% url 'read' chapter_id=chapter.id %}">
                                                   {% if chapter.title %}
                                                       {{ chapter.title }}
                                                   {% else %}

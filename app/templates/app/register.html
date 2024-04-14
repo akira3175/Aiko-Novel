@@ -4,7 +4,7 @@
           <div class="dialog">
             <div class="dialog-body">
               <div class="dialog-container">
-                <form action="register" class="cmn-form-web" method="POST">
+                <form action="{% url 'register' %}" class="cmn-form-web" method="POST">
                   {% csrf_token %}
                   <div class="form-main-logo">
                   </div>
@@ -37,6 +37,7 @@
                     </div>
                     <div class="error-text" style="display: none;"></div>
                   </div>
+                  <input type="hidden" name="current-url" value="{{ request.build_absolute_uri }}">
                   <div class="agreement-item-list">
                     <label for="" class="el-checkbox">
                       <span class="el-checkbox-input" aria-checked="false">

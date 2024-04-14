@@ -3,12 +3,12 @@
 {% block banner_slider %}
 {% endblock banner_slider %}
 {% block main_content %}
-    <div id="profile" class="w-100">
+    <div id="profile" class="w-100" style="min-height: 100vh">
         <div class="">
             <div class="info w-100">
                 <div>
                     {% if userInfo %}
-                    <div role="main" style="height: 300vh">
+                    <div role="main">
                         <div class="background-img w-100">
                             <div class="save-edit-background w-100" style="display: none">
                                 <div class="text-content">
@@ -99,6 +99,27 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-join d-flex justify-content-center">
+                        <div class="group-join-container col-lg-8 col-md-10 col-sm-12 col-12">
+                            <div class="group-join-container col-md-5 col-12 panel">
+                                <div class="group-join-title porel">
+                                    <p class="title p-2 fs-5 fw-semibold">
+                                        Nhóm đã tham gia
+                                    </p>
+                                </div>
+                                <main class="group-list d-flex flex-column">
+                                    {% for group in groups %}
+                                    <div class="group-info pb-3">
+                                        <a href="{% url 'group' group_id=group.id %}" class="group-title fs-5 w-100 fw-semibold">
+                                            <i class="fa-solid fa-users-rectangle"></i>   
+                                            {{ group.groupname }}
+                                        </a>
+                                    </div>
+                                    {% endfor %}
+                                </main>
                             </div>
                         </div>
                     </div>

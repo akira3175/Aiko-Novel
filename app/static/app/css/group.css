@@ -1,0 +1,26 @@
+#group .group-name {
+    font-size: xx-large;
+    font-weight: 600;
+}
+
+#group .group-description {
+    padding: 20px 20px;
+    border: 1px solid;
+}
+
+#group .title {
+    content: "";
+    background: #5837d0;
+    color: white;
+    width: fit-content;
+}
+
+#group .title::after{
+    content: '';
+    display: block;
+    height: 5px;
+    width: 98%;
+    background: #5837d0;
+    position: absolute;
+    bottom: 0;
+}

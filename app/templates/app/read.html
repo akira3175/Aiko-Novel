@@ -13,11 +13,11 @@
                         <div class="top-bar pt-5">
                             <div class="index box">
                                 {% if previous_chapter %}
-                                <a href="{% url 'read' volume_id=previous_chapter.volume.id chapter_id=previous_chapter %}" id="btn-pre-chapter" class="btn btn-blue">Chương trước</a>
+                                <a href="{% url 'read' chapter_id=previous_chapter %}" id="btn-pre-chapter" class="btn btn-blue">Chương trước</a>
                                 {% endif %}
                                 <a href="{% url 'novel' id=book.id %}" id="btn-index" class="btn btn-blue mx-3">Mục lục</a>
                                 {% if next_chapter %}
-                                <a href="{% url 'read' volume_id=next_chapter.volume.id chapter_id=next_chapter %}" id="btn-next-chapter" class="btn btn-blue">Chương tiếp theo</a>
+                                <a href="{% url 'read' chapter_id=next_chapter %}" id="btn-next-chapter" class="btn btn-blue">Chương tiếp theo</a>
                                 {% endif %}
                             </div>
                         </div>
@@ -46,11 +46,11 @@
                         <div class="bottom-bar pt-5">
                             <div class="index box">
                                 {% if previous_chapter %}
-                                <a href="{% url 'read' volume_id=previous_chapter.volume.id chapter_id=previous_chapter %}" id="btn-pre-chapter" class="btn btn-blue">Chương trước</a>
+                                <a href="{% url 'read' chapter_id=previous_chapter %}" id="btn-pre-chapter" class="btn btn-blue">Chương trước</a>
                                 {% endif %}
                                 <a href="{% url 'novel' id=book.id %}" id="btn-index" class="btn btn-blue mx-3">Mục lục</a>
                                 {% if next_chapter %}
-                                <a href="{% url 'read' volume_id=volume.id chapter_id=next_chapter %}" id="btn-next-chapter" class="btn btn-blue">Chương tiếp theo</a>
+                                <a href="{% url 'read' chapter_id=next_chapter %}" id="btn-next-chapter" class="btn btn-blue">Chương tiếp theo</a>
                                 {% endif %}
                             </div>
                         </div>
@@ -65,7 +65,7 @@
             {% if user.username %}
             <div class="comment-section col-12 mt-5 mb-4 ">
                 <h2>Thêm Bình Luận</h2>
-                <form method="post" action="{% url 'read' volume_id=volume.id chapter_id=chapter.id %}" autocomplete="off">
+                <form method="post" action="{% url 'read' chapter_id=chapter.id %}" autocomplete="off">
                     {% csrf_token %}
                     <div class="row">
                     <div class="col"> {{ chapter_comment_form.as_p }} </div>

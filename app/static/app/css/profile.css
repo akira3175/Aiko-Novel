@@ -247,3 +247,17 @@
     color: var(--bs-black);
     margin: 0 0 10px 10px;
 }
+
+/* Group join */
+
+.group-join-container {
+    border-radius: 15px;
+}
+
+.group-join-container .group-title {
+    padding-top: 1px;
+    height: 50px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

@@ -48,7 +48,7 @@
                                                     <div class="triangle"></div>
                                                     <ul class="dropdown-menu">
                                                         <li><a href="{% url 'novel-works' group_id=group.id book_id=item.book.id %}" class="dropdown-item">Cập nhật</a></li>
-                                                        <li><a href="#" class="dropdown-item">Xóa</a></li>
+                                                        <li><a href="{% url 'delete-book' book_id=item.book.id %}" class="dropdown-item">Xóa</a></li>
                                                     </ul>
                                                 </div>
                                             </div>

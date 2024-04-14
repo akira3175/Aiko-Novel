@@ -12,6 +12,7 @@ from django.contrib import messages # thu vien thong bao
 from .models import UserForm
 from forum.models import ForumPost
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 from django.db.models import Sum, Max
 from django import forms
 
@@ -24,6 +25,7 @@ def register(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         repassword = request.POST.get('repassword')
+        current_url = request.POST.get('current-url')
         date_join = timezone.now()
 
         if password == repassword:
@@ -38,11 +40,10 @@ def register(request):
             UserInfo.objects.create(username=myuser, full_name=myuser.username, date_join=date_join)
 
             messages.success(request, "Your account has been registered")
-            return redirect('home')
+            return redirect(current_url)
         else:
             messages.error(request, "Passwords do not match")
-
-    return redirect('home')
+        current_url = request.POST.get('current-url')
 
 def checkUsername(request):
     if request.method == 'GET' and request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
@@ -84,15 +85,17 @@ def loginPage(request):
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
+        current_url = request.POST.get('current-url')
         user = authenticate(request, username=username, password=password)
         
         if user is not None:
             login(request, user)
-            return redirect('home')
+            return redirect(current_url)
         else:
             messages.error(request, "Username or password is incorrect!")
+        return redirect(current_url)
 
-    return redirect('home')
+    return JsonResponse({'success': False, 'error_message': 'Invalid request method'}, status=400)
 
 def logoutPage(request):
     logout(request)
@@ -112,7 +115,7 @@ def home(request):
     book_ids_added = set()  # Set để lưu trữ các book_id đã thêm vào danh sách
     for chapter_info in latest_chapters:
         if len(new_update_novels) >= 14:
-            break  # Đã lấy đủ 14 sách, dừng vòng lặp
+            break 
 
         latest_chapter = Chapter.objects.filter(
             volume_id=chapter_info['volume_id'],
@@ -123,7 +126,7 @@ def home(request):
             volume = latest_chapter.volume
             book = volume.book
             new_update_novels.append({'book': book, 'volume': volume, 'chapter': latest_chapter})
-            book_ids_added.add(latest_chapter.volume.book_id)  # Đánh dấu book_id đã thêm vào danh sách
+            book_ids_added.add(latest_chapter.volume.book_id) 
 
 
     context = {
@@ -145,6 +148,69 @@ def search(request):
             if keywords.lower() in book.title.lower():
                 matched_books.append(book)
     return render(request, 'app/search.html', {'keywords': keywords,'matched_books': matched_books})
+
+"""Novel page"""
+
+def novel(request,id):
+    book = Book.objects.get(id=id, isDeleted=False)
+    volumes = Volume.objects.filter(book=book).order_by('-id')
+    chapters = Chapter.objects.filter(volume__in=volumes, date_upload__isnull=False)
+    group = Group.objects.get(id=book.workerid)
+    is_follow = BookFollowing.objects.filter(user=request.user, book=book).exists()
+    follow_status = 'follow' if not is_follow else 'unfollow'
+    number_followers = BookFollowing.objects.filter(book=book).count()
+    context = {'book': book, 'volumes': volumes, 'chapters': chapters, 'follow_status': follow_status, 'number_followers': number_followers, 'group': group}
+
+    # Tính tổng số bình luận của tất cả các chương
+    total_comments = 0
+    for chapter in chapters:
+        total_comments += ChapterComment.objects.filter(chapter=chapter).count()
+
+    context['total_comments'] = total_comments
+    
+    return render(request, 'app/novel.html', context)
+
+def read(request, chapter_id):
+    chapter = Chapter.objects.get(id=chapter_id, date_upload__isnull=False)
+    volume = Volume.objects.get(id=chapter.volume.id)
+    book = Book.objects.get(id=volume.book.id, isDeleted=False)
+    chapter.increase_views()
+
+    previous_chapter_same_volume = Chapter.objects.filter(volume__book=book, volume__id=volume.id, id__lt=chapter.id, date_upload__isnull=False).order_by('-id').first()
+    previous_chapter_prev_volume = None
+    prev_volume = Volume.objects.filter(book=book, id__lt=volume.id).order_by('-id').first()
+    if prev_volume:
+        previous_chapter_prev_volume = Chapter.objects.filter(volume=prev_volume, date_upload__isnull=False).order_by('-id').first()
+
+    next_chapter_same_volume = Chapter.objects.filter(volume__book=book, volume__id=volume.id, id__gt=chapter.id, date_upload__isnull=False).order_by('id').first()
+    next_chapter_next_volume = None
+    next_volume = Volume.objects.filter(book=book, id__gt=volume.id).order_by('id').first()
+    if next_volume:
+        next_chapter_next_volume = Chapter.objects.filter(volume=next_volume, date_upload__isnull=False).order_by('id').first()
+        
+    context = {
+        'chapter': chapter,
+        'volume': volume,
+        'book': book,
+        'previous_chapter': previous_chapter_same_volume or previous_chapter_prev_volume or None,
+        'next_chapter': next_chapter_same_volume or next_chapter_next_volume or None,
+    }
+    
+    if request.method == 'POST':
+        form = ChapterCommentForm(request.POST)
+        if form.is_valid():
+            chapter_comment = form.save(commit=False)
+            chapter_comment.chapter = chapter
+            chapter_comment.user_info = UserInfo.objects.get(username=request.user)
+            chapter_comment.save()
+            return redirect('read', chapter_id=chapter_id)
+    else:
+        form = ChapterCommentForm()
+
+    context['chapter_comment_form'] = form
+    context['chapter_comments'] = ChapterComment.objects.filter(chapter=chapter).order_by('-created_at')
+    
+    return render(request, 'app/read.html', context)
 
 """Novel works"""
 
@@ -197,65 +263,6 @@ def novelWorks(request, group_id, book_id):
     group = Group.objects.get(pk=group_id)
     context = {'categories': categories, 'book': book, 'group': group, 'volumes': volumes, 'chapters': chapters}
     return render(request, 'app/novelworks.html', context)
-
-"""Novel page"""
-
-def novel(request,id):
-    book = Book.objects.get(id=id, isDeleted=False)
-    volumes = Volume.objects.filter(book=book).order_by('-id')
-    chapters = Chapter.objects.filter(volume__in=volumes, date_upload__isnull=False)
-    context = {'book': book, 'volumes': volumes, 'chapters': chapters}
-    
-    # Tính tổng số bình luận của tất cả các chương
-    total_comments = 0
-    for chapter in chapters:
-        total_comments += ChapterComment.objects.filter(chapter=chapter).count()
-
-    context['total_comments'] = total_comments
-    
-    return render(request, 'app/novel.html', context)
-
-def read(request, volume_id, chapter_id):
-    volume = Volume.objects.get(id=volume_id)
-    book = Book.objects.get(id=volume.book.id, isDeleted=False)
-    chapter = Chapter.objects.get(id=chapter_id, date_upload__isnull=False)
-    chapter.increase_views()
-
-    previous_chapter_same_volume = Chapter.objects.filter(volume__book=book, volume__id=volume_id, id__lt=chapter.id, date_upload__isnull=False).order_by('-id').first()
-    previous_chapter_prev_volume = None
-    prev_volume = Volume.objects.filter(book=book, id__lt=volume_id).order_by('-id').first()
-    if prev_volume:
-        previous_chapter_prev_volume = Chapter.objects.filter(volume=prev_volume).order_by('-id').first()
-
-    next_chapter_same_volume = Chapter.objects.filter(volume__book=book, volume__id=volume_id, id__gt=chapter.id, date_upload__isnull=False).order_by('id').first()
-    next_chapter_next_volume = None
-    next_volume = Volume.objects.filter(book=book, id__gt=volume_id).order_by('id').first()
-    if next_volume:
-        next_chapter_next_volume = Chapter.objects.filter(volume=next_volume).order_by('id').first()
-        
-    context = {
-        'chapter': chapter,
-        'volume': volume,
-        'book': book,
-        'previous_chapter': previous_chapter_same_volume or previous_chapter_prev_volume or None,
-        'next_chapter': next_chapter_same_volume or next_chapter_next_volume or None,
-    }
-    
-    if request.method == 'POST':
-        form = ChapterCommentForm(request.POST)
-        if form.is_valid():
-            chapter_comment = form.save(commit=False)
-            chapter_comment.chapter = chapter
-            chapter_comment.user_info = UserInfo.objects.get(username=request.user)
-            chapter_comment.save()
-            return redirect('read', volume_id=volume_id, chapter_id=chapter_id)
-    else:
-        form = ChapterCommentForm()
-
-    context['chapter_comment_form'] = form
-    context['chapter_comments'] = ChapterComment.objects.filter(chapter=chapter).order_by('-created_at')
-    
-    return render(request, 'app/read.html', context)
 
 @csrf_exempt
 def saveBook(request):
@@ -383,6 +390,12 @@ def saveBookSub(request):
     else:
         return JsonResponse({'error': 'Yêu cầu không hợp lệ.'}, status=405)
     
+def deleteBook(request, book_id):
+    book = Book.objects.get(id=book_id)
+    book.isDeleted = True
+    book.save()
+    return redirect('novel-of-trans-team', group_id=book.workerid)
+    
 @csrf_exempt
 def saveVolume(request):
     if request.method == 'POST':
@@ -419,6 +432,12 @@ def saveVolume(request):
 
     return JsonResponse({'error': 'Phương thức yêu cầu không hợp lệ'}, status=400)
     
+def deleteVolume(request, volume_id):
+    volume = Volume.objects.get(id=volume_id)
+    book = volume.book
+    volume.delete()
+    return redirect('novel-works', group_id=book.workerid, book_id=book.id)
+
 """Write page"""
     
 def write(request, volume_id, chapter_id):
@@ -507,8 +526,10 @@ def deleteChapter(request):
 """Profile page"""
     
 def profile(request, username):
-    userInfo, created = UserInfo.objects.get_or_create(username__username=username) 
-    return render(request, 'app/profile.html', {'userInfo': userInfo})
+    userInfo, created = UserInfo.objects.get_or_create(username__username=username)
+    groups = Group.objects.filter(members__auth_user=userInfo.username)
+    context = {'groups': groups, 'userInfo': userInfo}
+    return render(request, 'app/profile.html', context)
 
 def saveBackground(request):
     if request.method == 'POST':
@@ -565,6 +586,14 @@ def saveFullName(request):
     return JsonResponse({'success': False})
 
 """Translation Group page"""
+
+def group(request, group_id):
+    group = Group.objects.get(id=group_id)
+    novels = Book.objects.filter(isDeleted=False, workerid=group_id).order_by('-dateUpdate')
+    context = {'novels': novels, 'group': group}
+    print(group)
+    print(novels)
+    return render(request, 'app/group.html', context)
 
 def forOfTransTeam(group_member_counts, groups, join):
     for group in groups:
@@ -802,7 +831,47 @@ def outGroup(request, group_id):
     
     return redirect('member-of-trans-team', group_id=group_id)
 
+"""Libraby"""
+def library(request):
+    book_following = Book.objects.filter(bookfollowing__user=request.user)
+    book_following_list = []
+    for book in book_following:
+        lastest_chapter = Chapter.objects.filter(volume__book=book, date_upload__isnull=False).order_by('-date_upload').first()
+        if lastest_chapter:
+            lastest_volume = lastest_chapter.volume
+        else:
+            lastest_volume = None
+        
+        book_following_list.append({
+            'book': book,
+            'lastest_volume': lastest_volume,
+            'lastest_chapter': lastest_chapter,
+        })
+    book_following_list.sort(key=lambda x: x['book'].dateUpload, reverse=True)
+    context = {
+        'book_following_list': book_following_list,
+    }
+    return render(request, 'app/library.html', context)
+
+@require_POST
+def followBook(request, book_id):
+    action = request.POST.get('action') 
+    user = request.user 
+    print(action == 'follow')
+    print(user)
+
+    if action == 'follow':
+        BookFollowing.objects.get_or_create(user=user, book_id=book_id)
+        message = 'Sách đã được theo dõi.'
+    elif action == 'unfollow':
+        BookFollowing.objects.filter(user=user, book_id=book_id).delete()
+        message = 'Sách đã bị bỏ theo dõi.'
+    else:
+        message = 'Hành động không hợp lệ.'
+
+    return JsonResponse({'success': True, 'message': message})
+                                   
+
 """Ckeditor"""
 def ckeditor_admin(request):
-    # Xử lý request ở đây
     return render(request, 'admin/ckeditor.html')

@@ -17,11 +17,6 @@ class Role(models.Model):
     def __str__(self):
         return self.role_name
 
-class RoleForm(forms.ModelForm):
-    class Meta:
-        model = Role
-        fields = '__all__'
-
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
@@ -31,17 +26,12 @@ class UserInfo(models.Model):
     username = models.OneToOneField(User, on_delete=models.CASCADE, db_index=True, primary_key=True)
     full_name = models.CharField(max_length=100, null=True)
     date_join = models.DateTimeField(default=timezone.now)
-    img_avatar = models.ImageField(upload_to='avatar_images/', null=True)
+    img_avatar = models.ImageField(upload_to='avatar_images/', null=True, default='avatar_images/default-avatar-profile-icon-of-social-media-user-vector.jpg')
     img_background = models.ImageField(upload_to='background_images/', null=True, blank=True)
     img_background_position = models.IntegerField(default=0)
     role_id = models.ForeignKey(Role, on_delete=models.CASCADE, null=True, blank=True)
     def __str__(self):
         return self.username.username
-
-class UserInfoForm(forms.ModelForm):
-    class Meta:
-        model = UserInfo
-        fields = ['username', 'full_name', 'date_join', 'img_avatar', 'img_background'] 
 
 """Category model"""
 
@@ -51,17 +41,12 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-class CategoryForm(forms.ModelForm):
-    class Meta:
-        model = Category
-        fields = ['id', 'name']
-
 """Book Model"""
 
 class Book(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=100, null=True, blank=True)
-    description = models.TextField(max_length=2000, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
     anothername = models.CharField(max_length=200, null=True) 
     img = models.ImageField(upload_to='books_images/', null=True)
     author = models.CharField(max_length=100, null=True)
@@ -134,24 +119,20 @@ class ChapterCommentForm(forms.ModelForm):
             'content': forms.Textarea(attrs={'rows': 5, 'style': 'width:100%;'}),
         }
         
-"""Category-Book model"""
+"""Book Following"""
+class BookFollowing(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
 
-class CategoryBook(models.Model):
-    book = models.OneToOneField(Book, on_delete=models.CASCADE)
-    category = models.OneToOneField(Category, on_delete=models.CASCADE)
     def __str__(self):
-        return f"{self.book.title} - {self.category.name}"
-    
-class CategoryBookForm(forms.ModelForm):
-    class Meta:
-        model = CategoryBook
-        fields = '__all__'
+        return f"{self.user.username} is following {self.book.title}"
 
 """Translate Group"""
 
 class Group(models.Model):
     id = models.AutoField(primary_key=True)
     groupname = models.CharField(max_length=40, db_index=True)
+    description = models.TextField(null=True, blank=True)
     
     def __str__(self) -> str:
         return self.groupname  

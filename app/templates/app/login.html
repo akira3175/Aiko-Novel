@@ -4,7 +4,7 @@
       <div class="dialog">
         <div class="dialog-body">
           <div class="dialog-container">
-            <form action= {% url 'login' %} class="cmn-form-web" method="POST">
+            <form action= {% url 'login' %} class="cmn-form-web" method="POST" id="login-form-main">
               {% csrf_token %}
               <div class="form-main-logo"></div>
               <div class="form-title">Đăng nhập tài khoản</div>
@@ -36,6 +36,7 @@
                 </div>
                 <div class="error-text" id="password-error" style="display: none;"></div>
               </div>
+              <input type="hidden" name="current-url" value="{{ request.build_absolute_uri }}">
               <button type="submit" class="el-button disable"><span>Đăng Nhập</span></button>
               <div class="another-choice">
                 <a href="" class="forgot-password">Quên mật khẩu?</a>

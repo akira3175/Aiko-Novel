@@ -26,9 +26,6 @@
                                         <div class="row-container">
                                             <div class="left-container">
                                                 <div class="item-wrapper">
-                                                    <div class="item-img">
-                                                        <img src="" alt="" height="70" class="page_aiko_31758421 cover cover-sm-works">
-                                                    </div>
                                                     <div class="item-info">
                                                         <h3 class="item-name"><a href=""><strong>{{ group_info.groupname }}</strong></a></h3>
                                                         <div class="counts"><strong>{{ group_info.member_count }} thành viên</strong></div>
@@ -46,7 +43,7 @@
                                                     </buton>
                                                     <div class="triangle"></div>
                                                     <ul class="dropdown-menu">
-                                                        <li><a href="#" class="dropdown-item">Xem thông tin nhóm </a></li>
+                                                        <li><a href="{% url 'group' group_id=group_info.groupid %}" class="dropdown-item">Xem thông tin nhóm </a></li>
                                                         <li><a href= {% url 'novel-of-trans-team' group_id=group_info.groupid %} class="dropdown-item">Xem truyện của nhóm</a></li>
                                                         {% if group_info.is_member%}
                                                         <li><a href= {% url 'member-of-trans-team' group_id=group_info.groupid %} class="dropdown-item">Xem thành viên nhóm</a></li>

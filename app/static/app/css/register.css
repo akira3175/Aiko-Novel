@@ -259,7 +259,7 @@
 .disable {
     background-color: #e7e8ee;
     color: #b9bcc6;
-    cursor: not-allowed;
+    cursor: not-allowed !important;
 }
 
 .account-exiting {

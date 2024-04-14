@@ -1,0 +1,38 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block banner_slider %}
+{% endblock banner_slider %}
+{% block main_content %}
+    <div id="group" class="w-100 d-flex justify-content-center" style="min-height: 90vh">
+        <div class="col-9 pt-5">
+            <div class="info w-100">
+                <div class="group-name py-3">
+                    <div class="">Nhóm {{group.groupname}}</div>
+                </div>
+                <div class="group-description">
+                    <div class="description-title fs-5 fw-semibold pb-4">Giới thiệu</div>
+                    <div class="description-content">Chào mừng bạn xem group chúng tôi</div>
+                </div>
+                <div class="group-novel">
+                    <div class="group-novel-title py-3">
+                        <div class="porel">
+                            <p class="title p-2 fs-5 fw-semibold">Truyện đã đăng</p>
+                        </div>
+                    </div>
+                    <main class="gridlist">
+                        {% for novel in novels %}
+                            <div class = "glitem">
+                                <a title="Mở đầu" href="{% url 'novel' id=novel.id %}">
+                                    <img class="image lazy page_aiko_31758421" style="" {% if novel.img %}src="{{novel.img.url}} {% endif %}"></img>
+                                </a>
+                                <a class="series-name" title="" href="{% url 'novel' id=novel.id %}">
+                                {{novel.title}}
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </main>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main_content %}

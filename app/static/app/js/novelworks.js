@@ -442,27 +442,31 @@ $(document).ready(function() {
 });
 
 document.getElementById('add-chapter-link').addEventListener('click', function(event) {
-    event.preventDefault();
+    if (bookIsEdited) {
+        event.preventDefault();
 
-    saveBookSub()
-        .then(function() {
-            window.location.href = event.target.href;
-        })
-        .catch(function(error) {
-            console.error('Lỗi khi lưu dữ liệu:', error);
-        });
+        saveBookSub()
+            .then(function() {
+                window.location.href = event.target.href;
+            })
+            .catch(function(error) {
+                console.error('Lỗi khi lưu dữ liệu:', error);
+            });
+    }
 });
 
 document.querySelector('.chapter-name-link').addEventListener('click', function(event) {
-    event.preventDefault();
+    if (bookIsEdited) {
+        event.preventDefault();
 
-    saveBookSub()
-        .then(function() {
-            window.location.href = event.target.href;
-        })
-        .catch(function(error) {
-            console.error('Lỗi khi lưu dữ liệu:', error);
-        });
+        saveBookSub()
+            .then(function() {
+                window.location.href = event.target.href;
+            })
+            .catch(function(error) {
+                console.error('Lỗi khi lưu dữ liệu:', error);
+            });
+    }
 });
 
 //Note

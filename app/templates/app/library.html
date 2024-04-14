@@ -1,0 +1,62 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block banner_slider %}
+{% endblock banner_slider %}
+{% block main_content %}
+    <div id="app-container">
+        <div id="content-works" class="container">
+            <div>
+                <div class="row">
+                    <div class="col-md-9">
+                        <header>
+                            <div>
+                                <h2>
+                                    <strong aria-label="Novel of Translation Teams">Thư viện</strong>
+                                </h2>
+                            </div>
+                        </header>
+                        <div class="panel">
+                            <div class="works-type-select">
+                                <button class="on-switch-type">Truyện đang theo dõi</button>
+                            </div>
+                            <section class="item-lists row" role="list">
+                                <div class="works-list">
+                                    {% for book_following in book_following_list %}
+                                    <div class="works-item">
+                                        <div class="row-container">
+                                            <div class="left-container col-xl-8 col-md-6 col-sm-5 col-4">
+                                                <div class="item-wrapper">
+                                                    <div class="item-img">
+                                                        <img if src="{{ book_following.book.img.url }}"alt="{{ book_following.book.title }}" height="70" class="page_aiko_31758421 cover cover-sm-works">
+                                                    </div>
+                                                    <div class="item-info w-100">
+                                                        <h3 class="item-name"><a href="{% url 'novel' id=book_following.book.id %}"><strong>{{ book_following.book.title }}</strong></a></h3>
+                                                        <div ><strong>{{book_following.lastest_volume.id}}</strong></div>
+                                                        {% if book_following.lastest_chapter %}
+                                                        <a href="{% url 'read' chapter_id=book_following.lastest_chapter.id %}"><strong>{{ book_following.lastest_chapter.title }}</strong></a>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="meta-wrapper">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="actions-wrapper row justify-content-center display-6 text-danger">
+                                                <a id="collect" data-book-id="{{ book_following.book.id }}" data-action="unfollow">
+                                                    <i class="fa fa-heart" style="font-weight: 900"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% empty %}
+                                        <p class="no-novel-text"></p>
+                                    {% endfor %}
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main_content %}

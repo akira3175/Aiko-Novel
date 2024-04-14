@@ -75,11 +75,11 @@
             <main class="gridlist">
               {% for item in new_update_novels %}
               <div class = "glitem">
-                <a title="Mở đầu" href="{% url 'read' volume_id=item.volume.id chapter_id=item.chapter.id %}">
+                <a title="{{item.chapter.title}}" href="{% url 'read' chapter_id=item.chapter.id %}">
                   <img class="image lazy page_aiko_31758421" style="" {% if item.book.img %}src="{{item.book.img.url}} {% endif %}"></img>
                   <div class="series-info">
-                    <div class="vol" title="Tập 01">{{item.volume.title}}</div>
-                    <div class="chap" title="Mở đầu">{{item.chapter.title}}</div>
+                    <div class="vol" title="{{item.volume.title}}">{{item.volume.title}}</div>
+                    <div class="chap" title="{{item.chapter.title}}">{{item.chapter.title}}</div>
                   </div>
                 </a>
                 <a class="series-name" title="" href="{% url 'novel' id=item.book.id %}">
