@@ -496,6 +496,7 @@ def uploadChapter(request):
             chapter.content = content
             chapter.date_upload = timezone.now()
             chapter.save()
+            book.dateUpload = timezone.now()
             # Redirect đến trang novelWorks với các tham số group_id và book_id
             redirect_url = f'/novel-works/{book.workerid}/{book.id}'  # Tạo chuỗi URL trực tiếp
             return JsonResponse({'redirect_url': redirect_url})

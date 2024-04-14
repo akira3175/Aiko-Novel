@@ -31,7 +31,7 @@
                                                     </div>
                                                     <div class="item-info w-100">
                                                         <h3 class="item-name"><a href="{% url 'novel' id=book_following.book.id %}"><strong>{{ book_following.book.title }}</strong></a></h3>
-                                                        <div ><strong>{{book_following.lastest_volume.id}}</strong></div>
+                                                        <div ><strong>{{book_following.lastest_volume.title}}</strong></div>
                                                         {% if book_following.lastest_chapter %}
                                                         <a href="{% url 'read' chapter_id=book_following.lastest_chapter.id %}"><strong>{{ book_following.lastest_chapter.title }}</strong></a>
                                                         {% endif %}
