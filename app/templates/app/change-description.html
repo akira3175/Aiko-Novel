@@ -1,0 +1,42 @@
+<div
+  id="changedescription-form"
+  style="display: none; height: 100vh; position: fixed; z-index: 1020"
+>
+  <div class="overlay">
+    <div class="overlay-dialog">
+      <div class="dialog">
+        <div class="dialog-body">
+          <div class="dialog-container">
+            <form
+              action="changeDescriptionPane"
+              class="cmn-form-web"
+              method="POST"
+            >
+              {% csrf_token %}
+              <div class="form-title">Đổi lời giới thiệu nhóm</div>
+              <div class="form-input">
+                <div class="el-input">
+                  <input
+                    type="text"
+                    name="groupname"
+                    id="groupname"
+                    autocomplete="off"
+                    class="el-input-inner"
+                    placeholder=""
+                  />
+                  <label for="" class="input-label">Lời giới thiệu mới</label>
+                </div>
+              </div>
+              <button type="submit" class="el-button">
+                <span>Thay đổi</span>
+              </button>
+            </form>
+            <div class="dialog-close" onclick="closeChangeDescriptionForm()">
+              <i class="fa-solid fa-x"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

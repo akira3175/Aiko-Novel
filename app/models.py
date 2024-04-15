@@ -132,7 +132,7 @@ class BookFollowing(models.Model):
 class Group(models.Model):
     id = models.AutoField(primary_key=True)
     groupname = models.CharField(max_length=40, db_index=True)
-    description = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True, default="Chào mừng bạn xem group chúng tôi")
     
     def __str__(self) -> str:
         return self.groupname  
@@ -141,14 +141,19 @@ class GroupForm(forms.ModelForm):
     class Meta:
         model = Group
         fields = ['groupname']
+        
+class DescriptionForm(forms.ModelForm):
+    class Meta:
+        model = Group
+        fields = ['description']
 
     
 class Member(models.Model):
     auth_user = models.ForeignKey(User, related_name='members', on_delete=models.CASCADE)  
     group = models.ForeignKey(Group, related_name='members', on_delete=models.CASCADE)
-    teamrole = models.CharField(max_length=40, db_index=True, default="member")
+    teamrole = models.CharField(max_length=40, db_index=True, default="Thành viên")
 
     def __str__(self):
-        return f'{self.auth_user.username}  (gr: {self.group.groupname})'
+        return f'{self.auth_user.username}  (gr: {self.group.groupname}| {self.teamrole})'
 
 

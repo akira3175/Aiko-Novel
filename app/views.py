@@ -3,7 +3,6 @@ from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from app.models import *
-from app.models import GroupForm
 import json
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout # thu vien xac thuc
@@ -596,12 +595,14 @@ def saveFullName(request):
 def group(request, group_id):
     group = Group.objects.get(id=group_id)
     novels = Book.objects.filter(isDeleted=False, workerid=group_id).order_by('-dateUpdate')
-    context = {'novels': novels, 'group': group}
+    is_owner = Member.objects.filter(auth_user=request.user, group=group, teamrole='Trưởng nhóm').exists()
+    
+    context = {'novels': novels, 'group': group, 'is_owner': is_owner}
     return render(request, 'app/group.html', context)
 
 def forOfTransTeam(group_member_counts, groups, join):
     for group in groups:
-        member = Member.objects.filter(group=group, teamrole__in=['owner', 'admin', 'member'])
+        member = Member.objects.filter(group=group, teamrole__in=['Trưởng nhóm', 'Admin', 'Thành viên'])
         group_member_info = {
             'groupname': group.groupname,
             'groupid': group.id,
@@ -614,8 +615,8 @@ def forOfTransTeam(group_member_counts, groups, join):
 
 def transTeam(request):
     user = request.user
-    member_groups = Member.objects.filter(auth_user=user, teamrole__in=['admin', 'owner', 'member']).values_list('group', flat=True)
-    waiter_groups = Member.objects.filter(auth_user=user, teamrole='waiter').values_list('group', flat=True)
+    member_groups = Member.objects.filter(auth_user=user, teamrole__in=['Admin', 'Trưởng nhóm', 'Thành viên']).values_list('group', flat=True)
+    waiter_groups = Member.objects.filter(auth_user=user, teamrole='Chờ duyệt').values_list('group', flat=True)
     groups = Group.objects.filter(id__in=member_groups)
     groups_waiter = Group.objects.filter(id__in=waiter_groups)
     other_groups = Group.objects.exclude(id__in=member_groups).exclude(id__in=waiter_groups)
@@ -644,8 +645,8 @@ def novelOfTransTeam(request, group_id):
     
 def memberOfTransTeam(request, group_id):
     group = Group.objects.get(pk=group_id)
-    members = Member.objects.filter(group=group, teamrole__in=['owner', 'admin', 'member'])
-    waiters = Member.objects.filter(group=group, teamrole='waiter')
+    members = Member.objects.filter(group=group, teamrole__in=['Trưởng nhóm', 'Admin', 'Thành viên'])
+    waiters = Member.objects.filter(group=group, teamrole='Chờ duyệt')
 
     for member in members:
         try:
@@ -666,8 +667,8 @@ def memberOfTransTeam(request, group_id):
             waiter.img_avatar = None
     
     is_member = Member.objects.filter(auth_user=request.user, group=group).exists()
-    is_owner = Member.objects.filter(auth_user=request.user, group=group, teamrole='owner').exists()
-    is_admin = Member.objects.filter(auth_user=request.user, group=group, teamrole='admin').exists()
+    is_owner = Member.objects.filter(auth_user=request.user, group=group, teamrole='Trưởng nhóm').exists()
+    is_admin = Member.objects.filter(auth_user=request.user, group=group, teamrole='Admin').exists()
 
     context = {
         'Members': members,
@@ -680,15 +681,19 @@ def memberOfTransTeam(request, group_id):
 
     return render(request, 'app/member-of-trans.html', context)   
 
-def addGroup(request):
-    form = GroupForm()
+def changeDescription(request, group_id):
+    group = get_object_or_404(Group, pk=group_id)
+    form = DescriptionForm()
+    context = {}
     if request.method == 'POST':
-        form = GroupForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, "Group created successfully")
-    context = {'form': form}
-    return render(request, 'transteam.html', context)
+            group.description = request.POST.get('description')
+            group.save()
+            messages.success(request, "Change description successfully")
+            context = {'form': form}
+    else:   
+         messages.error(request, "Error add group. Please check the changeDescription.")
+    return redirect(reverse('group', kwargs={'group_id': group_id}), context)
 
 def deleteGroup(request, group_id):
     group = get_object_or_404(Group, pk=group_id)
@@ -707,7 +712,7 @@ def addGroup(request):
             else: 
                 group = form.save()
                 current_user = request.user # Lấy thông tin user hiện tại từ request
-                member = Member(auth_user_id=current_user.id, group_id=group.id, teamrole='owner')
+                member = Member(auth_user_id=current_user.id, group_id=group.id, teamrole='Trưởng nhóm')
                 member.save()
                 messages.success(request, "Group created successfully")
         else:   
@@ -717,10 +722,10 @@ def addGroup(request):
     
 def wantToJoin(request, group_id):
     group = get_object_or_404(Group, pk=group_id)
-    if Member.objects.filter(auth_user=request.user, group=group, teamrole='waiter').exists():
+    if Member.objects.filter(auth_user=request.user, group=group, teamrole='Chờ duyệt').exists():
         messages.success(request, 'Please waiting for the admin acceptance')
     elif Member.objects.exclude(auth_user=request.user, group=group).exists():
-        member = Member(auth_user_id=request.user.id, group_id=group.id, teamrole='waiter')
+        member = Member(auth_user_id=request.user.id, group_id=group.id, teamrole='Chờ duyệt')
         member.save()
         messages.success(request, 'Join successfully')
     return redirect('transteam')
@@ -729,9 +734,9 @@ def approveMember(request, group_id, member_id):
     group = get_object_or_404(Group, pk=group_id)
     member = get_object_or_404(Member, pk=member_id)
     
-    if Member.objects.filter(auth_user=request.user, group=group, teamrole__in=['admin', 'owner', 'member']).exists():
+    if Member.objects.filter(auth_user=request.user, group=group, teamrole__in=['Admin', 'Trưởng nhóm', 'Thành viên']).exists():
         if request.method == 'POST':
-            member.teamrole = "member"
+            member.teamrole = "Thành viên"
             member.save()
             messages.success(request, "Approve successfully")
     else:
@@ -743,9 +748,9 @@ def changeRoleToAdmin(request, group_id, member_id):
     group = get_object_or_404(Group, pk=group_id)
     member = get_object_or_404(Member, pk=member_id)
     
-    if Member.objects.filter(auth_user=member.auth_user, group=group, teamrole='member').exists():
-        if Member.objects.filter(auth_user=request.user, group=group, teamrole__in=['admin', 'owner']).exists():
-            member.teamrole = "admin"
+    if Member.objects.filter(auth_user=member.auth_user, group=group, teamrole='Thành viên').exists():
+        if Member.objects.filter(auth_user=request.user, group=group, teamrole__in=['Admin', 'Trưởng nhóm']).exists():
+            member.teamrole = "Admin"
             member.save()
             messages.success(request, "Change member's role successfully")
   
@@ -756,9 +761,9 @@ def deleteRoleOfAdmin(request, group_id, member_id):
     group = get_object_or_404(Group, pk=group_id)
     member = get_object_or_404(Member, pk=member_id)
     
-    if Member.objects.filter(auth_user=member.auth_user, group=group, teamrole='admin').exists():
-        if Member.objects.filter(auth_user=request.user, group=group, teamrole='owner').exists():
-            member.teamrole = "member"
+    if Member.objects.filter(auth_user=member.auth_user, group=group, teamrole='Admin').exists():
+        if Member.objects.filter(auth_user=request.user, group=group, teamrole='Trưởng nhóm').exists():
+            member.teamrole = "Thành viên"
             member.save()
             messages.success(request, "Change member's role successfully")
   
@@ -768,15 +773,15 @@ def changeRoleToOwner(request, group_id, member_id):
     # Nhượng quyền sở hữu cho thành viên khác
     group = get_object_or_404(Group, pk=group_id)
     member = get_object_or_404(Member, pk=member_id)
-    owner = Member.objects.filter(group=group, teamrole='owner').first()
+    owner = Member.objects.filter(group=group, teamrole='Trưởng nhóm').first()
     
     if owner.id != member_id:
-        if Member.objects.filter(auth_user=request.user, group=group, teamrole='owner').exists():
-            member.teamrole = "owner"
+        if Member.objects.filter(auth_user=request.user, group=group, teamrole='Trưởng nhóm').exists():
+            member.teamrole = "Trưởng nhóm"
             member.save()
             
             auth_member = Member.objects.filter(auth_user=request.user, group=group).first()
-            auth_member.teamrole = 'member'
+            auth_member.teamrole = 'Thành viên'
             auth_member.save()
             messages.success(request, "Change member's role successfully")
             
@@ -787,7 +792,7 @@ def changeRoleToOwner(request, group_id, member_id):
 def deleteGroup(request, group_id):
     group = get_object_or_404(Group, pk=group_id)
     # Kiểm tra xem người dùng hiện tại có trong nhóm và có vai trò owner trong nhóm đó không
-    if Member.objects.filter(auth_user=request.user, group=group, teamrole='owner').exists():
+    if Member.objects.filter(auth_user=request.user, group=group, teamrole='Trưởng nhóm').exists():
         if request.method == 'POST':
             group.delete()
             messages.success(request, 'Delete group successfully')
@@ -801,15 +806,15 @@ def deleteMember(request, group_id, member_id):
     member = get_object_or_404(Member, id=member_id)
     
     if Member.objects.filter(auth_user=request.user, group=group).exists():
-        # Kiểm tra xem người dùng hiện tại có vai trò "owner" trong nhóm đó không
-        if Member.objects.filter(auth_user=request.user, group=group, teamrole='owner').exists():
-            if member.teamrole == "owner":
+        # Kiểm tra xem người dùng hiện tại có vai trò "Trưởng nhóm" trong nhóm đó không
+        if Member.objects.filter(auth_user=request.user, group=group, teamrole='Trưởng nhóm').exists():
+            if member.teamrole == "Trưởng nhóm":
                 messages.error(request, "You can't delete the owner")
             else:
                 member.delete()
                 messages.success(request, "Delete member successfully")
-        elif Member.objects.filter(auth_user=request.user, group=group, teamrole='admin').exists():
-            if member.teamrole in ["owner", "admin"]:
+        elif Member.objects.filter(auth_user=request.user, group=group, teamrole='Admin').exists():
+            if member.teamrole in ["Trưởng nhóm", "Admin"]:
                 messages.error(request, "Can't delete the admin/owner member")
             else:
                 member.delete()
@@ -826,7 +831,7 @@ def outGroup(request, group_id):
     member = get_object_or_404(Member, auth_user=request.user, group=group)
     
     if request.method == "POST":
-        if member.teamrole != 'owner':
+        if member.teamrole != 'Trưởng nhóm':
             member.delete()
             messages.success(request, "Left group successfully")
         else:
