@@ -6,9 +6,9 @@ from app.models import *
 from app.models import GroupForm
 import json
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate, login, logout # thu vien xac thuc
+from django.contrib.auth import authenticate, login, logout 
 from django.contrib.auth.models import User, AnonymousUser
-from django.contrib import messages # thu vien thong bao
+from django.contrib import messages 
 from .models import UserForm
 from forum.models import ForumPost
 from django.views.decorators.csrf import csrf_exempt
@@ -26,7 +26,6 @@ def register(request):
         password = request.POST.get('password')
         repassword = request.POST.get('repassword')
         current_url = request.POST.get('current-url')
-        date_join = timezone.now()
 
         if password == repassword:
             # Tạo một người dùng mới
@@ -37,7 +36,7 @@ def register(request):
             )
 
             # Tạo một đối tượng UserInfo và liên kết với người dùng mới
-            UserInfo.objects.create(username=myuser, full_name=myuser.username, date_join=date_join)
+            UserInfo.objects.create(username=myuser, full_name=myuser.username)
 
             messages.success(request, "Your account has been registered")
             return redirect(current_url)
@@ -213,7 +212,7 @@ def read(request, chapter_id):
         form = ChapterCommentForm()
 
     context['chapter_comment_form'] = form
-    context['chapter_comments'] = ChapterComment.objects.filter(chapter=chapter).order_by('-created_at')
+    context['chapter_comments'] = ChapterComment.objects.filter(chapter=chapter, is_deleted=False).order_by('-created_at')
     
     return render(request, 'app/read.html', context)
 
@@ -496,7 +495,8 @@ def uploadChapter(request):
             chapter.content = content
             chapter.date_upload = timezone.now()
             chapter.save()
-            book.dateUpload = timezone.now()
+            book.dateUpdate = timezone.now()
+            book.save()
             # Redirect đến trang novelWorks với các tham số group_id và book_id
             redirect_url = f'/novel-works/{book.workerid}/{book.id}'  # Tạo chuỗi URL trực tiếp
             return JsonResponse({'redirect_url': redirect_url})
@@ -851,7 +851,7 @@ def library(request):
             'lastest_volume': lastest_volume,
             'lastest_chapter': lastest_chapter,
         })
-    book_following_list.sort(key=lambda x: x['book'].dateUpload, reverse=True)
+    book_following_list.sort(key=lambda x: x['book'].dateUpdate, reverse=True)
     context = {
         'book_following_list': book_following_list,
     }

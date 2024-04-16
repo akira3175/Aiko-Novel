@@ -11,12 +11,6 @@ from ckeditor.fields import RichTextField
 
 """User model"""
 
-class Role(models.Model):
-    role_id = models.IntegerField(primary_key=True, default=-900)
-    role_name = models.CharField(max_length=200, null=False, blank=False)
-    def __str__(self):
-        return self.role_name
-
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
@@ -25,11 +19,9 @@ class UserForm(forms.ModelForm):
 class UserInfo(models.Model):
     username = models.OneToOneField(User, on_delete=models.CASCADE, db_index=True, primary_key=True)
     full_name = models.CharField(max_length=100, null=True)
-    date_join = models.DateTimeField(default=timezone.now)
     img_avatar = models.ImageField(upload_to='avatar_images/', null=True, default='avatar_images/default-avatar-profile-icon-of-social-media-user-vector.jpg')
     img_background = models.ImageField(upload_to='background_images/', null=True, blank=True)
     img_background_position = models.IntegerField(default=0)
-    role_id = models.ForeignKey(Role, on_delete=models.CASCADE, null=True, blank=True)
     def __str__(self):
         return self.username.username
 
@@ -62,11 +54,6 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
-class BookForm(forms.ModelForm):
-    class Meta:
-        model = Book
-        fields = ['id', 'title', 'description', 'anothername', 'author', 'artist', 'isCompleted', 'workerid', 'note', 'quantityVol', 'dateUpdate', 'dateUpload']
-
 """Volumes"""
 
 class Volume(models.Model):
@@ -94,16 +81,13 @@ class Chapter(models.Model):
     def __str__(self):
         return str(self.id)
 
-class ChapterForm(forms.ModelForm):
-    class Meta:
-        model = Chapter
-        fields = ['title', 'content']
-
 class ChapterComment(models.Model):
-    chapter = models.ForeignKey('Chapter', on_delete=models.CASCADE, related_name='chapter_comments')
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='book_comments', null=True, blank=True)
+    chapter = models.ForeignKey('Chapter', on_delete=models.CASCADE, related_name='chapter_comments', null=True, blank=True)
     content = models.TextField()
     user_info = models.ForeignKey(UserInfo, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    is_deleted = models.BooleanField(default=False)
     
 class ChapterCommentForm(forms.ModelForm):
     class Meta:

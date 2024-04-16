@@ -52,7 +52,7 @@
                         <section class="work-section">
                             <form action="" method="" class="main-edit-form" style="display: none">
                                 {% csrf_token %}
-                                <div class="col-lg-4 col-md-3 col-sm-12" id="picture-sidebar">
+                                <div class="col-lg-4 col-md-4 col-12" id="picture-sidebar">
                                     <div class="image-placeholder file-upload file-drop" data-file-upload="drop">
                                         <div class="icon-upload">
                                             <input type="file" id="image-upload" accept="image/*" onchange="previewImage(event)">
@@ -64,7 +64,7 @@
                                         <img id="preview" src="{{ book.img_path }}" alt="" class="cover edit-cover page_aiko_31758421 preview" height="256">
                                     </div>
                                 </div>
-                                <div class="required-form-wrapper col-lg-8 col-md-9 col-sm-12">
+                                <div class="required-form-wrapper col-lg-8 col-md-8 col-12">
                                     <div class="form-group title-form">
                                         <label for="title">Tiêu đề</label>
                                         <span class="empty-warning" id="title-warning"></span>

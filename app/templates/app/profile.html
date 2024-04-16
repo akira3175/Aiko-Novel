@@ -27,6 +27,7 @@
                                 <div class="porel w-100" style="z-index: 1;">
                                     <div class="edit-background-container w-100">
                                         <div class="edit-background">
+                                            {% if userInfo == InfoUser %}
                                             <div class="input-edit-background icon-upload">
                                                 <input type="file" id="background-image-upload" accept="image/*" onchange="previewImageBackground(event)" >
                                                 <label for="background-image-upload">
@@ -34,6 +35,7 @@
                                                     <span class="text-icon">Chỉnh sửa ảnh bìa</span>
                                                 </label>
                                             </div>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -60,12 +62,14 @@
                                                 <script> 
                                                     positionBackground();
                                                 </script>
+                                                {% if userInfo == InfoUser %}
                                                 <div class="input-edit-avatar icon-upload bkgr btn-circle cir35 align-items-end">
                                                     <input type="file" id="avatar-upload" accept="image/*" onchange="saveAvatarImage()">
                                                     <label for="avatar-upload">
                                                         <i class="fa-regular fa-image font-large"></i>
                                                     </label>
                                                 </div>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>
@@ -75,6 +79,7 @@
                                         </div>
                                     </div>
                                     <div class="another col-lg col-md col-sm-12 col-12 porel">
+                                        {% if userInfo == InfoUser %}
                                         <div class="btn btn-grey edit-profile-btn" onclick="loadEditProfileForm()">Chỉnh sửa hồ sơ</div>
                                         <div id="edit-profile-form" style="display: none; height: 100vh; position: fixed">
                                             <div class="overlay">
@@ -97,6 +102,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
