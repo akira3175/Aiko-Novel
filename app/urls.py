@@ -39,5 +39,6 @@ urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('admin/ckeditor/', views.ckeditor_admin, name='ckeditor_admin'),
     path('novel/<int:id>/', views.novel, name='novel'),
-    path('read/<int:volume_id>/<int:chapter_id>/', views.read, name='read')
+    path('read/<int:volume_id>/<int:chapter_id>/', views.read, name='read'),
+    path('the-loai/<str:category>/', views.category, name='category'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

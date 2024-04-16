@@ -806,3 +806,7 @@ def outGroup(request, group_id):
 def ckeditor_admin(request):
     # Xử lý request ở đây
     return render(request, 'admin/ckeditor.html')
+
+"""Category"""
+def category(request,category):
+    return render(request, 'app/category.html')
