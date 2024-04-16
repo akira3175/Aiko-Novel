@@ -33,51 +33,59 @@ function closeAddGroupForm() {
   toggleModalOpen();
 }
 
-function switchForm() {
-    $('#login-form').toggle();
-    $('#register-form').toggle();
+function loadChangeDescriptionForm() {
+  $("#changedescription-form").toggle();
+  toggleModalOpen();
 }
 
+function closeChangeDescriptionForm() {
+  $("#changedescription-form").hide();
+  toggleModalOpen();
+}
+
+function switchForm() {
+  $("#login-form").toggle();
+  $("#register-form").toggle();
+}
 
 //trả về trang trước
 function goBack() {
-    window.history.back();
+  window.history.back();
 }
 
-window.addEventListener('scroll', function() {
-    var scrollPosition = window.scrollY;
-    var parallaxElements = document.querySelectorAll('.parallax-section');
+window.addEventListener("scroll", function () {
+  var scrollPosition = window.scrollY;
+  var parallaxElements = document.querySelectorAll(".parallax-section");
 
-    parallaxElements.forEach(function(element) {
-        var speed = parseFloat(element.dataset.speed);
-        var translateY = -scrollPosition * speed;
-        element.style.transform = 'translateY(' + translateY + 'px)';
-    });
+  parallaxElements.forEach(function (element) {
+    var speed = parseFloat(element.dataset.speed);
+    var translateY = -scrollPosition * speed;
+    element.style.transform = "translateY(" + translateY + "px)";
+  });
 });
 
-$(document).ready(function() {
-  var navbar = $('.navbar');
+$(document).ready(function () {
+  var navbar = $(".navbar");
   var lastScrollTop = 0;
 
-  $(window).scroll(function() {
+  $(window).scroll(function () {
     var currentScroll = $(this).scrollTop();
     if (currentScroll < lastScrollTop) {
       // Cuộn xuống
-      navbar.addClass('sticky-top');
+      navbar.addClass("sticky-top");
     } else {
       // Cuộn lên
-      navbar.removeClass('sticky-top');
+      navbar.removeClass("sticky-top");
     }
     lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Đảm bảo lastScrollTop không âm
   });
 
-  $(window).on('load resize', function() {
+  $(window).on("load resize", function () {
     if ($(window).width() < 992) {
-      var searchForm = $('#search-form');
+      var searchForm = $("#search-form");
       searchForm.prependTo(searchForm.parent());
-    }
-    else {
-      var searchForm = $('#search-form');
+    } else {
+      var searchForm = $("#search-form");
       searchForm.insertAfter(searchForm.siblings().eq(0));
     }
   });

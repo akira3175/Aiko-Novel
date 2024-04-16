@@ -13,6 +13,7 @@ urlpatterns = [
     path('login', views.loginPage, name="login"),
     path('logoutPage', views.logoutPage, name="logout"),
     path('addGroupPane', views.addGroup, name="addgroup"),
+    path('changeDescriptionPane/<int:group_id>', views.changeDescription, name="changedescription"),
     path('trans-team', views.transTeam, name="transteam"),
     path('novel-of-trans-team/<int:group_id>/', views.novelOfTransTeam, name="novel-of-trans-team"),
     path('novel-works/<int:group_id>/<int:book_id>/', views.novelWorks, name="novel-works"),

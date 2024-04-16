@@ -9,9 +9,21 @@
                 <div class="group-name py-3">
                     <div class="">Nhóm {{group.groupname}}</div>
                 </div>
+                {% if is_owner %}
+                <form action="{% url 'changedescription' group_id=group.id %}" method="post">
+                  {% csrf_token %}
+                  <button
+                    type="submit"
+                    onclick="loadChangeDescriptionForm()"
+                    class="btn btn-blue btn-right-align pull-right trans-teams"
+                  >
+                    + Thay đổi
+                  </button>
+                </form>
+                {% endif %}
                 <div class="group-description">
                     <div class="description-title fs-5 fw-semibold pb-4">Giới thiệu</div>
-                    <div class="description-content">Chào mừng bạn xem group chúng tôi</div>
+                    <div class="description-content">{{group.description}}</div>
                 </div>
                 <div class="group-novel">
                     <div class="group-novel-title py-3">
@@ -35,4 +47,5 @@
             </div>
         </div>
     </div>
+    {% include 'app/change-description.html' %}
 {% endblock main_content %}

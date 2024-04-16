@@ -1,8 +1,5 @@
-{% extends "app/base.html" %} 
-{% load static %} 
-{% block banner_slider %}
-{% endblock banner_slider %}
-{% block main_content %}
+{% extends "app/base.html" %} {% load static %} {% block banner_slider %}
+{%endblock banner_slider %} {% block main_content %}
 <div id="app-container">
   <div id="content-works" class="container">
     <div>
@@ -40,7 +37,9 @@
                 {% for member in Members %}
                 <div class="works-item">
                   <div class="row-container">
-                    <div class="left-container col-xl-8 col-md-6 col-xs-5 col-4">
+                    <div
+                      class="left-container col-xl-8 col-md-6 col-xs-5 col-4"
+                    >
                       <div class="item-wrapper">
                         <div class="item-img">
                           <img
@@ -51,7 +50,8 @@
                         </div>
                         <div class="item-info">
                           <h3 class="item-name">
-                            <a href="{% url 'profile' username=member.auth_user %}"
+                            <a
+                              href="{% url 'profile' username=member.auth_user %}"
                               ><strong>{{member.full_name}}</strong></a
                             >
                           </h3>
@@ -140,7 +140,8 @@
                         </div>
                         <div class="item-info">
                           <h3 class="item-name">
-                            <a href="{% url 'profile' username=member.auth_user %}"
+                            <a
+                              href="{% url 'profile' username=member.auth_user %}"
                               ><strong>{{member.full_name}}</strong></a
                             >
                           </h3>
