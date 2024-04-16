@@ -10,16 +10,14 @@
                     <div class="">Nhóm {{group.groupname}}</div>
                 </div>
                 {% if is_owner %}
-                <form action="{% url 'changedescription' group_id=group.id %}" method="post">
-                  {% csrf_token %}
-                  <button
-                    type="submit"
-                    onclick="loadChangeDescriptionForm()"
+                <button
+                    id="change-description-btn" 
+                    type = "button"
+                    onclick= "loadChangeDescriptionForm()"
                     class="btn btn-blue btn-right-align pull-right trans-teams"
-                  >
+                >
                     + Thay đổi
-                  </button>
-                </form>
+                </button>
                 {% endif %}
                 <div class="group-description">
                     <div class="description-title fs-5 fw-semibold pb-4">Giới thiệu</div>
@@ -48,4 +46,11 @@
         </div>
     </div>
     {% include 'app/change-description.html' %}
+    
+    <!-- JavaScript -->
+    {% comment %} <script>
+        document.getElementById('change-description-btn').addEventListener('click', function(event) {
+            event.preventDefault(); // Ngăn chặn sự kiện mặc định của nút
+        });
+    </script> {% endcomment %}
 {% endblock main_content %}

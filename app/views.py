@@ -680,18 +680,20 @@ def memberOfTransTeam(request, group_id):
     return render(request, 'app/member-of-trans.html', context)   
 
 def changeDescription(request, group_id):
-    group = get_object_or_404(Group, pk=group_id)
-    form = DescriptionForm()
-    context = {}
     if request.method == 'POST':
-        if form.is_valid():
-            group.description = request.POST.get('description')
+        group = get_object_or_404(Group, pk=group_id)
+        description = request.POST.get('description')
+        if description:
+            group.description = description
             group.save()
-            messages.success(request, "Change description successfully")
-            context = {'form': form}
-    else:   
-         messages.error(request, "Error add group. Please check the changeDescription.")
-    return redirect(reverse('group', kwargs={'group_id': group_id}), context)
+            messages.success(request, "Changed description successfully")
+        else:
+            messages.error(request, "Error: Description cannot be empty.")
+    else:
+        messages.error(request, "Error: Invalid request method for changing description.")
+    
+    return redirect('group', group_id=group_id)
+
 
 def deleteGroup(request, group_id):
     group = get_object_or_404(Group, pk=group_id)
