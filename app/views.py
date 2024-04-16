@@ -6,6 +6,7 @@ from app.models import *
 import json
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout 
+from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import User, AnonymousUser
 from django.contrib import messages
 from forum.models import ForumPost
@@ -302,7 +303,7 @@ def saveBook(request):
                 new_book.categories.add(*categories)
 
             # Trả về phản hồi thành công
-            return redirect('novel-of-trans-team', group_id=novelTransTeam)
+            return JsonResponse({'book_id': new_book.id})
         else:
             # Cập nhật thông tin của đối tượng Book đã tồn tại
             existing_book = get_object_or_404(Book, id=id)
@@ -608,6 +609,9 @@ def forOfTransTeam(group_member_counts, groups, join):
             'join': join,
             'is_member': (join == 'Đã tham gia'),  # Đã tham gia: True, Chưa tham gia: False
             'is_waiter': (join == 'Chờ duyệt'),
+            'join': join,
+            'is_member': (join == 'Đã tham gia'),  # Đã tham gia: True, Chưa tham gia: False
+            'is_waiter': (join == 'Chờ duyệt'),
         }
         group_member_counts.append(group_member_info)
 
@@ -628,6 +632,7 @@ def transTeam(request):
         'group_member_counts': group_member_counts,
     }
     return render(request, 'app/transteam.html', context)
+
 
 
 def novelOfTransTeam(request, group_id):
@@ -718,6 +723,27 @@ def addGroup(request):
         else:   
             messages.error(request, "Error add group. Please check the addGroup.")
     return redirect('transteam')
+
+def changePassword(request):
+    if request.method == 'POST':
+        oldpassword = request.POST.get('oldpassword')
+        newpassword = request.POST.get('newpassword')
+        repassword = request.POST.get('repassword')
+        # Bổ sung thêm lệnh nếu muốn tăng độ mạnh mật khẩu
+        if check_password(oldpassword, request.user.password):
+            if newpassword == repassword and newpassword != "":
+                user = request.user
+                user.set_password(newpassword)
+                user.save()
+                messages.success(request, 'Mật khẩu đã được thay đổi thành công!')
+                return redirect('home')  # Chuyển hướng đến trang sau khi thay đổi mật khẩu thành công
+            else:
+                messages.error(request, 'Mật khẩu mới không trùng khớp hoặc bị để trống.')
+        else:
+            messages.error(request, 'Mật khẩu cũ không đúng')
+    else:
+        messages.error(request, 'Lỗi đổi mật khẩu')
+    return redirect('home')  # Chuyển hướng sau khi xử lý xong dữ liệu
 
     
 def wantToJoin(request, group_id):

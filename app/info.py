@@ -8,9 +8,11 @@ def get_user_info(request):
         try:
             info_user = UserInfo.objects.get(username=user)
             info['InfoUser'] = info_user
+            print(info['InfoUser'].img_avatar)  # Di chuyển việc truy cập thuộc tính vào trong khối try
         except UserInfo.DoesNotExist:
             info['error'] = "Thông tin người dùng không tồn tại."
     return info
+
 
 
 APP_VERSION = '1.0.0'
