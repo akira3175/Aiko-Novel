@@ -58,7 +58,7 @@
                             <input type="text" id="chapter-title-input" placeholder="Chương chưa có tiêu đề" value="{{ chapter.title }}">
                             <div class="chapter-detail">
                                 <label for="chapter-content" class="placeholder-chapter">Nhập nội dung ở đây...</label>
-                                <div id="chapter-content" contenteditable="true" value="">{{ chapter.content | safe }}</div>
+                                <div id="chapter-content" contenteditable="true" value="" data-text="Nhập nội dung ở đây...">{{ chapter.content | safe }}</div>
                             </div>
                         </div>
                     </section>

@@ -4,7 +4,7 @@
       <div class="dialog">
         <div class="dialog-body">
           <div class="dialog-container">
-            <form action= {% url 'login' %} class="cmn-form-web" method="POST" id="login-form-main">
+            <form action= "{% url 'login' %}" class="cmn-form-web" method="POST" id="login-form-main">
               {% csrf_token %}
               <div class="form-main-logo"></div>
               <div class="form-title">Đăng nhập tài khoản</div>

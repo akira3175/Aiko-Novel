@@ -13,6 +13,11 @@ document.addEventListener("DOMContentLoaded", function () {
     togglePlaceholder();
 
     chapterContent.addEventListener("input", togglePlaceholder);
+    chapterContent.addEventListener("paste", function () {
+        setTimeout(function () {
+            togglePlaceholder();
+        }, 1);
+    });
 });
 function getCookie(name) {
     var cookieValue = null;
