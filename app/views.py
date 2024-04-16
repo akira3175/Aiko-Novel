@@ -7,8 +7,7 @@ import json
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout 
 from django.contrib.auth.models import User, AnonymousUser
-from django.contrib import messages 
-from .models import UserForm
+from django.contrib import messages
 from forum.models import ForumPost
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
@@ -467,7 +466,6 @@ def saveChapter(request):
             chapter.title = title
             chapter.content = content
             chapter.save()
-            # Redirect đến trang novelWorks với các tham số group_id và book_id
             redirect_url = f'/novel-works/{book.workerid}/{book.id}'  # Tạo chuỗi URL trực tiếp
             return JsonResponse({'redirect_url': redirect_url})
         except Book.DoesNotExist:
