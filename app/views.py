@@ -14,6 +14,7 @@ from forum.models import ForumPost
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Sum, Max
 from django import forms
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 
@@ -809,4 +810,20 @@ def ckeditor_admin(request):
 
 """Category"""
 def category(request,category):
-    return render(request, 'app/category.html')
+    book = Book.objects.filter(categories__name=category)
+    category = Category.objects.all()
+
+    lenPage=30
+    paginator = Paginator(book, lenPage)
+    if request.method == 'GET':
+        page_number = request.GET.get("page")
+        if page_number:
+            try:
+                book = paginator.page(page_number)
+            except PageNotAnInteger:
+                book = paginator.page(1)
+            except EmptyPage:
+                book = paginator.page(paginator.num_pages)
+            return render(request, 'app/category.html',{'books': book, 'categorys': category})
+        book = paginator.page(1)
+        return render(request, 'app/category.html',{'books': book, 'categorys': category})   
