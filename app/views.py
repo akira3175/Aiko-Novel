@@ -593,7 +593,10 @@ def saveFullName(request):
 def group(request, group_id):
     group = Group.objects.get(id=group_id)
     novels = Book.objects.filter(isDeleted=False, workerid=group_id).order_by('-dateUpdate')
-    is_owner = Member.objects.filter(auth_user=request.user, group=group, teamrole='Trưởng nhóm').exists()
+    if request.user.is_authenticated:
+        is_owner = Member.objects.filter(auth_user=request.user, group=group, teamrole='Trưởng nhóm').exists()
+    else:
+        is_owner = None
     
     context = {'novels': novels, 'group': group, 'is_owner': is_owner}
     return render(request, 'app/group.html', context)
