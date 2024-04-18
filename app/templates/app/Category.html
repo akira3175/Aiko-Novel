@@ -1,0 +1,60 @@
+{% extends "app/base.html" %} {% load static %} {% block main_content %}
+<section class="container" style = "margin-left: auto; margin-right: auto; width: 100%; margin-top:50px; display: flex; justify-content: space-between;">
+  <main class="row" style="display: flex;flex-wrap: wrap; width:100%">
+    {% for book in books %}
+    <div class="thumb-item-flow col-4 col-md-3 col-lg-2">
+      <div
+        class="thumb-wrapper ln-tooltip"
+        data-tooltip-content="#series_3845"
+        style = "position:relative;"
+      >
+        <a
+          href="{% url 'novel' id=book.id %}"
+          title="{{book.title}}" >
+          <div class="a6-ratio">
+            <div
+              class="content img-in-ratio lazyloaded"
+              {% if book.img %}
+              style="background-image: url('{{book.img.url}}');"
+              {% endif %}
+            ></div>
+          </div>
+        </a>
+      </div>
+      <div class="thumb_attr series-title" style="overflow: hidden; text-align: center;">
+          <a href="{% url 'novel' id=book.id %}" title='{{book.title}}' style="color: black !important; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+            {{book.title}}
+          </a>
+        </div>
+    </div>
+    {% endfor %}
+    <div class="pagination-footer" style="text-align: right;">
+      <div class="pagination_wrap">
+        {% if books.has_previous %}
+            <a href="?page={{ books.previous_page_number }}">previous</a>
+        {% endif %}
+
+        {% if books.has_next %}
+            <a href="?page={{ books.next_page_number }}">next</a>
+        {% endif %}
+      </div>
+    </div>
+  </main>
+  <div class="col-12 none d-lg-block col-lg-3 filters-wrapper margin-left: auto;">
+      <section class="sub-index-style" style = "padding:10px;">
+          <div class="title-wrapper">
+              <div class="section-title">Thể loại</div>
+          </div>
+          <div class="section-content">
+              {% for category in categorys %}
+                <ul class="filter-type unstyled clear" style = "list-style:none; padding: 0 10px;"> 
+                    <li class="filter-type_item">
+                        <a href="/the-loai/{{category}}">{{category}}</a>
+                    </li>
+                </ul>
+              {% endfor %}
+          </div>
+      </section>
+  </div>
+</section>
+{% endblock main_content %}

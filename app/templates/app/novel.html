@@ -41,7 +41,7 @@
                                             <div class="series-information mb-0 flex flex-col">
                                                 <div class="series-gernes">
                                                     {% for category in book.categories.all %}
-                                                        <a class="series-gerne-item" href="">{{category}}</a>
+                                                        <a class="series-gerne-item" href="{% url 'category' category=category %}">{{category}}</a>
                                                     {% endfor %}
                                                 </div>
                                                 <div class="info-item">
