@@ -6,6 +6,7 @@ from app.models import *
 import json
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout 
+from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import User, AnonymousUser
 from django.contrib import messages
 from forum.models import ForumPost
@@ -611,6 +612,9 @@ def forOfTransTeam(group_member_counts, groups, join):
             'join': join,
             'is_member': (join == 'Đã tham gia'),  # Đã tham gia: True, Chưa tham gia: False
             'is_waiter': (join == 'Chờ duyệt'),
+            'join': join,
+            'is_member': (join == 'Đã tham gia'),  # Đã tham gia: True, Chưa tham gia: False
+            'is_waiter': (join == 'Chờ duyệt'),
         }
         group_member_counts.append(group_member_info)
 
@@ -631,6 +635,7 @@ def transTeam(request):
         'group_member_counts': group_member_counts,
     }
     return render(request, 'app/transteam.html', context)
+
 
 
 def novelOfTransTeam(request, group_id):
@@ -683,18 +688,20 @@ def memberOfTransTeam(request, group_id):
     return render(request, 'app/member-of-trans.html', context)   
 
 def changeDescription(request, group_id):
-    group = get_object_or_404(Group, pk=group_id)
-    form = DescriptionForm()
-    context = {}
     if request.method == 'POST':
-        if form.is_valid():
-            group.description = request.POST.get('description')
+        group = get_object_or_404(Group, pk=group_id)
+        description = request.POST.get('description')
+        if description:
+            group.description = description
             group.save()
-            messages.success(request, "Change description successfully")
-            context = {'form': form}
-    else:   
-         messages.error(request, "Error add group. Please check the changeDescription.")
-    return redirect(reverse('group', kwargs={'group_id': group_id}), context)
+            messages.success(request, "Changed description successfully")
+        else:
+            messages.error(request, "Error: Description cannot be empty.")
+    else:
+        messages.error(request, "Error: Invalid request method for changing description.")
+    
+    return redirect('group', group_id=group_id)
+
 
 def deleteGroup(request, group_id):
     group = get_object_or_404(Group, pk=group_id)
@@ -719,6 +726,27 @@ def addGroup(request):
         else:   
             messages.error(request, "Error add group. Please check the addGroup.")
     return redirect('transteam')
+
+def changePassword(request):
+    if request.method == 'POST':
+        oldpassword = request.POST.get('oldpassword')
+        newpassword = request.POST.get('newpassword')
+        repassword = request.POST.get('repassword')
+        # Bổ sung thêm lệnh nếu muốn tăng độ mạnh mật khẩu
+        if check_password(oldpassword, request.user.password):
+            if newpassword == repassword and newpassword != "":
+                user = request.user
+                user.set_password(newpassword)
+                user.save()
+                messages.success(request, 'Mật khẩu đã được thay đổi thành công!')
+                return redirect('home')  # Chuyển hướng đến trang sau khi thay đổi mật khẩu thành công
+            else:
+                messages.error(request, 'Mật khẩu mới không trùng khớp hoặc bị để trống.')
+        else:
+            messages.error(request, 'Mật khẩu cũ không đúng')
+    else:
+        messages.error(request, 'Lỗi đổi mật khẩu')
+    return redirect('home')  # Chuyển hướng sau khi xử lý xong dữ liệu
 
     
 def wantToJoin(request, group_id):

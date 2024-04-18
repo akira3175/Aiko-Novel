@@ -8,7 +8,7 @@
         <div class="dialog-body">
           <div class="dialog-container">
             <form
-              action="changeDescriptionPane"
+              action="{% url 'changedescription' group_id=group.id %}"
               class="cmn-form-web"
               method="POST"
             >
@@ -18,8 +18,8 @@
                 <div class="el-input">
                   <input
                     type="text"
-                    name="groupname"
-                    id="groupname"
+                    name="description"
+                    id="description"
                     autocomplete="off"
                     class="el-input-inner"
                     placeholder=""

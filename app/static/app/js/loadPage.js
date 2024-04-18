@@ -23,6 +23,17 @@ function closeLoginForm() {
   toggleModalOpen();
 }
 
+
+function loadChangePasswordForm() {
+  var changeInfoForm = document.getElementById('changeinfo-form');
+  changeInfoForm.style.display = 'block';
+}
+
+function closeChangePasswordForm() {
+  $("#changeinfo-form").hide();
+  toggleModalOpen();
+}
+
 function loadAddGroupForm() {
   $("#addgroup-form").toggle();
   toggleModalOpen();
@@ -46,17 +57,28 @@ function closeChangeDescriptionForm() {
 function switchForm() {
   $("#login-form").toggle();
   $("#register-form").toggle();
+  $("#login-form").toggle();
+  $("#register-form").toggle();
 }
 
 //trả về trang trước
 function goBack() {
+  window.history.back();
   window.history.back();
 }
 
 window.addEventListener("scroll", function () {
   var scrollPosition = window.scrollY;
   var parallaxElements = document.querySelectorAll(".parallax-section");
+window.addEventListener("scroll", function () {
+  var scrollPosition = window.scrollY;
+  var parallaxElements = document.querySelectorAll(".parallax-section");
 
+  parallaxElements.forEach(function (element) {
+    var speed = parseFloat(element.dataset.speed);
+    var translateY = -scrollPosition * speed;
+    element.style.transform = "translateY(" + translateY + "px)";
+  });
   parallaxElements.forEach(function (element) {
     var speed = parseFloat(element.dataset.speed);
     var translateY = -scrollPosition * speed;
@@ -89,4 +111,5 @@ $(document).ready(function () {
       searchForm.insertAfter(searchForm.siblings().eq(0));
     }
   });
+});
 });

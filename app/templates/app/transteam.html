@@ -1,69 +1,113 @@
-{% extends "app/base.html" %}
-{% load static %}
-{% block banner_slider %}{% endblock banner_slider %}
-{% block main_content %}
-    <div id="app-container">
-        <div id="content-works" class="container">
+{% extends "app/base.html" %} {% load static %} {% block banner_slider %}
+{%endblock banner_slider %} {% block main_content %}
+<div id="app-container">
+  <div id="content-works" class="container">
+    <div>
+      <div class="row">
+        <div class="col-md-9">
+          <header>
             <div>
-                <div class="row">
-                    <div class="col-md-9">
-                        <header>
-                            <div>
-                                <h2>
-                                    <strong aria-label="Translation Teams">Nhóm dịch của tôi</strong>
-                                    <button  class="btn btn-blue btn-right-align pull-right trans-teams" onclick="loadAddGroupForm()">+ Nhóm mới</button>
-                                </h2>
-                            </div>
-                        </header>
-                        <div class="panel">
-                            <div class="works-type-select">
-                                <button class="on-switch-type">Danh sách nhóm</button>
-                            </div>
-                            <section class="item-lists row" role="list">
-                                <div class="works-list">
-                                    {% for group_info in group_member_counts %}
-                                    <div class="works-item">
-                                        <div class="row-container">
-                                            <div class="left-container">
-                                                <div class="item-wrapper">
-                                                    <div class="item-info">
-                                                        <h3 class="item-name"><a href=""><strong>{{ group_info.groupname }}</strong></a></h3>
-                                                        <div class="counts"><strong>{{ group_info.member_count }} thành viên</strong></div>
-                                                        <div class="counts"><strong>{{ group_info.join }}</strong></div>
-                                                    </div>
-                                                    <div class="meta-wrapper">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="actions-wrapper">
-                                                <div class="dropdown parts-dropdown">
-                                                    <buton class="btn btn-blue btn-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <span class="text">Xem nhóm</span>
-                                                    </buton>
-                                                    <div class="triangle"></div>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a href="{% url 'group' group_id=group_info.groupid %}" class="dropdown-item">Xem thông tin nhóm </a></li>
-                                                        {% if group_info.is_member%}
-                                                        <li><a href= {% url 'novel-of-trans-team' group_id=group_info.groupid %} class="dropdown-item">Xem truyện của nhóm</a></li>
-                                                        <li><a href= {% url 'member-of-trans-team' group_id=group_info.groupid %} class="dropdown-item">Xem thành viên nhóm</a></li>
-                                                        {% endif %}
-                                                        {% if not group_info.is_member and not group_info.is_waiter %}
-                                                        <li><a href= {% url 'want_to_join' group_id=group_info.groupid %} class="dropdown-item">Tham gia nhóm</a></li>
-                                                        {% endif %}
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {% endfor%}
-                                </div>
-                            </section>
-                        </div>
-                    </div>
-                </div>
+              <h2>
+                <strong aria-label="Translation Teams"
+                  >Nhóm dịch của tôi</strong
+                >
+                <button
+                  class="btn btn-blue btn-right-align pull-right trans-teams"
+                  onclick="loadAddGroupForm()"
+                >
+                  + Nhóm mới
+                </button>
+              </h2>
             </div>
+          </header>
+          <div class="panel">
+            <div class="works-type-select">
+              <button class="on-switch-type">Danh sách nhóm</button>
+            </div>
+            <section class="item-lists row" role="list">
+              <div class="works-list">
+                {% for group_info in group_member_counts %}
+                <div class="works-item">
+                  <div class="row-container">
+                    <div class="left-container">
+                      <div class="item-wrapper">
+                        <div class="item-info">
+                          <h3 class="item-name">
+                            <a
+                              href="{% url 'group' group_id=group_info.groupid %}"
+                              ><strong>{{ group_info.groupname }}</strong></a
+                            >
+                          </h3>
+                          <div class="counts">
+                            <strong
+                              >{{ group_info.member_count }} thành viên</strong
+                            >
+                          </div>
+                          <div class="counts">
+                            <strong>{{ group_info.join }}</strong>
+                          </div>
+                        </div>
+                        <div class="meta-wrapper">
+                          <!-- Meta data goes here -->
+                        </div>
+                      </div>
+                    </div>
+                    <div class="actions-wrapper">
+                      <div class="dropdown parts-dropdown">
+                        <button
+                          class="btn btn-blue btn-primary"
+                          type="button"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          <span class="text">Xem nhóm</span>
+                        </button>
+                        <div class="triangle"></div>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <a
+                              href="{% url 'group' group_id=group_info.groupid %}"
+                              class="dropdown-item"
+                              >Xem thông tin nhóm</a
+                            >
+                          </li>
+                          {% if group_info.is_member %}
+                          <li>
+                            <a
+                              href="{% url 'novel-of-trans-team' group_id=group_info.groupid %}"
+                              class="dropdown-item"
+                              >Xem truyện của nhóm</a
+                            >
+                          </li>
+                          <li>
+                            <a
+                              href="{% url 'member-of-trans-team' group_id=group_info.groupid %}"
+                              class="dropdown-item"
+                              >Xem thành viên nhóm</a
+                            >
+                          </li>
+                          {%endif %} 
+                          {%if not group_info.is_member and not group_info.is_waiter %}
+                          <li>
+                            <a
+                              href="{% url 'want_to_join' group_id=group_info.groupid %}"
+                              class="dropdown-item"
+                              >Tham gia nhóm</a
+                            >
+                          </li>
+                          {% endif %} 
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </section>
+          </div>
         </div>
+      </div>
     </div>
-    {% include 'app/addgroup.html' %}
-{% endblock main_content %}
+  </div>
+</div>
+{% include 'app/addgroup.html' %} {% endblock main_content %}

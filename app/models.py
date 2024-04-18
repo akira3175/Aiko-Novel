@@ -130,7 +130,6 @@ class DescriptionForm(forms.ModelForm):
     class Meta:
         model = Group
         fields = ['description']
-
     
 class Member(models.Model):
     auth_user = models.ForeignKey(User, related_name='members', on_delete=models.CASCADE)  
