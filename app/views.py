@@ -109,6 +109,7 @@ def home(request):
     latest_chapters = Chapter.objects.values('volume_id').annotate(
         latest_chapter_date=Max('date_upload')
     ).order_by('-latest_chapter_date')
+    lastest_comment = ChapterComment.objects.filter(is_deleted=False).order_by('-created_at')[:10]
     
     new_update_novels = []
     book_ids_added = set()  # Set để lưu trữ các book_id đã thêm vào danh sách
@@ -133,6 +134,7 @@ def home(request):
             'novels': novels,
             'trending_novels': trending_novels,
             'new_update_novels': new_update_novels,
+            'lastest_comment': lastest_comment,
         }
     return render(request, 'app/home.html', context)
 

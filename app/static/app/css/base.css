@@ -232,6 +232,12 @@ input:-webkit-autofill {
     height: 35px !important; 
 }
 
+.cir45 {
+    border-radius: 50% !important;    
+    width: 45px !important;
+    height: 45px !important; 
+}
+
 .cir168 {
     border-radius: 50% !important;
     width: 168px !important;

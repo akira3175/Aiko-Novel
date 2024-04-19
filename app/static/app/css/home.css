@@ -4,6 +4,11 @@
     box-sizing: border-box;
 }
 
+.carousel-item {
+    height: 352px;
+    object-fit: cover;
+}
+
 .carousel-item::before {
     content: '';
     position: absolute;
@@ -11,7 +16,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('../images/banner-slider/banner-welcome.jpg');
+    background-image: url('../images/banner-slider/Design3.png');
     background-size: cover;
     filter: blur(10px);
     -webkit-filter: blur(50px);
@@ -182,6 +187,28 @@ a.series-name {
     font-size: 16px;
     font-weight: 700;
     text-align: center;
+}
+
+.comment {
+    position: relative;
+}
+
+.comment::after {
+    content: "";
+    background: rgba(0, 0, 0, .5);
+    height: 1px;
+    width: 100%;
+    margin-bottom: 5px;
+    position: absolute;
+    bottom: 0;
+}
+
+.comment-content {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 @media screen and (max-width: 767px) {

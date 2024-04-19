@@ -4,7 +4,7 @@
   <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active banner-img-blur">
-        <img src=" {% static 'app/images/banner-slider/banner-welcome.jpg' %}" class="d-block w-100 banner-size img-fluid" alt="..." height="400">
+        <img src=" {% static 'app/images/banner-slider/Design5.png' %}" class="d-block w-100 banner-size img-fluid" alt="..." height="400">
       </div>
       <!--
       <div class="carousel-item banner-size">
@@ -104,14 +104,22 @@
               <strong>Bình luận</strong>
             </div>
             <div class="comment-list">
+              {% for comment in lastest_comment %}
               <div class="comment">
-                <a class="book-title">Đại hải trình</a>
-                <div class="comment-info">
-                  <div class="comment-user">Admin</div>
-                  <div class="comment-content">Truyện gì ra chậm thế</div>
-                  
+                <a class="book-title text-truncate d-block w-100" href="{% url 'novel' id=comment.chapter.volume.book.id %}">{{comment.chapter.volume.book.title}}</a>
+                <div class="comment-info d-flex">
+                  <div class="comment-user-avatar page_aiko_31758421 cir45" style="background-image: url('{{comment.user_info.img_avatar.url}}')"></div>
+                  <div class="d-flex ps-1 flex-column" style="max-height: 90px; max-width: 75%">
+                    <a class="comment-user text-truncate fw-bold text-dark" href="{% url 'profile' username=comment.user_info.username%}">{{comment.user_info.full_name}}</a>
+                    <div class="comment-content">
+                      <p>
+                        {{comment.content}}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
+              {% endfor %}
             </div>
           </div>
         </div>
