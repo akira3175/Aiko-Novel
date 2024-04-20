@@ -24,10 +24,10 @@
                                 </div>
                             </div>
                             <div class="background-img-main col-lg-8 col-md-10 col-sm-12 col-12 p-0">
+                                {% if userInfo == InfoUser %}
                                 <div class="porel w-100" style="z-index: 1;">
                                     <div class="edit-background-container w-100">
                                         <div class="edit-background">
-                                            {% if userInfo == InfoUser %}
                                             <div class="input-edit-background icon-upload">
                                                 <input type="file" id="background-image-upload" accept="image/*" onchange="previewImageBackground(event)" >
                                                 <label for="background-image-upload">
@@ -35,10 +35,10 @@
                                                     <span class="text-icon">Chỉnh sửa ảnh bìa</span>
                                                 </label>
                                             </div>
-                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
+                                {% endif %}
                                 <div class="background-img-data-container w-100 porel">
                                     <div class="porel w-100">
                                         <div class="background-sub w-100" position="{{ userInfo.img_background_position | default_if_none:'#' }}">

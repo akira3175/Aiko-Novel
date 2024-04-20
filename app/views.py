@@ -110,6 +110,15 @@ def home(request):
         latest_chapter_date=Max('date_upload')
     ).order_by('-latest_chapter_date')
     lastest_comment = ChapterComment.objects.filter(is_deleted=False).order_by('-created_at')[:10]
+    new_novels = Book.objects.filter(isDeleted=False).order_by('-dateUpload')[:4]
+    new_novels_info = []
+
+    for novel in new_novels:
+        latest_volume = novel.volumes.order_by('-id').first()
+        if latest_volume:
+            latest_chapter = latest_volume.chapters.order_by('-date_upload').first()
+            if latest_chapter:
+                new_novels_info.append({'book': novel, 'volume': latest_volume, 'chapter': latest_chapter})
     
     new_update_novels = []
     book_ids_added = set()  # Set để lưu trữ các book_id đã thêm vào danh sách
@@ -135,6 +144,7 @@ def home(request):
             'trending_novels': trending_novels,
             'new_update_novels': new_update_novels,
             'lastest_comment': lastest_comment,
+            'new_novels_info': new_novels_info,
         }
     return render(request, 'app/home.html', context)
 
@@ -144,11 +154,25 @@ def search(request):
     keywords = request.GET.get('keywords')
     matched_books = []
     all_book = Book.objects.filter(isDeleted=False)
+    category = Category.objects.all()
     if all_book:
         for book in all_book:
             if keywords.lower() in book.title.lower():
                 matched_books.append(book)
-    return render(request, 'app/search.html', {'keywords': keywords,'matched_books': matched_books})
+    lenPage=30
+    paginator = Paginator(matched_books, lenPage)
+    if request.method == 'GET':
+        page_number = request.GET.get("page")
+        if page_number:
+            try:
+                matched_books = paginator.page(page_number)
+            except PageNotAnInteger:
+                matched_books = paginator.page(1)
+            except EmptyPage:
+                matched_books = paginator.page(paginator.num_pages)
+            return render(request, 'app/search.html', {'keywords': keywords, 'books': matched_books, 'categorys': category})
+        matched_books = paginator.page(1)
+        return render(request, 'app/search.html', {'keywords': keywords, 'books': matched_books, 'categorys': category})  
 
 """Novel page"""
 
@@ -935,3 +959,26 @@ def category(request,category):
             return render(request, 'app/category.html',{'books': book, 'categorys': category})
         book = paginator.page(1)
         return render(request, 'app/category.html',{'books': book, 'categorys': category})   
+
+def list(request, type):
+    category = Category.objects.all()
+    if type == 'lastest-updated' or type == 'all':
+        book = Book.objects.filter(isDeleted=False).order_by('-dateUpdate')
+    elif type == 'lastest-upload':
+        book = Book.objects.filter(isDeleted=False).order_by('-id')
+    else:
+        book = Book.objects.none()
+    lenPage=30
+    paginator = Paginator(book, lenPage)
+    if request.method == 'GET':
+        page_number = request.GET.get("page")
+        if page_number:
+            try:
+                book = paginator.page(page_number)
+            except PageNotAnInteger:
+                book = paginator.page(1)
+            except EmptyPage:
+                book = paginator.page(paginator.num_pages)
+            return render(request, 'app/list.html',{'books': book, 'categorys': category})
+        book = paginator.page(1)
+        return render(request, 'app/list.html',{'books': book, 'categorys': category})   

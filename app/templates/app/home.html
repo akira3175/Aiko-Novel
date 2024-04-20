@@ -88,12 +88,12 @@
               </div>
               {% endfor %}
               <div class = "glitem">
-                <a title="Xem thêm" href="#">
+                <a title="Xem thêm" href="{% url 'list' type='lastest-updated' %}">
                   <div class="image lazy page_aiko_31758421"></div>
                   <div class="image bg-dark opacity-5"></div>
                   <div class="image d-flex align-items-center justify-content-center text-white display-3"><i class="fa-solid fa-angles-right"></i></div>
                 </a>
-                <a class="series-name" title="Xem thêm" href="#">
+                <a class="series-name" title="Xem thêm" href="{% url 'list' type='lastest-updated' %}">
                   Xem thêm
                 </a>
               </div>
@@ -108,7 +108,7 @@
               <div class="comment">
                 <a class="book-title text-truncate d-block w-100" href="{% url 'novel' id=comment.chapter.volume.book.id %}">{{comment.chapter.volume.book.title}}</a>
                 <div class="comment-info d-flex">
-                  <div class="comment-user-avatar page_aiko_31758421 cir45" style="background-image: url('{{comment.user_info.img_avatar.url}}')"></div>
+                  <a class="comment-user-avatar page_aiko_31758421 cir45" href="{% url 'profile' username=comment.user_info.username%}" style="background-image: url('{{comment.user_info.img_avatar.url}}')"></a>
                   <div class="d-flex ps-1 flex-column" style="max-height: 90px; max-width: 75%">
                     <a class="comment-user text-truncate fw-bold text-dark" href="{% url 'profile' username=comment.user_info.username%}">{{comment.user_info.full_name}}</a>
                     <div class="comment-content">
@@ -132,6 +132,32 @@
             <div class="b_title">
               <strong>Truyện mới</strong>
             </div>
+            <main class="gridlist">
+              {% for item in new_novels_info %}
+              <div class = "glitem">
+                <a title="{{item.chapter.title}}" href="{% url 'read' chapter_id=item.chapter.id %}">
+                  <img class="image lazy page_aiko_31758421" style="" {% if item.book.img %}src="{{item.book.img.url}} {% endif %}"></img>
+                  <div class="series-info">
+                    <div class="vol" title="{{item.volume.title}}">{{item.volume.title}}</div>
+                    <div class="chap" title="{{item.chapter.title}}">{{item.chapter.title}}</div>
+                  </div>
+                </a>
+                <a class="series-name" title="" href="{% url 'novel' id=item.book.id %}">
+                  {{item.book.title}}
+                </a>
+              </div>
+              {% endfor %}
+              <div class = "glitem">
+                <a title="Xem thêm" href="{% url 'list' type='lastest-upload' %}">
+                  <div class="image lazy page_aiko_31758421"></div>
+                  <div class="image bg-dark opacity-5"></div>
+                  <div class="image d-flex align-items-center justify-content-center text-white display-3"><i class="fa-solid fa-angles-right"></i></div>
+                </a>
+                <a class="series-name" title="Xem thêm" href="{% url 'list' type='lastest-upload' %}">
+                  Xem thêm
+                </a>
+              </div>
+            </main>
           </div>
         </div>
       </div>

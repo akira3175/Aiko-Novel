@@ -4,11 +4,6 @@
     box-sizing: border-box;
 }
 
-.carousel-item {
-    height: 352px;
-    object-fit: cover;
-}
-
 .carousel-item::before {
     content: '';
     position: absolute;

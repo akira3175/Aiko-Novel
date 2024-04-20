@@ -58,7 +58,7 @@
                       <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Trang chủ</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Danh sách</a>
+                    <a class="nav-link" href="{% url 'list' type='all' %}">Danh sách</a>
                   </li>
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -135,7 +135,7 @@
         {% include 'app/changepassword.html' %}
         {% endif %}
         <!-- footer-->
-        <footer class="container--fluid bg-success text-center b-2 mt-5">
+        <footer class="container--fluid bg-success text-center b-2 mt-5 py-3 fs-5">
           Aiko Novel - All rights reserved
         <footer>
 

@@ -50,4 +50,5 @@ urlpatterns = [
     path('novel/<int:id>/', views.novel, name='novel'),
     path('read/<int:volume_id>/<int:chapter_id>/', views.read, name='read'),
     path('the-loai/<str:category>/', views.category, name='category'),
+    path('list/<str:type>/', views.list, name='list'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

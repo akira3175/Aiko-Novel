@@ -1,40 +1,70 @@
-{% extends "app/base.html" %}
-{% load static %}
-{% block banner_slider %}
-  <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      <div class="carousel-item active banner-img-blur">
-        <img src=" {% static 'app/images/banner-slider/banner-welcome.jpg' %}" class="d-block w-100 banner-size" alt="..." height="400">
-      </div>
-  </div>
-{% endblock banner_slider %}
+{% extends "app/base.html" %} 
+{% load static %} 
 {% block main_content %}
-    <div id="mainpart" class="container-fluid">
-        <div class="main-content-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-9">
-                        <div id="slider" class="owl-carousel owl-theme" style="opacity: 1; display: block">
-                            <div class="owl-wrapper-outer">
-                                <div class="owl-wrapper" style="width: 3329px; left: 0px; display: inline-flex">
-                                    {% for book in matched_books %}
-                                        <div class="owl-item" style="width: 252px">
-                                            <div class="slide-item">
-                                                <a title={{book.tittle}} href="#">
-                                                    <div class="image lazy page_aiko_31758421" style=""> </div>
-                                                    <div class="series-info"> 
-                                                    <div class="series"></div>
-                                                    </div> 
-                                                </a>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<div class="keyword-container d-flex justify-content-center pt-4">
+    <form id="search-form" action="/search" method="get" style="width: 60%">
+        <input class="search-input" type="search" placeholder="Search" name="keywords" value="{{keywords}}" style="width: 95%">
+        <button class="search-icon" type="submit">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+</div>
+<section class="container" style = "margin-left: auto; margin-right: auto; width: 100%; margin-top:50px; display: flex; justify-content: space-between;">
+  <main class="row" style="display: flex;flex-wrap: wrap; width:100%">
+    {% for book in books %}
+    <div class="thumb-item-flow col-4 col-md-3 col-lg-2">
+      <div
+        class="thumb-wrapper ln-tooltip"
+        data-tooltip-content="#series_3845"
+        style = "position:relative;"
+      >
+        <a
+          href="{% url 'novel' id=book.id %}"
+          title="{{book.title}}" >
+          <div class="a6-ratio">
+            <div
+              class="content img-in-ratio lazyloaded"
+              {% if book.img %}
+              style="background-image: url('{{book.img.url}}');"
+              {% endif %}
+            ></div>
+          </div>
+        </a>
+      </div>
+      <div class="thumb_attr series-title" style="overflow: hidden; text-align: center;">
+          <a href="{% url 'novel' id=book.id %}" title='{{book.title}}' style="color: black !important; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+            {{book.title}}
+          </a>
         </div>
     </div>
+    {% endfor %}
+    <div class="pagination-footer" style="text-align: right;">
+      <div class="pagination_wrap">
+        {% if books.has_previous %}
+            <a href="?page={{ books.previous_page_number }}">previous</a>
+        {% endif %}
+
+        {% if books.has_next %}
+            <a href="?page={{ books.next_page_number }}">next</a>
+        {% endif %}
+      </div>
+    </div>
+  </main>
+  <div class="col-12 none d-lg-block col-lg-3 filters-wrapper margin-left: auto;">
+      <section class="sub-index-style" style = "padding:10px;">
+          <div class="title-wrapper">
+              <div class="section-title">Thể loại</div>
+          </div>
+          <div class="section-content">
+              {% for category in categorys %}
+                <ul class="filter-type unstyled clear" style = "list-style:none; padding: 0 10px;"> 
+                    <li class="filter-type_item">
+                        <a href="/the-loai/{{category}}">{{category}}</a>
+                    </li>
+                </ul>
+              {% endfor %}
+          </div>
+      </section>
+  </div>
+</section>
 {% endblock main_content %}
