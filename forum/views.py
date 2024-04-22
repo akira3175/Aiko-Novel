@@ -10,7 +10,7 @@ from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
 from .forms import ForumPostForm, CommentForm
 from django.contrib.auth.models import User
-from django.http import JsonResponse
+from django.http import Http404, HttpResponseNotFound, JsonResponse
 from django.template.loader import render_to_string
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -100,7 +100,13 @@ class EditPostView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('post-detail', kwargs={'pk': self.object.pk})
-
+    
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if not obj.user_info.username == self.request.user:
+            raise Http404("Chỉnh bài cc à") 
+        return obj
+    
 # DeleteView cho phép người dùng xóa bài đăng
 class DeletePostView(LoginRequiredMixin, DeleteView):
     model = ForumPost
