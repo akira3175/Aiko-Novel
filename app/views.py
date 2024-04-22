@@ -346,6 +346,7 @@ def novelWorks(request, group_id, book_id):
     context = {'categories': categories, 'book': book, 'group': group, 'volumes': volumes, 'chapters': chapters}
     return render(request, 'app/novelworks.html', context)
 
+@can_edit_book
 @csrf_exempt
 def saveBook(request):
     if request.method == 'POST':
@@ -409,6 +410,7 @@ def saveBook(request):
     else:
         return JsonResponse({'error': 'Yêu cầu không hợp lệ.'}, status=405)
     
+@can_edit_book
 @csrf_exempt
 def saveBookSub(request):
     if request.method == 'POST':
@@ -472,6 +474,7 @@ def saveBookSub(request):
     else:
         return JsonResponse({'error': 'Yêu cầu không hợp lệ.'}, status=405)
     
+@can_edit_book
 def deleteBook(request, book_id):
     book = Book.objects.get(id=book_id)
     book.isDeleted = True
@@ -513,7 +516,8 @@ def saveVolume(request):
                 return JsonResponse({'error': 'Tập không tồn tại'}, status=404)
 
     return JsonResponse({'error': 'Phương thức yêu cầu không hợp lệ'}, status=400)
-    
+
+@can_edit_chapter
 def deleteVolume(request, volume_id):
     volume = Volume.objects.get(id=volume_id)
     book = volume.book
