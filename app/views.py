@@ -8,6 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout 
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import User, AnonymousUser
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from forum.models import ForumPost
 from django.views.decorators.csrf import csrf_exempt
@@ -15,6 +16,56 @@ from django.views.decorators.http import require_POST
 from django.db.models import Sum, Max
 from django import forms
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+# Decoration 
+
+def member_required(view_func):
+    def wrapper(request, *args, **kwargs):
+        group_id = kwargs.get('group_id') 
+        try:
+            group = Group.objects.get(id=group_id)
+        except Group.DoesNotExist:
+            return render(request,'404.html')
+
+        if not Member.objects.filter(auth_user=request.user, group=group).exists():
+            return render(request,'404.html')
+
+        return view_func(request, *args, **kwargs)
+    return wrapper
+
+def can_edit_book(view_func):
+    def wrapper(request, *args, **kwargs):
+        book_id = kwargs.get('book_id') 
+        try:
+            book = Book.objects.get(id=book_id)
+        except Book.DoesNotExist:
+            return render(request,'404.html')
+
+        if not request.user.is_authenticated:
+            return render(request,'404.html')
+        
+        if not Group.objects.filter(id=book.workerid, members__auth_user=request.user).exists():
+            return render(request,'404.html')
+        
+        return view_func(request, *args, **kwargs)
+    return wrapper
+
+def can_edit_chapter(view_func):
+    def wrapper(request, *args, **kwargs):
+        volume_id = kwargs.get('volume_id') 
+        try:
+            volume = Volume.objects.get(id=volume_id)
+        except Volume.DoesNotExist:
+            return render(request, '404.html')
+
+        if not request.user.is_authenticated:
+            return render(request, '404.html')
+        
+        if not Group.objects.filter(id=volume.book.workerid, members__auth_user=request.user).exists():
+            return render(request, '404.html')
+        
+        return view_func(request, *args, **kwargs)
+    return wrapper
 
 # Create your views here.
 
@@ -244,6 +295,7 @@ def read(request, chapter_id):
 
 """Novel works"""
 
+@can_edit_book
 def novelWorks(request, group_id, book_id):
     if int(book_id) == 0:
         book = {
@@ -470,6 +522,7 @@ def deleteVolume(request, volume_id):
 
 """Write page"""
     
+@can_edit_chapter
 def write(request, volume_id, chapter_id):
     volume = Volume.objects.get(id=volume_id)
     book = Book.objects.get(id=volume.book.id, isDeleted=False)
@@ -645,6 +698,7 @@ def forOfTransTeam(group_member_counts, groups, join):
         }
         group_member_counts.append(group_member_info)
 
+@login_required
 def transTeam(request):
     user = request.user
     member_groups = Member.objects.filter(auth_user=user, teamrole__in=['Admin', 'Trưởng nhóm', 'Thành viên']).values_list('group', flat=True)
@@ -663,8 +717,8 @@ def transTeam(request):
     }
     return render(request, 'app/transteam.html', context)
 
-
-
+@login_required
+@member_required
 def novelOfTransTeam(request, group_id):
     group = Group.objects.get(pk=group_id)
     books = Book.objects.filter(workerid=group_id, isDeleted=False).order_by('-dateUpdate')
@@ -676,6 +730,7 @@ def novelOfTransTeam(request, group_id):
     context = {'group': group, 'books_with_volumes_count': books_with_volumes_count}
     return render(request, 'app/novel-of-trans.html', context)
     
+@login_required
 def memberOfTransTeam(request, group_id):
     group = Group.objects.get(pk=group_id)
     members = Member.objects.filter(group=group, teamrole__in=['Trưởng nhóm', 'Admin', 'Thành viên'])
@@ -754,6 +809,7 @@ def addGroup(request):
             messages.error(request, "Error add group. Please check the addGroup.")
     return redirect('transteam')
 
+@csrf_exempt
 def changePassword(request):
     if request.method == 'POST':
         oldpassword = request.POST.get('oldpassword')
@@ -897,6 +953,8 @@ def outGroup(request, group_id):
     return redirect('member-of-trans-team', group_id=group_id)
 
 """Libraby"""
+
+@login_required
 def library(request):
     book_following = Book.objects.filter(bookfollowing__user=request.user)
     book_following_list = []
