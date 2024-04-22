@@ -1014,9 +1014,9 @@ def category(request,category):
                 book = paginator.page(1)
             except EmptyPage:
                 book = paginator.page(paginator.num_pages)
-            return render(request, 'app/category.html',{'books': book, 'categorys': category})
+            return render(request, 'app/Category.html',{'books': book, 'categorys': category})
         book = paginator.page(1)
-        return render(request, 'app/category.html',{'books': book, 'categorys': category})   
+        return render(request, 'app/Category.html',{'books': book, 'categorys': category})   
 
 def list(request, type):
     category = Category.objects.all()
