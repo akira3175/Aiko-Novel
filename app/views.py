@@ -731,6 +731,7 @@ def novelOfTransTeam(request, group_id):
     return render(request, 'app/novel-of-trans.html', context)
     
 @login_required
+@member_required
 def memberOfTransTeam(request, group_id):
     group = Group.objects.get(pk=group_id)
     members = Member.objects.filter(group=group, teamrole__in=['Trưởng nhóm', 'Admin', 'Thành viên'])
@@ -784,13 +785,14 @@ def changeDescription(request, group_id):
     
     return redirect('group', group_id=group_id)
 
-
+@member_required
 def deleteGroup(request, group_id):
     group = get_object_or_404(Group, pk=group_id)
     group.delete()
     messages.success(request, "Group deleted successfully")
     return redirect('home')
 
+@member_required
 def addGroup(request):
     form = GroupForm()
     if request.method == 'POST':
@@ -855,6 +857,7 @@ def approveMember(request, group_id, member_id):
         messages.error(request, "You must have admin/owner/member role in the group to approve members")
     return redirect('member-of-trans-team', group_id=group_id)
 
+@member_required
 def changeRoleToAdmin(request, group_id, member_id):
     # Đổi vai trò thành admin
     group = get_object_or_404(Group, pk=group_id)
@@ -868,6 +871,7 @@ def changeRoleToAdmin(request, group_id, member_id):
   
     return redirect('member-of-trans-team', group_id=group_id)
 
+@member_required
 def deleteRoleOfAdmin(request, group_id, member_id):
     # Xoá vai trò thành admin của thành viên
     group = get_object_or_404(Group, pk=group_id)
@@ -881,6 +885,7 @@ def deleteRoleOfAdmin(request, group_id, member_id):
   
     return redirect('member-of-trans-team', group_id=group_id)
 
+@member_required
 def changeRoleToOwner(request, group_id, member_id):
     # Nhượng quyền sở hữu cho thành viên khác
     group = get_object_or_404(Group, pk=group_id)
@@ -900,7 +905,7 @@ def changeRoleToOwner(request, group_id, member_id):
     return redirect('member-of-trans-team', group_id=group_id)
 
 
-    
+@member_required
 def deleteGroup(request, group_id):
     group = get_object_or_404(Group, pk=group_id)
     # Kiểm tra xem người dùng hiện tại có trong nhóm và có vai trò owner trong nhóm đó không
@@ -912,6 +917,7 @@ def deleteGroup(request, group_id):
         messages.error(request, "You must have owner role in the group to delete this group")
     return redirect('transteam')
 
+@member_required
 def deleteMember(request, group_id, member_id):
     # Lấy nhóm và thành viên từ cơ sở dữ liệu
     group = get_object_or_404(Group, id=group_id)
