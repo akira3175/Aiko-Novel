@@ -31,7 +31,9 @@
         </div>
       {% endif %}
       <div class="border rounded p-3 mb-4">
+        {% autoescape on %}
         <p>{{ post.content|safe }}</p>
+        {% endautoescape %}
       </div>
 
       {% if user.username %}
