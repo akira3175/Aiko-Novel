@@ -179,7 +179,8 @@ def home(request):
 
         latest_chapter = Chapter.objects.filter(
             volume_id=chapter_info['volume_id'],
-            date_upload=chapter_info['latest_chapter_date']
+            date_upload=chapter_info['latest_chapter_date'],
+            volume__book__isDeleted=False
         ).first()
 
         if latest_chapter and latest_chapter.volume.book_id not in book_ids_added:
