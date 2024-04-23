@@ -15,6 +15,7 @@ from django.template.loader import render_to_string
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import UpdateView, DeleteView
+from django.core.exceptions import PermissionDenied
 
 # hien thi danh sach bai dang theo thu tu som nhat
 class PostListView(ListView):
@@ -104,7 +105,7 @@ class EditPostView(LoginRequiredMixin, UpdateView):
     def get_object(self, queryset=None):
         obj = super().get_object(queryset)
         if not obj.user_info.username == self.request.user:
-            raise Http404("Chỉnh bài cc à") 
+            raise PermissionDenied("Bạn không được phép truy cập vào đây") 
         return obj
     
 # DeleteView cho phép người dùng xóa bài đăng
