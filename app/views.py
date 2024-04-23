@@ -156,7 +156,7 @@ def logoutPage(request):
 def home(request):
     latest_posts = ForumPost.objects.all().order_by('-created_at')[:5]
     novels = Book.objects.filter(isDeleted=False)
-    trending_novels = Book.objects.annotate(total_views=Sum('volumes__chapters__view')).order_by('-total_views')[:8]
+    trending_novels = Book.objects.filter(isDeleted=False).annotate(total_views=Sum('volumes__chapters__view')).order_by('-total_views')[:8]
     latest_chapters = Chapter.objects.values('volume_id').annotate(
         latest_chapter_date=Max('date_upload')
     ).order_by('-latest_chapter_date')
