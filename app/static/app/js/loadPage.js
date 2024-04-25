@@ -57,13 +57,10 @@ function closeChangeDescriptionForm() {
 function switchForm() {
   $("#login-form").toggle();
   $("#register-form").toggle();
-  $("#login-form").toggle();
-  $("#register-form").toggle();
 }
 
 //trả về trang trước
 function goBack() {
-  window.history.back();
   window.history.back();
 }
 

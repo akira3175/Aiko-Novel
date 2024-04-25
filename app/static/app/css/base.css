@@ -170,6 +170,11 @@ input:-webkit-autofill {
     color: white !important;
 }
 
+.signup-btn:focus,
+.signup-btn:hover {
+    background-color: blue;
+}
+
 /* Another */
 
 .panel {
