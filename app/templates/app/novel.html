@@ -8,10 +8,8 @@
                 <div class="col-12">
                     <div class="page-breadcrumb">
                         <span class="breadcrum-level">
-                            <a href="https://docln.net"><i class="fas fa-home"></i></a>
+                            <a href="{% url 'home'%}"><i class="fas fa-home"></i></a>
                         </span>
-                        <span class="next-icon"><i class="fas fa-chevron-right"></i></span>
-                        <span class="breadcrum-level"><a href="{% url 'home'%}">Truyện dịch</a></span>
                     </div>
                 </div>
             </div>
@@ -54,12 +52,15 @@
                                                 <div class="info-item">
                                                     <span class="info-name">Tình trạng:</span>
                                                     <span class="info-value">
-                                                        <a href="https://docln.net/truyen-dang-tien-hanh">
-                                                            {% if book.isCompleted %}
-                                                                Đã hoàn thành
-                                                            {% else %}
-                                                                Đang tiến hành
-                                                            {% endif %}</a>
+                                                        {% if book.isCompleted %}
+                                                        <a href="{% url 'list' type='completed' %}">
+                                                            Đã hoàn thành
+                                                        </a>
+                                                        {% else %}
+                                                        <a href="{% url 'list' type='ongoing' %}">
+                                                            Đang tiến hành
+                                                        </a>
+                                                        {% endif %}
                                                     </span>
                                                 </div>
                                             </div>

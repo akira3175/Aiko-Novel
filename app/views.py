@@ -1,3 +1,4 @@
+from django.template import RequestContext
 from django.utils import timezone
 from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -36,6 +37,10 @@ def member_required(view_func):
 def can_edit_book(view_func):
     def wrapper(request, *args, **kwargs):
         book_id = kwargs.get('book_id') 
+        
+        if book_id == 0:
+            return view_func(request, *args, **kwargs)
+        
         try:
             book = Book.objects.get(id=book_id)
         except Book.DoesNotExist:
@@ -347,7 +352,6 @@ def novelWorks(request, group_id, book_id):
     context = {'categories': categories, 'book': book, 'group': group, 'volumes': volumes, 'chapters': chapters}
     return render(request, 'app/novelworks.html', context)
 
-@can_edit_book
 @csrf_exempt
 def saveBook(request):
     if request.method == 'POST':
@@ -406,12 +410,13 @@ def saveBook(request):
                 existing_book.categories.add(*categories)
 
             existing_book.save()
+            print(isCompleted)
             # Trả về phản hồi thành công
             return redirect('novel-of-trans-team', group_id=novelTransTeam)
     else:
+        print(5)
         return JsonResponse({'error': 'Yêu cầu không hợp lệ.'}, status=405)
     
-@can_edit_book
 @csrf_exempt
 def saveBookSub(request):
     if request.method == 'POST':
@@ -1035,6 +1040,10 @@ def list(request, type):
         book = Book.objects.filter(isDeleted=False).order_by('-dateUpdate')
     elif type == 'lastest-upload':
         book = Book.objects.filter(isDeleted=False).order_by('-id')
+    elif type == 'ongoing':
+        book = Book.objects.filter(isCompleted=False, isDeleted=False).order_by('-dateUpdate')
+    elif type == 'completed':
+        book = Book.objects.filter(isCompleted=True, isDeleted=False).order_by('-dateUpdate')
     else:
         book = Book.objects.none()
     lenPage=30
@@ -1051,3 +1060,6 @@ def list(request, type):
             return render(request, 'app/list.html',{'books': book, 'categorys': category})
         book = paginator.page(1)
         return render(request, 'app/list.html',{'books': book, 'categorys': category})   
+
+def handler404(request, exception):
+    return render(request, '404.html')

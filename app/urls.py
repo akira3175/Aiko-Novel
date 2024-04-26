@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.shortcuts import render
 from django.urls import include, path
 from django.conf.urls.static import static
 from django.conf import settings
@@ -52,3 +53,5 @@ urlpatterns = [
     path('the-loai/<str:category>/', views.category, name='category'),
     path('list/<str:type>/', views.list, name='list'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = 'app.views.handler404'

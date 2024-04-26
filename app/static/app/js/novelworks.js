@@ -286,6 +286,7 @@ function saveBook() {
     .catch(error => {
         console.error('Error:', error);
     });
+    console.log('1')
 }
 
 function saveBookSub() {
