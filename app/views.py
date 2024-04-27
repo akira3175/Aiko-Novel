@@ -166,10 +166,13 @@ def home(request):
         latest_chapter_date=Max('date_upload')
     ).order_by('-latest_chapter_date')
     lastest_comment = ChapterComment.objects.filter(is_deleted=False).order_by('-created_at')[:10]
-    new_novels = Book.objects.filter(isDeleted=False).order_by('-dateUpload')[:4]
+    new_novels = Book.objects.filter(isDeleted=False).order_by('-dateUpload')
     new_novels_info = []
 
     for novel in new_novels:
+        if len(new_novels_info) >= 4:
+            break
+
         latest_volume = novel.volumes.order_by('-id').first()
         if latest_volume:
             latest_chapter = latest_volume.chapters.order_by('-date_upload').first()

@@ -61,8 +61,10 @@ function toggleLoginButton() {
 
     if (username === '' || password === '') {
         loginButton.classList.add('disable');
+        loginButton.disabled = true;
     } else {
-        loginButton.classList.remove('disable');x
+        loginButton.classList.remove('disable');
+        loginButton.disabled = false;
     }
 }
 
@@ -286,11 +288,21 @@ function toggleRegisterButton() {
 
     if (meetTheRequirements()) {
         registerButton.classList.remove('disable');
+        registerButton.disabled = false;
     } else {
         registerButton.classList.add('disable');
+        registerButton.disabled = true;
     }
 }
 
 function meetTheRequirements() {
     return isValidUsernameRegister && isValidEmailRegister && isValidPasswordRegister && isValidRepasswordRegister && isAgreeToTerms;
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    var registerButton = document.querySelector('#register-form .el-button');
+    var loginButton = document.querySelector('#login-form .el-button');
+
+    registerButton.disabled = true;
+    loginButton.disabled = true;
+});
