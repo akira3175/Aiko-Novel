@@ -802,7 +802,6 @@ def deleteGroup(request, group_id):
     messages.success(request, "Group deleted successfully")
     return redirect('home')
 
-@member_required
 def addGroup(request):
     form = GroupForm()
     if request.method == 'POST':
